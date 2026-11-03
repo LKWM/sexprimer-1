@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <script>
+  // ================================================================
+  // 한국어 발음 오디오 — 녹음 완료 후 링크 추가 시 자동 연동
+  // ================================================================
+  const audioMap = {
+      '정장을 사려고요.': '',
+      '도서관에서 책을 빌리려고요.': '',
+      '한번 입어 보세요.': '',
+      '이 소설을 읽어 볼까요?': '',
+      'C2L5-1': '',
+      'C2L5-2': 'https://res.cloudinary.com/de76i94ia/video/upload/v1793614640/C1L1-2_yr4uau.mp3',
+      'C2L5-3': '',
+      'C2L5-4': 'https://res.cloudinary.com/de76i94ia/video/upload/v1782504917/C1L1-4_xtvbr9.mp3',
+      'C2L5-5': '',
+      'C2L5-6': 'https://res.cloudinary.com/de76i94ia/video/upload/v1793614936/C1L1-6_eyqcbg.mp3',
+      'C2L5-7': '',
+      'C2L5-8': '',
+      'C2L5-9': '',
+      'C2L5-10': '',
+      'C2L5-11': '',
+      'C2L5-12': 'https://res.cloudinary.com/de76i94ia/video/upload/v1790878993/C6L21-11_womqfd.mp3',
+      'C2L5-13': 'https://res.cloudinary.com/de76i94ia/video/upload/v1782504919/C1L1-8_hnb5ey.mp3',
+      'C2L5-14': 'https://res.cloudinary.com/de76i94ia/video/upload/v1793644025/C1L1-13_vgrpjm.mp3',
+      'C2L5-15': 'https://res.cloudinary.com/de76i94ia/video/upload/v1782504919/C1L1-10_fecigc.mp3',
+      'C2L5-16': 'https://res.cloudinary.com/de76i94ia/video/upload/v1782504919/C1L1-11_xh3brz.mp3',
+      'C2L5-17': 'https://res.cloudinary.com/de76i94ia/video/upload/v1790878992/C6L21-15_aaskdc.mp3',
+      'C2L5-18': 'https://res.cloudinary.com/de76i94ia/video/upload/v1793644159/C1L1-17_lulvcu.mp3',
+      'C2L5-19': 'https://res.cloudinary.com/de76i94ia/video/upload/v1790880593/C6L21-17_c2drah.mp3',
+      'C2L5-20': 'https://res.cloudinary.com/de76i94ia/video/upload/v1782504921/C1L1-13_gv22h7.mp3',
+      'C2L5-21': 'https://res.cloudinary.com/de76i94ia/video/upload/v1793278689/C7L25-20_yayxv0.mp3',
+      'C2L5-22': '',
+  };
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>S’exprimer davantage (1) — Chapitre 2 — Leçon 2</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+  <style>
+    :root { --nav-h: max(12vmin, 10vh); --btn: calc(var(--nav-h) * 0.5); }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Nunito', sans-serif; }
+    .page {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 2.5vh 2.5vw; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; overflow: hidden;
+    }
+    .page.active { opacity: 1; pointer-events: auto; }
+    .ko { font-family: 'Noto Sans KR', sans-serif; }
+    .blank { color: #cbd5e1; font-weight: 400; }
+    .blank.revealed { color: #5b21b6; font-weight: 700; transition: color 0.4s; }
+    .blank-char { cursor: pointer; color: #7c3aed; }
+    .blank-char.revealed { color: #5b21b6; font-weight: 700; transition: color 0.4s; }
+    .mic-btn {
+      width: calc(var(--btn) * 2); height: calc(var(--btn) * 2);
+      border-radius: 50%; border: none; background: #7c3aed; color: #fff;
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
+      transition: transform 0.15s, background 0.15s; flex-shrink: 0;
+    }
+    .mic-btn:hover:not(.disabled) { transform: scale(1.05); }
+    .mic-btn.disabled { background: #e9d5ff; cursor: not-allowed; opacity: 0.5; }
+    .mic-btn.recording { background: #ef4444; animation: pulse 1s infinite; }
+    @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
+    .feedback-area { min-height: 8vh; display: flex; align-items: center; justify-content: center; }
+    .invisible-fb { visibility: hidden; }
+    .visible-fb { visibility: visible; }
+    .nav-btn {
+      width: var(--btn); height: var(--btn);
+      border-radius: 50%; border: none; background: #7c3aed; color: #fff;
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
+      font-size: calc(var(--btn) * 0.4167); transition: opacity 0.15s;
+    }
+    .nav-btn:disabled { background: #e9d5ff; cursor: not-allowed; opacity: 0.5; }
+    .card-clickable { cursor: pointer; transition: background 0.15s; }
+    .listen-btn { transition: opacity 0.15s; }
+    .listen-btn.disabled { opacity: 0.5; pointer-events: none; }
+    .card-clickable:hover { background: #ede9fe; }
+
+/* ═══ EXPLANATION PAGES (13강 스타일) ═══ */
+.expl-wrap { width:95%; max-width:90vw; display:flex; flex-direction:column; gap:1.5vh; }
+.expl-cards { display:flex; flex-direction:column; gap:1.5vh; }
+.expl-card { background:#f5f3ff; border:0.15vh solid #e9d5ff; border-radius:1.2vw; padding:2vh 3vw; display:flex; flex-direction:column; align-items:center; gap:0.8vh; box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08); }
+.expl-icon { font-size:clamp(1.5rem,max(3vw,3vh),2rem); color:#7c3aed; }
+.expl-ko { font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem); font-weight:700; text-align:center; }
+.expl-ko-sm { font-size:clamp(1.2rem,max(3vw,3vh),1.9rem); font-weight:700; }
+.expl-sub { font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem); font-weight:500; text-align:center; }
+.expl-sub2 { font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem); font-weight:500; text-align:center; color:#6b7280; font-style:italic; }
+.expl-text { font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem); font-weight:500; line-height:1.7; text-align:center; color:#1e1b2e; }
+@media (orientation: landscape) {
+  .expl-cards { flex-direction:row; flex-wrap:wrap; justify-content:center; align-items:stretch; }
+  .expl-cards.stack { flex-direction:column; }
+  .expl-card { padding:1.5vh 2vw; }
+  .expl-icon { font-size:clamp(1.1rem,min(max(3vw,3vh),3.6vh),2rem); }
+  .expl-ko { font-size:clamp(1.05rem,min(max(3.5vw,3.5vh),4.6vh),2.3rem); }
+  .expl-ko-sm { font-size:clamp(0.95rem,min(max(3vw,3vh),3.6vh),1.9rem); }
+  .expl-sub, .expl-sub2 { font-size:clamp(0.8rem,min(max(2.2vw,2.2vh),3vh),1.3rem); }
+  .expl-text { font-size:clamp(0.8rem,min(max(2.3vw,2.3vh),3.2vh),1.3rem); line-height:1.5; }
+}
+  </style>
+</head>
+<body>
+
+  <!-- ════════ PROGRESS BAR ════════ -->
+  <div id="progress-bar-container" style="position:fixed;top:0;left:0;width:100%;height:0.4vh;background:#ede9fe;z-index:200;display:none;">
+    <div id="progress-bar" style="height:100%;background:#7c3aed;width:0%;transition:width 0.3s ease;"></div>
+  </div>
+
+  <!-- ════════ PAGE 0 — COVER ════════ -->
+  <div class="page active flex-col bg-violet-50" id="page-0">
+    <div class="flex flex-col items-center" style="gap:3vh;">
+      <div style="width:clamp(3.5rem,max(12vw,12vh),99rem);height:clamp(3.5rem,max(12vw,12vh),99rem);border-radius:50%;background:linear-gradient(135deg,#7c3aed,#a78bfa);display:flex;align-items:center;justify-content:center;box-shadow:0 0.5vh 2vh rgba(124,58,237,0.25);flex-shrink:0;">
+        <i class="ph ph-hand-tap" style="font-size:clamp(1.75rem,max(6vw,6vh),99rem);color:#fff;"></i>
+      </div>
+      <p style="font-size:clamp(1.05rem,max(2.6vw,2.6vh),99rem);font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:#a78bfa;text-align:center;line-height:1.5;margin-bottom:1.5vh;"><span style="white-space:nowrap;">Chapitre 2 :</span> <span style="display:inline-block;">Les intentions et les tentatives</span></p>
+      <p style="font-size:clamp(0.8rem,max(1.8vw,1.8vh),99rem);font-weight:800;letter-spacing:0.18em;color:#a78bfa;text-align:center;">Leçon interactive 📱</p>
+      <h1 style="font-size:clamp(1.5rem,max(5vw,5vh),99rem);font-weight:900;color:#4c1d95;text-align:center;line-height:1.15;margin-top:-1.5vh;">Leçon 2 : Je compte acheter un costume.</h1>
+      <button onclick="startLesson()" style="margin-top:1vh;background:linear-gradient(135deg,#7c3aed,#4c1d95);color:#fff;border:none;border-radius:1.2vw;padding:1.8vh 8vw;font-family:'Nunito',sans-serif;font-size:clamp(0.9rem,max(2.5vw,2.5vh),99rem);font-weight:800;letter-spacing:0.06em;cursor:pointer;box-shadow:0 0.5vh 1.8vh rgba(124,58,237,0.2);transition:transform 0.15s;">Commencer</button>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 1 — INTRODUCTION ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-1">
+    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:2vh;">
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);">
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#1e1b2e;">Bonjour ! Bienvenue dans le deuxième chapitre. Dans ce chapitre, on va apprendre à parler de ce qu’on a l’intention de faire ou de ce qu’on essaie de faire. Comme la grammaire est similaire à celle du Chapitre 1, si vous ne maîtrisez pas encore bien son contenu, pensez à le revoir pour éviter toute confusion ! Alors, on commence la leçon d’aujourd’hui !</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 2 — REPEAT S1-1 ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-2">
+    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
+      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
+        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">정장</span>을 <span class="text-purple-600">사려고요</span>.</p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-green-600">un costume</span> <span class="text-purple-600">compter acheter</span></p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je compte acheter un costume.</p>
+        <button class="mic-btn disabled" id="mic-2" onclick="handleMicClick(2)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
+        <div class="feedback-area invisible-fb" id="feedback-2" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 3 — S1 EXPLANATION ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-3">
+    <div class="expl-wrap">
+      <div class="expl-cards stack">
+        <div class="expl-card">
+          <p class="ko expl-ko-sm">V+(으)려고요</p>
+          <p class="expl-sub">compter + V</p>
+        </div>
+        <div class="expl-card card-clickable" onclick="playClickAudio(3, 0)">
+          <div style="display:flex;align-items:center;gap:0.5vw;">
+            <i class="ph-fill ph-speaker-high expl-icon"></i>
+            <p class="ko expl-ko"><span class="text-green-600">정장</span>을 <span class="text-purple-600">사려고요</span>.</p>
+          </div>
+          <p class="expl-sub"><span class="text-green-600">un costume</span> <span class="text-purple-600">compter acheter</span></p>
+          <p class="expl-sub2">Je compte acheter un costume.</p>
+        </div>
+      </div>
+      <p class="expl-text">Très bien ! Dans le chapitre 1, on a appris « (으)려고 » qui exprime le but d’une action. Cependant, à l’oral, on peut l’utiliser comme un « suffixe terminatif », qui signifie que le locuteur « a l’intention », « compte » ou « pense » faire quelque chose.</p>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 4 — REPEAT S1-2 ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-4">
+    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
+      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
+        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">정장</span>을 <span class="text-purple-600">사려고요</span>.</p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-green-600">un costume</span> <span class="text-purple-600">compter acheter</span></p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je compte acheter un costume.</p>
+        <button class="mic-btn disabled" id="mic-4" onclick="handleMicClick(4)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
+        <div class="feedback-area invisible-fb" id="feedback-4" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 5 — S2 EXPLANATION ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-5">
+    <div class="expl-wrap">
+      <p class="expl-text">Bien joué ! Dans cette phrase aussi, à « 빌리다 », on a attaché « 려고요 », qui exprime un projet et une intention. Ce n’est pas une décision prise avec une ferme volonté ni un projet certain, mais ça veut dire qu’on « a l’intention d’emprunter un livre ».</p>
+      <div class="expl-cards stack">
+        <div class="expl-card card-clickable" onclick="playClickAudio(5, 0)">
+          <div style="display:flex;align-items:center;gap:0.5vw;">
+            <i class="ph-fill ph-speaker-high expl-icon"></i>
+            <p class="ko expl-ko"><span class="text-red-500">도서관에서</span> <span class="text-green-600">책</span>을 <span class="text-purple-600">빌리려고요</span>.</p>
+          </div>
+          <p class="expl-sub"><span class="text-red-500">à la bibliothèque</span> <span class="text-green-600">un livre</span> <span class="text-purple-600">compter emprunter</span></p>
+          <p class="expl-sub2">Je compte emprunter un livre à la bibliothèque.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 6 — REPEAT S2-1 ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-6">
+    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
+      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
+        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-red-500">도서관에서</span> <span class="text-green-600">책</span>을 <span class="text-purple-600">빌리려고요</span>.</p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-red-500">à la bibliothèque</span> <span class="text-green-600">un livre</span> <span class="text-purple-600">compter emprunter</span></p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je compte emprunter un livre à la bibliothèque.</p>
+        <button class="mic-btn disabled" id="mic-6" onclick="handleMicClick(6)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
+        <div class="feedback-area invisible-fb" id="feedback-6" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 7 — REPEAT S2-2 ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-7">
+    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
+      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
+        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-red-500">도서관에서</span> <span class="text-green-600">책</span>을 <span class="text-purple-600">빌리려고요</span>.</p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-red-500">à la bibliothèque</span> <span class="text-green-600">un livre</span> <span class="text-purple-600">compter emprunter</span></p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je compte emprunter un livre à la bibliothèque.</p>
+        <button class="mic-btn disabled" id="mic-7" onclick="handleMicClick(7)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
+        <div class="feedback-area invisible-fb" id="feedback-7" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 8 — REPEAT S3-1 ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-8">
+    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
+      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
+        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-red-500">한번</span> <span class="text-purple-600">입어 보세요</span>.</p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-red-500">une fois</span> <span class="text-purple-600">essayer de porter</span></p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Essayez de (le) porter une fois.</p>
+        <button class="mic-btn disabled" id="mic-8" onclick="handleMicClick(8)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
+        <div class="feedback-area invisible-fb" id="feedback-8" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 9 — S3 EXPLANATION ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-9">
+    <div class="expl-wrap">
+      <div class="expl-cards stack">
+        <div class="expl-card">
+          <p class="ko expl-ko-sm">V + 아/어 보다</p>
+          <p class="expl-sub">Essayer de + V</p>
+        </div>
+        <div class="expl-card card-clickable" onclick="playClickAudio(9, 0)">
+          <div style="display:flex;align-items:center;gap:0.5vw;">
+            <i class="ph-fill ph-speaker-high expl-icon"></i>
+            <p class="ko expl-ko"><span class="text-red-500">한번</span> <span class="text-purple-600">입어 보세요</span>.</p>
+          </div>
+          <p class="expl-sub"><span class="text-red-500">une fois</span> <span class="text-purple-600">essayer de porter</span></p>
+          <p class="expl-sub2">Essayez de (le) porter une fois.</p>
+        </div>
+      </div>
+      <p class="expl-text">Génial ! Dans cette phrase, « 보다 » ne veut pas dire « regarder » ou « voir », mais c’est un verbe auxiliaire au sens d’« essayer » ou « tenter ». Il faut conjuguer le verbe qui exprime l’action qu’on veut tenter au registre informel, puis y ajouter « 보다 ».</p>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 10 — REPEAT S3-2 ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-10">
+    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
+      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
+        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-red-500">한번</span> <span class="text-purple-600">입어 보세요</span>.</p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-red-500">une fois</span> <span class="text-purple-600">essayer de porter</span></p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Essayez de (le) porter une fois.</p>
+        <button class="mic-btn disabled" id="mic-10" onclick="handleMicClick(10)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
+        <div class="feedback-area invisible-fb" id="feedback-10" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 11 — S4 EXPLANATION ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-11">
+    <div class="expl-wrap">
+      <p class="expl-text">De la même façon, on conjugue le verbe « 읽다 » en « 읽어 », et on y attache « 보다 ». Comme cette phrase sert à demander l’avis de l’interlocuteur, on y a également ajouté « 까요 », ce qui donne la forme « 볼까요 ».</p>
+      <div class="expl-cards stack">
+        <div class="expl-card card-clickable" onclick="playClickAudio(11, 0)">
+          <div style="display:flex;align-items:center;gap:0.5vw;">
+            <i class="ph-fill ph-speaker-high expl-icon"></i>
+            <p class="ko expl-ko"><span class="text-green-600">이 소설</span>을 <span class="text-purple-600">읽어 볼까요</span>?</p>
+          </div>
+          <p class="expl-sub"><span class="text-green-600">ce roman</span> <span class="text-purple-600">essayer de lire</span></p>
+          <p class="expl-sub2">Dois-je essayer de lire ce roman ?</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 12 — REPEAT S4-1 ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-12">
+    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
+      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
+        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">이 소설</span>을 <span class="text-purple-600">읽어 볼까요</span>?</p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-green-600">ce roman</span> <span class="text-purple-600">essayer de lire</span></p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Dois-je essayer de lire ce roman ?</p>
+        <button class="mic-btn disabled" id="mic-12" onclick="handleMicClick(12)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
+        <div class="feedback-area invisible-fb" id="feedback-12" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 13 — REPEAT S4-2 ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-13">
+    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
+      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
+        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">이 소설</span>을 <span class="text-purple-600">읽어 볼까요</span>?</p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-green-600">ce roman</span> <span class="text-purple-600">essayer de lire</span></p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Dois-je essayer de lire ce roman ?</p>
+        <button class="mic-btn disabled" id="mic-13" onclick="handleMicClick(13)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
+        <div class="feedback-area invisible-fb" id="feedback-13" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 14 — REPEAT S1-3 (HIDE) ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-14">
+    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
+      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
+        <div style="display:flex;align-items:center;gap:0.5vw;justify-content:center;">
+          <button onclick="playCardAudio(14)" id="listen-14" class="listen-btn" style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:clamp(1.5rem,max(3vw,3vh),2rem);padding:0;display:flex;align-items:center;"><i class="ph-fill ph-speaker-high"></i></button>
+          <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">정장을 사려<span class="blank" data-page="14" data-answer="고요">◯◯</span>.</p>
+        </div>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je compte acheter un costume.</p>
+        <button class="mic-btn disabled" id="mic-14" onclick="handleMicClick(14)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
+        <div class="feedback-area invisible-fb" id="feedback-14" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 15 — REPEAT S3-3 (HIDE) ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-15">
+    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
+      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
+        <div style="display:flex;align-items:center;gap:0.5vw;justify-content:center;">
+          <button onclick="playCardAudio(15)" id="listen-15" class="listen-btn" style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:clamp(1.5rem,max(3vw,3vh),2rem);padding:0;display:flex;align-items:center;"><i class="ph-fill ph-speaker-high"></i></button>
+          <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">한번 <span class="blank" data-page="15" data-answer="입어">◯◯</span> 보세요.</p>
+        </div>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Essayez de (le) porter une fois.</p>
+        <button class="mic-btn disabled" id="mic-15" onclick="handleMicClick(15)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
+        <div class="feedback-area invisible-fb" id="feedback-15" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 16 — REPEAT S2-3 (HIDE) ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-16">
+    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
+      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
+        <div style="display:flex;align-items:center;gap:0.5vw;justify-content:center;">
+          <button onclick="playCardAudio(16)" id="listen-16" class="listen-btn" style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:clamp(1.5rem,max(3vw,3vh),2rem);padding:0;display:flex;align-items:center;"><i class="ph-fill ph-speaker-high"></i></button>
+          <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">도서관에서 책을 <span class="blank" data-page="16" data-answer="빌리려">◯◯◯</span>고요.</p>
+        </div>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je compte emprunter un livre à la bibliothèque.</p>
+        <button class="mic-btn disabled" id="mic-16" onclick="handleMicClick(16)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
+        <div class="feedback-area invisible-fb" id="feedback-16" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 17 — REPEAT S4-3 (HIDE) ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-17">
+    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
+      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
+        <div style="display:flex;align-items:center;gap:0.5vw;justify-content:center;">
+          <button onclick="playCardAudio(17)" id="listen-17" class="listen-btn" style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:clamp(1.5rem,max(3vw,3vh),2rem);padding:0;display:flex;align-items:center;"><i class="ph-fill ph-speaker-high"></i></button>
+          <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">이 소설을 읽어 <span class="blank" data-page="17" data-answer="볼까">◯◯</span>요?</p>
+        </div>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Dois-je essayer de lire ce roman ?</p>
+        <button class="mic-btn disabled" id="mic-17" onclick="handleMicClick(17)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
+        <div class="feedback-area invisible-fb" id="feedback-17" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 18 — TRAD S1-4 ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-18">
+    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
+      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">한국어로 말해 보세요!</p>
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
+        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">정장을 <span class="blank" data-page="18" data-answer="사려고요">◯◯◯◯</span>.</p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je compte acheter un costume.</p>
+        <button class="mic-btn disabled" id="mic-18" onclick="handleMicClick(18)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
+        <div class="feedback-area invisible-fb" id="feedback-18" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 19 — TRAD S3-4 ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-19">
+    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
+      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">한국어로 말해 보세요!</p>
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
+        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="blank" data-page="19" data-answer="한번">◯◯</span> 입어 <span class="blank" data-page="19" data-answer="보세요">◯◯◯</span>.</p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Essayez de (le) porter une fois.</p>
+        <button class="mic-btn disabled" id="mic-19" onclick="handleMicClick(19)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
+        <div class="feedback-area invisible-fb" id="feedback-19" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 20 — TRAD S2-4 ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-20">
+    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
+      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">한국어로 말해 보세요!</p>
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
+        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">도서관<span class="blank" data-page="20" data-answer="에서">◯◯</span> 책을 <span class="blank" data-page="20" data-answer="빌리려고요">◯◯◯◯◯</span>.</p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je compte emprunter un livre à la bibliothèque.</p>
+        <button class="mic-btn disabled" id="mic-20" onclick="handleMicClick(20)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
+        <div class="feedback-area invisible-fb" id="feedback-20" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 21 — TRAD S4-4 ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-21">
+    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
+      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">한국어로 말해 보세요!</p>
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
+        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">이 소설을 <span class="blank" data-page="21" data-answer="읽어">◯◯</span> <span class="blank" data-page="21" data-answer="볼까요">◯◯◯</span>?</p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Dois-je essayer de lire ce roman ?</p>
+        <button class="mic-btn disabled" id="mic-21" onclick="handleMicClick(21)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
+        <div class="feedback-area invisible-fb" id="feedback-21" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 22 — OUTRO ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-22">
+    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:2vh;">
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);">
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#1e1b2e;">Bravo ! Vous pouvez maintenant parler de ce que vous avez l’intention de faire ou de ce que vous essayez de faire, et vous pouvez également demander aux autres ce qu’ils prévoient de faire ou ce qu’ils vont tenter de faire. Dans les prochaines leçons, on révisera le vocabulaire et s’entraînera à formuler encore plus de phrases en utilisant la grammaire apprise. Alors, à la prochaine leçon !</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ BOTTOM NAV ════════ -->
+  <div id="bottom-nav" style="position:fixed;bottom:0;left:0;width:100%;height:var(--nav-h);display:none;align-items:center;justify-content:space-between;padding:0 2.5vw;background:rgba(255,255,255,0.95);backdrop-filter:blur(1vmin);border-top:0.15vh solid #e9d5ff;z-index:150;">
+    <button class="nav-btn" id="prev-btn" onclick="prevPage()"><i class="ph ph-caret-left"></i></button>
+    <span id="page-num" style="font-size:calc(var(--btn) * 0.4167);font-weight:700;color:#4a4466;"></span>
+    <button class="nav-btn" id="next-btn" onclick="nextPage()"><i class="ph ph-caret-right"></i></button>
+  </div>
+
+<script>
+/* ═══════════════════════════════════════
+   CONFIG
+   ═══════════════════════════════════════ */
+const GEMINI_URL = 'https://coreeno.base44.app/functions/GeminiChatSecure';
+let lessonPermit = null;
+let lessonId = null;
+window.addEventListener("message", (event) => {
+  if (event.data?.type !== "coreeno:permit") return;
+  lessonPermit = event.data.permit;
+  lessonId = event.data.lesson_id;
+});
+// Gemini 호출 오류 — 원인 간단 명시 + 사용자 안내 (프랑스어)
+let geminiErrorStreak = 0;
+function geminiErrorMessage(error) {
+  const msg = (error && error.message) || String(error);
+  if (msg.indexOf('Lesson permit') !== -1) {
+    return "Permis d'accès indisponible. Veuillez actualiser la page et réessayer.";
+  }
+  const m = msg.match(/API status: (\d+)/);
+  if (m) {
+    const status = parseInt(m[1], 10);
+    if (status === 401 || status === 403) return "Permis d'accès expiré. Veuillez actualiser la page et réessayer.";
+    if (status === 429) return "Limite d'utilisation atteinte. Veuillez réessayer dans quelques instants. Si l'erreur persiste, signalez un bug.";
+    if (status >= 500) return "Erreur du serveur. Veuillez réessayer dans quelques instants. Si l'erreur persiste, signalez un bug.";
+    return "Erreur inattendue. Si le problème persiste, signalez un bug.";
+  }
+  geminiErrorStreak++;
+  if (geminiErrorStreak >= 2) return "Erreur de connexion. Si le problème persiste, signalez un bug.";
+  return "Erreur de connexion. Veuillez réessayer.";
+}
+
+const TOTAL_PAGES = 23;
+
+const PAGE_AUDIO = {
+  1: audioMap['C2L5-1'], 2: audioMap['C2L5-2'], 3: audioMap['C2L5-3'], 4: audioMap['C2L5-4'], 5: audioMap['C2L5-5'],
+  6: audioMap['C2L5-6'], 7: audioMap['C2L5-7'], 8: audioMap['C2L5-8'], 9: audioMap['C2L5-9'], 10: audioMap['C2L5-10'],
+  11: audioMap['C2L5-11'], 12: audioMap['C2L5-12'], 13: audioMap['C2L5-13'], 14: audioMap['C2L5-14'], 15: audioMap['C2L5-15'],
+  16: audioMap['C2L5-16'], 17: audioMap['C2L5-17'], 18: audioMap['C2L5-18'], 19: audioMap['C2L5-19'], 20: audioMap['C2L5-20'],
+  21: audioMap['C2L5-21'], 22: audioMap['C2L5-22'],
+};
+
+const CARD_AUDIO = {
+  2: audioMap['정장을 사려고요.'], 4: audioMap['정장을 사려고요.'], 6: audioMap['도서관에서 책을 빌리려고요.'], 7: audioMap['도서관에서 책을 빌리려고요.'], 8: audioMap['한번 입어 보세요.'], 10: audioMap['한번 입어 보세요.'],
+  12: audioMap['이 소설을 읽어 볼까요?'], 13: audioMap['이 소설을 읽어 볼까요?'],
+  14: audioMap['정장을 사려고요.'], 15: audioMap['한번 입어 보세요.'], 16: audioMap['도서관에서 책을 빌리려고요.'], 17: audioMap['이 소설을 읽어 볼까요?'],
+};
+
+const CLICK_AUDIO = {
+  3: audioMap['정장을 사려고요.'],
+  5: audioMap['도서관에서 책을 빌리려고요.'],
+  9: audioMap['한번 입어 보세요.'],
+  11: audioMap['이 소설을 읽어 볼까요?'],
+};
+
+// 페이지 오디오 직후 카드 본문 문장 오디오를 1회 자동 재생하는 설명 페이지 (실라버스 Page 6, 12)
+const AUTO_CLICK_PAGES = [5, 11];
+
+const SENTENCE_AUDIO = {
+  18: audioMap['정장을 사려고요.'], 19: audioMap['한번 입어 보세요.'], 20: audioMap['도서관에서 책을 빌리려고요.'], 21: audioMap['이 소설을 읽어 볼까요?'],
+};
+
+const EXERCISES = {
+  2: { type: 'repeat', maxAttempts: 1, expected: '정장을 사려고요' },
+  4: { type: 'repeat', maxAttempts: 1, expected: '정장을 사려고요' },
+  6: { type: 'repeat', maxAttempts: 1, expected: '도서관에서 책을 빌리려고요' },
+  7: { type: 'repeat', maxAttempts: 1, expected: '도서관에서 책을 빌리려고요' },
+  8: { type: 'repeat', maxAttempts: 1, expected: '한번 입어 보세요' },
+  10: { type: 'repeat', maxAttempts: 1, expected: '한번 입어 보세요' },
+  12: { type: 'repeat', maxAttempts: 1, expected: '이 소설을 읽어 볼까요' },
+  13: { type: 'repeat', maxAttempts: 1, expected: '이 소설을 읽어 볼까요' },
+  14: { type: 'hide', maxAttempts: 2, expected: '정장을 사려고요' },
+  15: { type: 'hide', maxAttempts: 2, expected: '한번 입어 보세요' },
+  16: { type: 'hide', maxAttempts: 2, expected: '도서관에서 책을 빌리려고요' },
+  17: { type: 'hide', maxAttempts: 2, expected: '이 소설을 읽어 볼까요' },
+  18: { type: 'trad', maxAttempts: 2, expected: '정장을 사려고요' },
+  19: { type: 'trad', maxAttempts: 2, expected: '한번 입어 보세요' },
+  20: { type: 'trad', maxAttempts: 2, expected: '도서관에서 책을 빌리려고요' },
+  21: { type: 'trad', maxAttempts: 2, expected: '이 소설을 읽어 볼까요' },
+};
+const MSG = {
+  SUCCESS_RETRY: 'Très bien, essayons encore une fois.',
+  SUCCESS_END:   'Très bien ! Passez à la suite.',
+  FAIL_RETRY:    'On y est presque ! Essayons encore une fois.',
+  FAIL_END:      'Bien essayé ! Passez à la suite.',
+  ANSWER_REVEAL: 'Bien essayé ! Voici la bonne réponse.',
+};
+
+/* ═══════════════════════════════════════
+   STATE
+   ═══════════════════════════════════════ */
+let currentPage = 0;
+let currentAudio = null;
+let audioTimer = null;
+let cardAudioTimer = null;
+let micTimer = null;
+let toneReady = false;
+let correctSound, errorSound, transitionSynth, completionSynth, startSynth;
+let activeRecorder = null;
+let recordingTimeout = null;
+let isDiscarding = false;
+let isRecording = false;
+const pageState = {};
+const visitedPages = new Set();
+
+/* ═══════════════════════════════════════
+   SOUND EFFECTS (Tone.js)
+   ═══════════════════════════════════════ */
+async function initTone() {
+  await Tone.start();
+  correctSound = new Tone.Synth({ oscillator: { type: "sine" } }).toDestination();
+  errorSound = new Tone.Synth({ oscillator: { type: "triangle" } }).toDestination();
+  completionSynth = new Tone.PolySynth(Tone.Synth).toDestination();
+  transitionSynth = new Tone.Synth({ oscillator: { type: "sine" }, envelope: { attack: 0.01, decay: 0.1, sustain: 0, release: 0.1 } }).toDestination();
+  transitionSynth.volume.value = -15;
+  startSynth = new Tone.Synth({ oscillator: { type: "sine" }, envelope: { attack: 0.01, decay: 0.2, sustain: 0, release: 0.15 } }).toDestination();
+  toneReady = true;
+}
+
+function playSfx(type) {
+  if (!toneReady) return;
+  switch(type) {
+    case 'pageTurn':
+      transitionSynth.triggerAttackRelease('C6', '0.05s');
+      break;
+    case 'correct':
+      correctSound.triggerAttackRelease('C5', '0.2s');
+      break;
+    case 'wrong':
+      errorSound.triggerAttackRelease('C4', '0.1s');
+      break;
+    case 'start':
+      startSynth.triggerAttackRelease("E4", "16n", Tone.now());
+      startSynth.triggerAttackRelease("A4", "16n", Tone.now() + 0.12);
+      startSynth.triggerAttackRelease("C#5", "8n", Tone.now() + 0.24);
+      break;
+    case 'end':
+      completionSynth.triggerAttackRelease(["C5","E5","G5","C6"], "4n");
+      break;
+  }
+}
+
+/* ═══════════════════════════════════════
+   AUDIO MANAGEMENT
+   ═══════════════════════════════════════ */
+function playAudio(url, onEnded) {
+  stopAudio();
+  currentAudio = new Audio(url);
+  const self = currentAudio;
+  const done = () => {
+    if (self._done) return;
+    self._done = true;
+    if (onEnded) onEnded();
+    if (currentAudio === self) currentAudio = null;
+    // 이어질 오디오가 예약돼 있으면 동기화 보류 (깜빡임 방지)
+    if (!audioTimer && !cardAudioTimer) syncMicAudioState();
+  };
+  currentAudio.onended = done;
+  currentAudio.onerror = done;
+  syncMicAudioState(); // 오디오 재생 중 → 마이크 비활성
+  currentAudio.play().catch(e => { console.warn('Audio autoplay blocked:', e); done(); });
+}
+
+/* 오디오가 재생 중이지 않을 땐 마이크가 항상 활성 (2026-09-12 규칙) */
+function syncMicAudioState() {
+  const n = currentPage;
+  if (!EXERCISES[n]) return;
+  if (pageState[n]?.completed) return;
+  if (isRecording) return;
+  const micBtn = document.getElementById('mic-' + n);
+  if (!micBtn) return;
+  if (currentAudio) {
+    if (!micBtn.classList.contains('disabled')) disableMic(n);
+  } else {
+    if (micBtn.classList.contains('disabled')) activateMic(n);
+  }
+}
+
+function stopAudio() {
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+    currentAudio = null;
+  }
+  if (audioTimer) { clearTimeout(audioTimer); audioTimer = null; }
+  if (cardAudioTimer) { clearTimeout(cardAudioTimer); cardAudioTimer = null; }
+  if (micTimer) { clearTimeout(micTimer); micTimer = null; }
+}
+
+function playCardAudio(pageNum) {
+  if (isRecording) return; // 말하기 사용 중 듣기 버튼 차단
+  if (CARD_AUDIO[pageNum]) playAudio(CARD_AUDIO[pageNum]);
+}
+
+function setListenDisabled(pageNum, disabled) {
+  const btn = document.getElementById('listen-' + pageNum);
+  if (btn) btn.classList.toggle('disabled', disabled);
+}
+
+function playClickAudio(pageNum, idx = 0) {
+  if (isRecording) return; // 말하기 사용 중 오디오 재생 차단
+  const entry = CLICK_AUDIO[pageNum];
+  if (!entry) return;
+  const url = Array.isArray(entry) ? entry[idx] : entry;
+  if (url) playAudio(url);
+}
+
+/* ═══════════════════════════════════════
+   NAVIGATION
+   ═══════════════════════════════════════ */
+async function startLesson() {
+  await initTone();
+  playSfx('start');
+  document.getElementById('progress-bar-container').style.display = 'block';
+  document.getElementById('bottom-nav').style.display = 'flex';
+  goToPage(1);
+}
+
+function goToPage(n) {
+  if (n === currentPage) return;
+  playSfx('pageTurn');
+  stopAudio();
+  stopRecording();
+
+  const oldPage = document.getElementById('page-' + currentPage);
+  if (oldPage) oldPage.classList.remove('active');
+  currentPage = n;
+  const newPage = document.getElementById('page-' + n);
+  if (newPage) newPage.classList.add('active');
+
+  updateProgress();
+  updateBottomBar();
+  handlePageEnter(n);
+}
+
+function nextPage() {
+  if (currentPage < 22) goToPage(currentPage + 1);
+}
+
+function prevPage() {
+  if (currentPage > 0) goToPage(currentPage - 1);
+}
+
+function updateProgress() {
+  const pct = (currentPage / (TOTAL_PAGES - 1)) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+}
+
+function updateBottomBar() {
+  const nav = document.getElementById('bottom-nav');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const pageNum = document.getElementById('page-num');
+  const activePage = document.getElementById('page-' + currentPage);
+
+  if (currentPage === 0 || currentPage === 22) {
+    nav.style.display = 'none';
+    if (activePage) activePage.style.paddingBottom = '';
+    return;
+  }
+  nav.style.display = 'flex';
+  if (activePage) activePage.style.paddingBottom = 'calc(var(--nav-h) + 2.5vh)';
+  pageNum.textContent = (currentPage + 1) + '/' + TOTAL_PAGES;
+  prevBtn.disabled = (currentPage === 1);
+
+  if (EXERCISES[currentPage]) {
+    nextBtn.disabled = !pageState[currentPage]?.completed;
+  } else {
+    nextBtn.disabled = false;
+  }
+}
+
+/* ═══════════════════════════════════════
+   PAGE ENTER HANDLER
+   ═══════════════════════════════════════ */
+function handlePageEnter(n) {
+  // Outro page
+  if (n === 22) {
+    playSfx('end');
+    setTimeout(() => triggerLessonComplete(), 500);
+    if (PAGE_AUDIO[n]) {
+      audioTimer = setTimeout(() => playAudio(PAGE_AUDIO[n]), 300);
+    }
+    return;
+  }
+
+  // Returning to visited page
+  const isReturning = visitedPages.has(n);
+  visitedPages.add(n);
+
+  if (isReturning) {
+    if (pageState[n]?.completed) {
+      restoreState(n);
+    } else if (EXERCISES[n]) {
+      // 미완료 문제 페이지 재방문: 오디오 체인 재실행 후 마이크 활성화
+      startExerciseChain(n);
+    }
+    return;
+  }
+
+  // First visit — auto-play audio
+  startExerciseChain(n);
+}
+
+function startExerciseChain(n) {
+  setListenDisabled(n, false);
+  if (PAGE_AUDIO[n]) {
+    audioTimer = setTimeout(() => {
+      playAudio(PAGE_AUDIO[n], () => {
+        // After page audio, check for card audio
+        if (CARD_AUDIO[n]) {
+          cardAudioTimer = setTimeout(() => {
+            playAudio(CARD_AUDIO[n]); // 종료 시 syncMicAudioState가 마이크 활성화
+          }, 500);
+        } else if (AUTO_CLICK_PAGES.includes(n) && CLICK_AUDIO[n]) {
+          // 설명 페이지 6·12: 페이지 오디오 직후 카드(text&audio) 본문 문장 오디오 1회 자동 재생
+          cardAudioTimer = setTimeout(() => {
+            playAudio(CLICK_AUDIO[n]);
+          }, 500);
+        }
+        // 카드 오디오가 없으면 인트로 종료 시 syncMicAudioState가 활성화
+      });
+    }, 300);
+  } else if (EXERCISES[n]) {
+    micTimer = setTimeout(() => activateMic(n), 300);
+  }
+}
+
+function activateMic(n) {
+  const micBtn = document.getElementById('mic-' + n);
+  if (micBtn) {
+    micBtn.classList.remove('disabled');
+  }
+}
+
+function isExercisePage(n) {
+  return EXERCISES[n] !== undefined;
+}
+
+/* ═══════════════════════════════════════
+   SPEECH RECOGNITION (Gemini API)
+   ═══════════════════════════════════════ */
+async function handleMicClick(pageNum) {
+  if (!EXERCISES[pageNum] || pageState[pageNum]?.completed) return;
+  const micBtn = document.getElementById('mic-' + pageNum);
+  if (micBtn.classList.contains('disabled')) return;
+
+  if (!isRecording) {
+    await startRecording(pageNum);
+  } else {
+    stopRecording();
+  }
+}
+
+async function startRecording(pageNum) {
+  const micBtn = document.getElementById('mic-' + pageNum);
+  const feedbackEl = document.getElementById('feedback-' + pageNum);
+
+  // 말하기 사용 중 오디오 재생 차단: 녹음 시작 시 재생 중인 오디오 정지
+  stopAudio();
+  setListenDisabled(pageNum, true);
+
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const mediaRecorder = new MediaRecorder(stream);
+    let audioChunks = [];
+
+    mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+
+    mediaRecorder.onstop = async () => {
+      if (isDiscarding) { isDiscarding = false; return; }
+
+      micBtn.classList.remove('recording');
+      micBtn.innerHTML = '<i class="ph ph-spinner" style="font-size:var(--btn);animation:spin 1s linear infinite;"></i>';
+      if (feedbackEl) {
+        feedbackEl.textContent = 'Analyse en cours...';
+        feedbackEl.className = 'feedback-area visible-fb';
+        feedbackEl.style.color = '#7c3aed';
+      }
+
+      const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+      const mimeType = audioBlob.type.split(';')[0] || 'audio/webm';
+      const reader = new FileReader();
+      reader.readAsDataURL(audioBlob);
+      reader.onloadend = async () => {
+        const base64data = reader.result.split(',')[1];
+        await processGeminiChat(base64data, mimeType, pageNum);
+      };
+      stream.getTracks().forEach(track => track.stop());
+    };
+
+    mediaRecorder.start();
+    activeRecorder = mediaRecorder;
+    isRecording = true;
+    micBtn.classList.add('recording');
+    micBtn.innerHTML = '<i class="ph-fill ph-stop" style="font-size:var(--btn);"></i>';
+
+    // Max 6 seconds (Golden Rule)
+    recordingTimeout = setTimeout(() => {
+      if (mediaRecorder.state === 'recording') mediaRecorder.stop();
+    }, 6000);
+
+  } catch (err) {
+    console.error('Mic access error:', err);
+    setListenDisabled(pageNum, false);
+    if (feedbackEl) {
+      feedbackEl.textContent = 'Micro inaccessible. Réessayez.';
+      feedbackEl.className = 'feedback-area visible-fb';
+      feedbackEl.style.color = '#ef4444';
+    }
+  }
+}
+
+function stopRecording() {
+  if (activeRecorder && isRecording) {
+    activeRecorder.stop();
+    isRecording = false;
+    clearTimeout(recordingTimeout);
+  }
+}
+
+/* ── Jamo-based Levenshtein similarity scoring (2026-09-07) ── */
+const CHOSUNG = ['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+const JUNGSUNG = ['ㅏ','ㅐ','ㅑ','ㅒ','ㅓ','ㅔ','ㅕ','ㅖ','ㅗ','ㅘ','ㅙ','ㅚ','ㅛ','ㅜ','ㅝ','ㅞ','ㅟ','ㅠ','ㅡ','ㅢ','ㅣ'];
+const JONGSUNG = ['','ㄱ','ㄲ','ㄳ','ㄴ','ㄵ','ㄶ','ㄷ','ㄸ','ㄹ','ㄺ','ㄻ','ㄼ','ㄽ','ㄾ','ㄿ','ㅀ','ㅁ','ㅂ','ㅄ','ㅅ','ㅆ','ㅇ','ㅈ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+
+function normalizeSpeech(s) {
+  return (s || '').replace(/[^가-힣ㄱ-ㅣA-Za-z0-9]/g, '');
+}
+
+function decomposeJamo(s) {
+  let out = '';
+  for (const ch of normalizeSpeech(s)) {
+    const code = ch.charCodeAt(0);
+    if (code >= 0xAC00 && code <= 0xD7A3) {
+      const base = code - 0xAC00;
+      out += CHOSUNG[Math.floor(base / 588)] + JUNGSUNG[Math.floor((base % 588) / 28)] + JONGSUNG[base % 28];
+    } else {
+      out += ch;
+    }
+  }
+  return out;
+}
+
+function levenshtein(a, b) {
+  const m = a.length, n = b.length;
+  if (m === 0) return n;
+  if (n === 0) return m;
+  let prev = Array.from({ length: n + 1 }, (_, i) => i);
+  let curr = new Array(n + 1);
+  for (let i = 1; i <= m; i++) {
+    curr[0] = i;
+    for (let j = 1; j <= n; j++) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      curr[j] = Math.min(prev[j] + 1, curr[j - 1] + 1, prev[j - 1] + cost);
+    }
+    [prev, curr] = [curr, prev];
+  }
+  return prev[n];
+}
+
+function jamoSimilarity(expected, actual) {
+  const e = decomposeJamo(expected), a = decomposeJamo(actual);
+  if (e.length === 0 && a.length === 0) return 100;
+  if (e.length === 0 || a.length === 0) return 0;
+  const dist = levenshtein(e, a);
+  return Math.round((1 - dist / Math.max(e.length, a.length)) * 100);
+}
+
+async function processGeminiChat(audioBase64, mimeType, pageNum) {
+  const ex = EXERCISES[pageNum];
+  if (!ex) return;
+
+  if (!pageState[pageNum]) {
+    pageState[pageNum] = { completed: false, passed: false, attempts: 0, feedback: null, blanksRevealed: false };
+  }
+  pageState[pageNum].attempts++;
+
+  const payload = {
+    contents: [{
+      role: "user",
+      parts: [
+        { inline_data: { mime_type: mimeType, data: audioBase64 } }
+      ]
+    }] };
+
+  let transcript = "";
+  let isPass = false;
+  let score = 0;
+  let bestIdx = 0;
+
+  try {
+    if (!lessonPermit || !lessonId) throw new Error('Lesson permit is not available yet.');
+    const res = await fetch(GEMINI_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...payload, systemInstruction: "유저의 발화를 한글로 전사하라", model: "gemini-3.5-flash-lite", permit: lessonPermit, lesson_id: lessonId })
+    });
+
+    if (!res.ok) throw new Error("API status: " + res.status);
+
+    const data = await res.json();
+    const resultText = (data.text || "").trim();
+
+    // Gemini returns ONLY the verbatim transcription (2026-09-07 rule)
+    transcript = resultText;
+    geminiErrorStreak = 0;
+
+    // Score = jamo(consonant/vowel)-decomposed Levenshtein similarity vs the expected answer
+    // 복수 정답 처리: 제시된 모든 정답을 인정하고, 발화값과 가장 유사한 답을 선택 (Golden Rule)
+    const candidates = Array.isArray(ex.expected) ? ex.expected : [ex.expected];
+    candidates.forEach((cand, i) => {
+      const sc = jamoSimilarity(cand, transcript);
+      if (sc > score) { score = sc; bestIdx = i; }
+    });
+    isPass = score >= 80;
+
+  } catch (error) {
+    console.warn("Gemini API Error:", error);
+    transcript = geminiErrorMessage(error);
+    isPass = false;
+    score = null;
+  }
+
+  evaluateResult(pageNum, isPass, transcript, score, bestIdx);
+}
+
+/* ═══════════════════════════════════════
+   EVALUATION
+   ═══════════════════════════════════════ */
+function evaluateResult(pageNum, isPass, transcript, score, bestIdx = 0) {
+  setListenDisabled(pageNum, false);
+  const ex = EXERCISES[pageNum];
+  const state = pageState[pageNum];
+  const micBtn = document.getElementById('mic-' + pageNum);
+  const feedbackEl = document.getElementById('feedback-' + pageNum);
+  const transcriptEl = document.getElementById('transcript-' + pageNum);
+
+  if (isPass) {
+    playSfx('correct');
+    state.passed = true;
+    state.completed = true;
+
+    if (ex.type === 'repeat') {
+      showFeedback(pageNum, MSG.SUCCESS_END, 'success', transcript, score);
+    } else {
+      // hide or trad: reveal blanks
+      showFeedback(pageNum, MSG.SUCCESS_END, 'success', transcript, score);
+      revealBlanks(pageNum, bestIdx === 1);
+      if (ex.type === 'trad') {
+        setTimeout(() => {
+          stopAudio();
+          if (SENTENCE_AUDIO[pageNum]) playAudio(SENTENCE_AUDIO[pageNum]);
+        }, 500);
+      }
+    }
+    disableMic(pageNum);
+  } else {
+    playSfx('wrong');
+
+    if (ex.type === 'repeat') {
+      // 1 attempt: fail → end
+      state.completed = true;
+      showFeedback(pageNum, MSG.FAIL_END, 'fail', transcript, score);
+      disableMic(pageNum);
+    } else {
+      // hide or trad: check attempts
+      if (state.attempts < ex.maxAttempts) {
+        // Can retry (2026-09-12 rule): Repeat (hide) = NO reveal, audio replay only / Trad = reveal the answer, no audio
+        if (ex.type === 'trad') revealBlanks(pageNum);
+        showFeedback(pageNum, MSG.FAIL_RETRY, 'fail', transcript, score);
+        if (ex.type === 'hide' && CARD_AUDIO[pageNum]) {
+          // Replay the sentence audio only (2026-09-12: no answer reveal) — mic re-enables via syncMicAudioState
+          audioTimer = setTimeout(() => {
+            playAudio(CARD_AUDIO[pageNum]);
+          }, 1500);
+        } else {
+          setTimeout(() => {
+            micBtn.classList.remove('disabled');
+            micBtn.innerHTML = '<i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i>';
+          }, 1500);
+        }
+      } else {
+        // Max attempts reached
+        state.completed = true;
+        showFeedback(pageNum, MSG.ANSWER_REVEAL, 'fail', transcript, score);
+        revealBlanks(pageNum);
+        if (ex.type === 'trad') {
+          setTimeout(() => {
+            stopAudio();
+            if (SENTENCE_AUDIO[pageNum]) playAudio(SENTENCE_AUDIO[pageNum]);
+          }, 500);
+        }
+        disableMic(pageNum);
+      }
+    }
+  }
+
+  updateBottomBar();
+}
+
+function showFeedback(pageNum, message, type, transcript, score) {
+  const el = document.getElementById('feedback-' + pageNum);
+  if (!el) return;
+  var color = (type === 'success' ? '#16a34a' : '#f97316');
+  var html = '';
+  if (transcript) html += '<span style="font-weight:500;color:#6b7280;">« ' + transcript + ' »</span> ';
+  if (typeof score !== 'undefined' && score !== null) html += '<span style="font-weight:700;color:' + color + ';">' + score + '/100</span> ';
+  html += '<span>' + message + '</span>';
+  el.innerHTML = '<div style="text-align:center;">' + html + '</div>';
+  el.className = 'feedback-area visible-fb';
+  el.style.color = type === 'success' ? '#16a34a' : '#f97316';
+  if (pageState[pageNum]) pageState[pageNum].feedback = { message, type, transcript: transcript || '', score: score };
+}
+
+function disableMic(pageNum) {
+  const micBtn = document.getElementById('mic-' + pageNum);
+  if (micBtn) {
+    micBtn.classList.add('disabled');
+    micBtn.classList.remove('recording');
+    micBtn.innerHTML = '<i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i>';
+  }
+}
+
+function revealBlanks(pageNum, useAlt = false) {
+  document.querySelectorAll('[data-page="' + pageNum + '"].blank').forEach(el => {
+    el.textContent = (useAlt && el.dataset.alt) ? el.dataset.alt : el.dataset.answer;
+    el.classList.add('revealed');
+  });
+  if (pageState[pageNum]) { pageState[pageNum].blanksRevealed = true; pageState[pageNum].revealedAlt = useAlt; }
+}
+
+function restoreState(pageNum) {
+  const state = pageState[pageNum];
+  if (!state?.completed) return;
+
+  disableMic(pageNum);
+  setListenDisabled(pageNum, false);
+
+  if (state.feedback) {
+    showFeedback(pageNum, state.feedback.message, state.feedback.type, state.feedback.transcript || '', state.feedback.score);
+  }
+
+  if (state.blanksRevealed) {
+    revealBlanks(pageNum, state.revealedAlt);
+  }
+}
+
+/* ═══════════════════════════════════════
+   BLANK CLICK REVEAL (Trad pages)
+   동그라미(◯)를 클릭하면 해당 글자만 공개. 시도 횟수와 무관, 페널티 없음.
+   기존 공개(정답 시 / 과제 종료 시)는 revealBlanks가 그대로 처리.
+   ═══════════════════════════════════════ */
+function initBlankClicks() {
+  Object.keys(EXERCISES).forEach(k => {
+    if (EXERCISES[k].type !== 'trad') return;
+    document.querySelectorAll('[data-page="' + k + '"].blank').forEach(el => {
+      const answer = el.dataset.answer || '';
+      const count = el.textContent.length;
+      el.textContent = '';
+      for (let i = 0; i < count; i++) {
+        const c = document.createElement('span');
+        c.className = 'blank-char';
+        c.textContent = '◯';
+        c.addEventListener('click', () => {
+          if (!answer[i]) return;
+          c.textContent = answer[i];
+          c.classList.add('revealed');
+        });
+        el.appendChild(c);
+      }
+    });
+  });
+}
+
+/* ═══════════════════════════════════════
+   LESSON COMPLETE
+   ═══════════════════════════════════════ */
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    stopAudio();
+  } else {
+    resumeCurrentPage();
+  }
+});
+
+// 탭 복귀 시 중단된 오디오 체인 재개: 마이크가 죽어 있으면 다시 활성화 경로로 수렴
+function resumeCurrentPage() {
+  const n = currentPage;
+  if (!EXERCISES[n]) return;
+  if (pageState[n]?.completed) return;
+  if (isRecording) return;
+  if (currentAudio) return;
+  const micBtn = document.getElementById('mic-' + n);
+  if (!micBtn || !micBtn.classList.contains('disabled')) return;
+  if (pageState[n]?.attempts > 0 && CARD_AUDIO[n]) {
+    // 재시도 중이었던 경우: 카드 오디오만 재생 — 종료 시 syncMicAudioState가 활성화
+    playAudio(CARD_AUDIO[n]);
+  } else {
+    startExerciseChain(n);
+  }
+}
+window.addEventListener('pagehide', () => { stopAudio(); });
+window.addEventListener('beforeunload', () => { stopAudio(); });
+
+function triggerLessonComplete() {
+  window.parent.postMessage({ type: 'lesson_complete' }, '*');
+}
+
+// Add spin keyframe for spinner
+const style = document.createElement('style');
+style.textContent = '@keyframes spin { from{transform:rotate(0)} to{transform:rotate(360deg)} } .ph-spinner{animation:spin 1s linear infinite}';
+document.head.appendChild(style);
+
+initBlankClicks();
+</script>
