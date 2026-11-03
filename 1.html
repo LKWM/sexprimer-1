@@ -53,7 +53,7 @@
     .ko { font-family: 'Noto Sans KR', sans-serif; }
     .blank { color: #cbd5e1; font-weight: 400; }
     .blank.revealed { color: #5b21b6; font-weight: 700; transition: color 0.4s; }
-    .blank-char { cursor: pointer; }
+    .blank-char { cursor: pointer; color: #7c3aed; }
     .blank-char.revealed { color: #5b21b6; font-weight: 700; transition: color 0.4s; }
     .mic-btn {
       width: calc(var(--btn) * 2); height: calc(var(--btn) * 2);
@@ -216,11 +216,23 @@
     <div class="expl-wrap">
       <div class="expl-cards stack">
         <div class="expl-card">
-          <p class="ko expl-ko-sm">V1+<span class="text-violet-600">(으)러</span> + V2</p>
+          <div style="display:inline-flex;align-items:flex-start;justify-content:center;gap:0.6vw;">
+            <span class="ko expl-ko-sm">V1+<span class="text-violet-600">(으)러</span> +</span>
+            <div style="display:flex;flex-direction:column;align-items:center;">
+              <span class="ko expl-ko-sm">V2</span>
+              <span class="expl-sub text-violet-600">déplacement</span>
+            </div>
+          </div>
           <p class="expl-sub">V2 <span class="text-violet-600">pour / afin de</span> V1</p>
         </div>
         <div class="expl-card">
-          <p class="ko expl-ko-sm">V1+<span class="text-violet-600">(으)려고</span> + V2</p>
+          <div style="display:inline-flex;align-items:flex-start;justify-content:center;gap:0.6vw;">
+            <span class="ko expl-ko-sm">V1+<span class="text-violet-600">(으)려고</span> +</span>
+            <div style="display:flex;flex-direction:column;align-items:center;">
+              <span class="ko expl-ko-sm">V2</span>
+              <span class="expl-sub text-violet-600">action</span>
+            </div>
+          </div>
           <p class="expl-sub">V2 <span class="text-violet-600">pour / afin de</span> V1</p>
         </div>
       </div>
@@ -495,6 +507,9 @@ const CLICK_AUDIO = {
   10: audioMap['중국에 가려고 여권을 만들었어요.'],
 };
 
+// 페이지 오디오 직후 카드 본문 문장 오디오를 1회 자동 재생하는 설명 페이지 (실라버스 Page 6, 9, 11)
+const AUTO_CLICK_PAGES = [5, 8, 10];
+
 const SENTENCE_AUDIO = {
   17: audioMap['일하러 서울에 가요.'], 18: audioMap['친구가 저를 만나러 왔어요.'], 19: audioMap['취직하려고 한국어 공부를 해요.'], 20: audioMap['중국에 가려고 여권을 만들었어요.'],
 };
@@ -748,6 +763,11 @@ function startExerciseChain(n) {
         if (CARD_AUDIO[n]) {
           cardAudioTimer = setTimeout(() => {
             playAudio(CARD_AUDIO[n]); // 종료 시 syncMicAudioState가 마이크 활성화
+          }, 500);
+        } else if (AUTO_CLICK_PAGES.includes(n) && CLICK_AUDIO[n]) {
+          // 설명 페이지 6·9·11: 페이지 오디오 직후 카드(text&audio) 본문 문장 오디오 1회 자동 재생
+          cardAudioTimer = setTimeout(() => {
+            playAudio(CLICK_AUDIO[n]);
           }, 500);
         }
         // 카드 오디오가 없으면 인트로 종료 시 syncMicAudioState가 활성화
