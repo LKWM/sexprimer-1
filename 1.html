@@ -109,21 +109,21 @@
     <div id="progress-bar" style="height:100%;background:#7c3aed;width:0%;transition:width 0.3s ease;"></div>
   </div>
 
-  <!-- ════════ PAGE 0 — COVER ════════ -->
-  <div class="page active flex-col bg-violet-50" id="page-0">
+  <!-- ════════ PAGE 1 — COVER ════════ -->
+  <div class="page active flex-col bg-violet-50" id="page-1">
     <div class="flex flex-col items-center" style="gap:3vh;">
       <div style="width:clamp(3.5rem,max(12vw,12vh),99rem);height:clamp(3.5rem,max(12vw,12vh),99rem);border-radius:50%;background:linear-gradient(135deg,#7c3aed,#a78bfa);display:flex;align-items:center;justify-content:center;box-shadow:0 0.5vh 2vh rgba(124,58,237,0.25);flex-shrink:0;">
         <i class="ph ph-hand-tap" style="font-size:clamp(1.75rem,max(6vw,6vh),99rem);color:#fff;"></i>
       </div>
       <p style="font-size:clamp(1.05rem,max(2.6vw,2.6vh),99rem);font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:#a78bfa;text-align:center;line-height:1.5;margin-bottom:1.5vh;"><span style="white-space:nowrap;">Chapitre 1 :</span> <span style="display:inline-block;">Le but d’une action</span></p>
       <p style="font-size:clamp(0.8rem,max(1.8vw,1.8vh),99rem);font-weight:800;letter-spacing:0.18em;color:#a78bfa;text-align:center;">Leçon interactive 📱</p>
-      <h1 style="font-size:clamp(1.5rem,max(5vw,5vh),99rem);font-weight:900;color:#4c1d95;text-align:center;line-height:1.15;margin-top:-1.5vh;">Je vais à Séoul pour travailler.</h1>
+      <h1 style="font-size:clamp(1.5rem,max(5vw,5vh),99rem);font-weight:900;color:#4c1d95;text-align:center;line-height:1.15;margin-top:-1.5vh;">Leçon 1 : Je vais à Séoul pour travailler.</h1>
       <button onclick="startLesson()" style="margin-top:1vh;background:linear-gradient(135deg,#7c3aed,#4c1d95);color:#fff;border:none;border-radius:1.2vw;padding:1.8vh 8vw;font-family:'Nunito',sans-serif;font-size:clamp(0.9rem,max(2.5vw,2.5vh),99rem);font-weight:800;letter-spacing:0.06em;cursor:pointer;box-shadow:0 0.5vh 1.8vh rgba(124,58,237,0.2);transition:transform 0.15s;">Commencer</button>
     </div>
   </div>
 
-  <!-- ════════ PAGE 1 — INTRODUCTION ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-1">
+  <!-- ════════ PAGE 2 — INTRODUCTION ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-2">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:2vh;">
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);">
         <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#1e1b2e;">안녕하세요! Bienvenue dans « S’exprimer davantage (1) ». Dans ce chapitre, nous allons apprendre à expliquer la raison d’une action ou d’un déplacement.</p>
@@ -131,29 +131,29 @@
     </div>
   </div>
 
-  <!-- ════════ PAGE 2 — REPEAT S1-1 ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-2">
+  <!-- ════════ PAGE 3 — REPEAT S1-1 ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-3">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">일하러</span> <span class="text-red-500">서울에 가요</span>.</p>
         <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-green-600">pour travailler</span> <span class="text-red-500">aller à Séoul</span></p>
         <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je vais à Séoul pour travailler.</p>
-        <button class="mic-btn disabled" id="mic-2" onclick="handleMicClick(2)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
-        <div class="feedback-area invisible-fb" id="feedback-2" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
+        <button class="mic-btn disabled" id="mic-3" onclick="handleMicClick(3)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
+        <div class="feedback-area invisible-fb" id="feedback-3" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
     </div>
   </div>
 
-  <!-- ════════ PAGE 3 — S1 EXPLANATION ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-3">
+  <!-- ════════ PAGE 4 — S1 EXPLANATION ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-4">
     <div class="expl-wrap">
       <div class="expl-cards stack">
         <div class="expl-card">
           <p class="ko expl-ko-sm">V1+<span class="text-violet-600">(으)러</span> + V2</p>
           <p class="expl-sub">V2 <span class="text-violet-600">pour / afin de</span> V1</p>
         </div>
-        <div class="expl-card card-clickable" onclick="playClickAudio(3, 0)">
+        <div class="expl-card card-clickable" onclick="playClickAudio(4, 0)">
           <div style="display:flex;align-items:center;gap:0.5vw;">
             <i class="ph-fill ph-speaker-high expl-icon"></i>
             <p class="ko expl-ko"><span class="text-green-600">일하러</span> <span class="text-red-500">서울에 가요</span>.</p>
@@ -166,26 +166,26 @@
     </div>
   </div>
 
-  <!-- ════════ PAGE 4 — REPEAT S1-2 ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-4">
+  <!-- ════════ PAGE 5 — REPEAT S1-2 ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-5">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">일하러</span> <span class="text-red-500">서울에 가요</span>.</p>
         <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-green-600">pour travailler</span> <span class="text-red-500">aller à Séoul</span></p>
         <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je vais à Séoul pour travailler.</p>
-        <button class="mic-btn disabled" id="mic-4" onclick="handleMicClick(4)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
-        <div class="feedback-area invisible-fb" id="feedback-4" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
+        <button class="mic-btn disabled" id="mic-5" onclick="handleMicClick(5)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
+        <div class="feedback-area invisible-fb" id="feedback-5" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
     </div>
   </div>
 
-  <!-- ════════ PAGE 5 — S2 EXPLANATION ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-5">
+  <!-- ════════ PAGE 6 — S2 EXPLANATION ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-6">
     <div class="expl-wrap">
       <p class="expl-text">Bien joué ! Cette phrase suit la même structure. Comme l’ami est déjà arrivé à l’endroit où je me trouve, on utilise « 왔어요 », la forme passée.</p>
       <div class="expl-cards stack">
-        <div class="expl-card card-clickable" onclick="playClickAudio(5, 0)">
+        <div class="expl-card card-clickable" onclick="playClickAudio(6, 0)">
           <div style="display:flex;align-items:center;gap:0.5vw;">
             <i class="ph-fill ph-speaker-high expl-icon"></i>
             <p class="ko expl-ko"><span class="text-blue-600">친구가</span> <span class="text-green-600">저를 만나러</span> <span class="text-purple-600">왔어요</span>.</p>
@@ -197,22 +197,22 @@
     </div>
   </div>
 
-  <!-- ════════ PAGE 6 — REPEAT S2-1 ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-6">
+  <!-- ════════ PAGE 7 — REPEAT S2-1 ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-7">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-blue-600">친구가</span> <span class="text-green-600">저를 만나러</span> <span class="text-purple-600">왔어요</span>.</p>
         <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-blue-600">Un ami</span> <span class="text-green-600">pour me rencontrer</span> <span class="text-purple-600">être venu</span></p>
         <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Un ami est venu me voir.</p>
-        <button class="mic-btn disabled" id="mic-6" onclick="handleMicClick(6)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
-        <div class="feedback-area invisible-fb" id="feedback-6" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
+        <button class="mic-btn disabled" id="mic-7" onclick="handleMicClick(7)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
+        <div class="feedback-area invisible-fb" id="feedback-7" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
     </div>
   </div>
 
-  <!-- ════════ PAGE 7 — COMPARISON ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-7">
+  <!-- ════════ PAGE 8 — COMPARISON ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-8">
     <div class="expl-wrap">
       <div class="expl-cards stack">
         <div class="expl-card">
@@ -240,8 +240,8 @@
     </div>
   </div>
 
-  <!-- ════════ PAGE 8 — S3 EXPLANATION ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-8">
+  <!-- ════════ PAGE 9 — S3 EXPLANATION ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-9">
     <div class="expl-wrap">
       <div class="expl-cards stack">
         <div class="expl-card">
@@ -251,7 +251,7 @@
       </div>
       <p class="expl-text">Cette fois, la phrase est un peu plus longue. Ici, le verbe de la proposition principale est « 공부하다 ». Comme il n’exprime pas un déplacement, il faut utiliser « 려고 ».</p>
       <div class="expl-cards stack">
-        <div class="expl-card card-clickable" onclick="playClickAudio(8, 0)">
+        <div class="expl-card card-clickable" onclick="playClickAudio(9, 0)">
           <div style="display:flex;align-items:center;gap:0.5vw;">
             <i class="ph-fill ph-speaker-high expl-icon"></i>
             <p class="ko expl-ko"><span class="text-green-600">취직하려고</span> <span class="text-red-500">한국어 공부를 해요</span>.</p>
@@ -263,26 +263,26 @@
     </div>
   </div>
 
-  <!-- ════════ PAGE 9 — REPEAT S3-1 ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-9">
+  <!-- ════════ PAGE 10 — REPEAT S3-1 ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-10">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">취직하려고</span> <span class="text-red-500">한국어 공부를 해요</span>.</p>
         <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-green-600">pour obtenir un emploi</span> <span class="text-red-500">étudier le coréen</span></p>
         <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’étudie le coréen pour trouver un emploi.</p>
-        <button class="mic-btn disabled" id="mic-9" onclick="handleMicClick(9)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
-        <div class="feedback-area invisible-fb" id="feedback-9" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
+        <button class="mic-btn disabled" id="mic-10" onclick="handleMicClick(10)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
+        <div class="feedback-area invisible-fb" id="feedback-10" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
     </div>
   </div>
 
-  <!-- ════════ PAGE 10 — S4 EXPLANATION ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-10">
+  <!-- ════════ PAGE 11 — S4 EXPLANATION ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-11">
     <div class="expl-wrap">
       <p class="expl-text">Cette phrase suit la même structure. « Aller en Chine » exprime le but, tandis que « faire son passeport » en est la conséquence. Comme le passeport a déjà été fait, le verbe de la proposition principale est au passé.</p>
       <div class="expl-cards stack">
-        <div class="expl-card card-clickable" onclick="playClickAudio(10, 0)">
+        <div class="expl-card card-clickable" onclick="playClickAudio(11, 0)">
           <div style="display:flex;align-items:center;gap:0.5vw;">
             <i class="ph-fill ph-speaker-high expl-icon"></i>
             <p class="ko expl-ko"><span class="text-green-600">중국에 가려고</span> <span class="text-red-500">여권을 만들었어요</span>.</p>
@@ -294,21 +294,7 @@
     </div>
   </div>
 
-  <!-- ════════ PAGE 11 — REPEAT S4-1 ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-11">
-    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
-      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
-        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">중국에 가려고</span> <span class="text-red-500">여권을 만들었어요</span>.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-green-600">pour aller en Chine</span> <span class="text-red-500">avoir fabriqué un passeport</span></p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai fait mon passeport pour aller en Chine.</p>
-        <button class="mic-btn disabled" id="mic-11" onclick="handleMicClick(11)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
-        <div class="feedback-area invisible-fb" id="feedback-11" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ════════ PAGE 12 — REPEAT S4-2 ════════ -->
+  <!-- ════════ PAGE 12 — REPEAT S4-1 ════════ -->
   <div class="page flex-col bg-violet-50" id="page-12">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
@@ -322,124 +308,138 @@
     </div>
   </div>
 
-  <!-- ════════ PAGE 13 — REPEAT S1-3 (HIDE) ════════ -->
+  <!-- ════════ PAGE 13 — REPEAT S4-2 ════════ -->
   <div class="page flex-col bg-violet-50" id="page-13">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
-        <div style="display:flex;align-items:center;gap:0.5vw;justify-content:center;">
-          <button onclick="playCardAudio(13)" id="listen-13" class="listen-btn" style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:clamp(1.5rem,max(3vw,3vh),2rem);padding:0;display:flex;align-items:center;"><i class="ph-fill ph-speaker-high"></i></button>
-          <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">일하<span class="blank" data-page="13" data-answer="러">◯</span> 서울에 가요.</p>
-        </div>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je vais à Séoul pour travailler.</p>
+        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">중국에 가려고</span> <span class="text-red-500">여권을 만들었어요</span>.</p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-green-600">pour aller en Chine</span> <span class="text-red-500">avoir fabriqué un passeport</span></p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai fait mon passeport pour aller en Chine.</p>
         <button class="mic-btn disabled" id="mic-13" onclick="handleMicClick(13)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-13" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
     </div>
   </div>
 
-  <!-- ════════ PAGE 14 — REPEAT S2-3 (HIDE) ════════ -->
+  <!-- ════════ PAGE 14 — REPEAT S1-3 (HIDE) ════════ -->
   <div class="page flex-col bg-violet-50" id="page-14">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <div style="display:flex;align-items:center;gap:0.5vw;justify-content:center;">
           <button onclick="playCardAudio(14)" id="listen-14" class="listen-btn" style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:clamp(1.5rem,max(3vw,3vh),2rem);padding:0;display:flex;align-items:center;"><i class="ph-fill ph-speaker-high"></i></button>
-          <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">친구가 저를 <span class="blank" data-page="14" data-answer="만나러">◯◯◯</span> 왔어요.</p>
+          <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">일하<span class="blank" data-page="14" data-answer="러">◯</span> 서울에 가요.</p>
         </div>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Un ami est venu me voir.</p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je vais à Séoul pour travailler.</p>
         <button class="mic-btn disabled" id="mic-14" onclick="handleMicClick(14)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-14" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
     </div>
   </div>
 
-  <!-- ════════ PAGE 15 — REPEAT S3-3 (HIDE) ════════ -->
+  <!-- ════════ PAGE 15 — REPEAT S2-3 (HIDE) ════════ -->
   <div class="page flex-col bg-violet-50" id="page-15">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <div style="display:flex;align-items:center;gap:0.5vw;justify-content:center;">
           <button onclick="playCardAudio(15)" id="listen-15" class="listen-btn" style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:clamp(1.5rem,max(3vw,3vh),2rem);padding:0;display:flex;align-items:center;"><i class="ph-fill ph-speaker-high"></i></button>
-          <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">취직하<span class="blank" data-page="15" data-answer="려고">◯◯</span> 한국어 공부를 해요.</p>
+          <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">친구가 저를 <span class="blank" data-page="15" data-answer="만나러">◯◯◯</span> 왔어요.</p>
         </div>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’étudie le coréen pour trouver un emploi.</p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Un ami est venu me voir.</p>
         <button class="mic-btn disabled" id="mic-15" onclick="handleMicClick(15)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-15" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
     </div>
   </div>
 
-  <!-- ════════ PAGE 16 — REPEAT S4-3 (HIDE) ════════ -->
+  <!-- ════════ PAGE 16 — REPEAT S3-3 (HIDE) ════════ -->
   <div class="page flex-col bg-violet-50" id="page-16">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <div style="display:flex;align-items:center;gap:0.5vw;justify-content:center;">
           <button onclick="playCardAudio(16)" id="listen-16" class="listen-btn" style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:clamp(1.5rem,max(3vw,3vh),2rem);padding:0;display:flex;align-items:center;"><i class="ph-fill ph-speaker-high"></i></button>
-          <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">중국<span class="blank" data-page="16" data-answer="에">◯</span> <span class="blank" data-page="16" data-answer="가려고">◯◯◯</span> 여권을 만들었어요.</p>
+          <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">취직하<span class="blank" data-page="16" data-answer="려고">◯◯</span> 한국어 공부를 해요.</p>
         </div>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai fait mon passeport pour aller en Chine.</p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’étudie le coréen pour trouver un emploi.</p>
         <button class="mic-btn disabled" id="mic-16" onclick="handleMicClick(16)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-16" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
     </div>
   </div>
 
-  <!-- ════════ PAGE 17 — TRAD S1-4 ════════ -->
+  <!-- ════════ PAGE 17 — REPEAT S4-3 (HIDE) ════════ -->
   <div class="page flex-col bg-violet-50" id="page-17">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">한국어로 말해 보세요!</p>
+      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
-        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="blank" data-page="17" data-answer="일하러">◯◯◯</span> 서울에 가요.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je vais à Séoul pour travailler.</p>
+        <div style="display:flex;align-items:center;gap:0.5vw;justify-content:center;">
+          <button onclick="playCardAudio(17)" id="listen-17" class="listen-btn" style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:clamp(1.5rem,max(3vw,3vh),2rem);padding:0;display:flex;align-items:center;"><i class="ph-fill ph-speaker-high"></i></button>
+          <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">중국<span class="blank" data-page="17" data-answer="에">◯</span> <span class="blank" data-page="17" data-answer="가려고">◯◯◯</span> 여권을 만들었어요.</p>
+        </div>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai fait mon passeport pour aller en Chine.</p>
         <button class="mic-btn disabled" id="mic-17" onclick="handleMicClick(17)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-17" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
     </div>
   </div>
 
-  <!-- ════════ PAGE 18 — TRAD S2-4 ════════ -->
+  <!-- ════════ PAGE 18 — TRAD S1-4 ════════ -->
   <div class="page flex-col bg-violet-50" id="page-18">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">한국어로 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
-        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">친구가 <span class="blank" data-page="18" data-answer="저를">◯◯</span> 만나러 <span class="blank" data-page="18" data-answer="왔어요">◯◯◯</span>.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Un ami est venu me voir.</p>
+        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="blank" data-page="18" data-answer="일하러">◯◯◯</span> 서울에 가요.</p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je vais à Séoul pour travailler.</p>
         <button class="mic-btn disabled" id="mic-18" onclick="handleMicClick(18)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-18" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
     </div>
   </div>
 
-  <!-- ════════ PAGE 19 — TRAD S3-4 ════════ -->
+  <!-- ════════ PAGE 19 — TRAD S2-4 ════════ -->
   <div class="page flex-col bg-violet-50" id="page-19">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">한국어로 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
-        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="blank" data-page="19" data-answer="취직하려고">◯◯◯◯◯</span> 한국어 <span class="blank" data-page="19" data-answer="공부">◯◯</span>를 해요.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’étudie le coréen pour trouver un emploi.</p>
+        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">친구가 <span class="blank" data-page="19" data-answer="저를">◯◯</span> 만나러 <span class="blank" data-page="19" data-answer="왔어요">◯◯◯</span>.</p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Un ami est venu me voir.</p>
         <button class="mic-btn disabled" id="mic-19" onclick="handleMicClick(19)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-19" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
     </div>
   </div>
 
-  <!-- ════════ PAGE 20 — TRAD S4-4 ════════ -->
+  <!-- ════════ PAGE 20 — TRAD S3-4 ════════ -->
   <div class="page flex-col bg-violet-50" id="page-20">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">한국어로 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
-        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">중국에 <span class="blank" data-page="20" data-answer="가려고">◯◯◯</span> 여권을 <span class="blank" data-page="20" data-answer="만들었어요">◯◯◯◯◯</span>.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai fait mon passeport pour aller en Chine.</p>
+        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="blank" data-page="20" data-answer="취직하려고">◯◯◯◯◯</span> 한국어 <span class="blank" data-page="20" data-answer="공부">◯◯</span>를 해요.</p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’étudie le coréen pour trouver un emploi.</p>
         <button class="mic-btn disabled" id="mic-20" onclick="handleMicClick(20)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-20" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
     </div>
   </div>
 
-  <!-- ════════ PAGE 21 — OUTRO ════════ -->
+  <!-- ════════ PAGE 21 — TRAD S4-4 ════════ -->
   <div class="page flex-col bg-violet-50" id="page-21">
+    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
+      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">한국어로 말해 보세요!</p>
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
+        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">중국에 <span class="blank" data-page="21" data-answer="가려고">◯◯◯</span> 여권을 <span class="blank" data-page="21" data-answer="만들었어요">◯◯◯◯◯</span>.</p>
+        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai fait mon passeport pour aller en Chine.</p>
+        <button class="mic-btn disabled" id="mic-21" onclick="handleMicClick(21)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
+        <div class="feedback-area invisible-fb" id="feedback-21" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 22 — OUTRO ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-22">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:2vh;">
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);">
         <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#1e1b2e;">Bravo ! Maintenant, vous pouvez expliquer non seulement ce que vous faites, mais aussi pourquoi vous le faites et pourquoi vous vous rendez quelque part. Dans la prochaine leçon, nous allons revoir plus en détail la grammaire apprise aujourd’hui et créer de nouvelles phrases. À bientôt dans la prochaine leçon !</p>
@@ -489,48 +489,48 @@ function geminiErrorMessage(error) {
 const TOTAL_PAGES = 22;
 
 const PAGE_AUDIO = {
-  1: audioMap['C1L1-1'], 2: audioMap['C1L1-2'], 3: audioMap['C1L1-3'], 4: audioMap['C1L1-4'], 5: audioMap['C1L1-5'],
-  6: audioMap['C1L1-6'], 7: audioMap['C1L1-7'], 8: audioMap['C1L1-8'], 9: audioMap['C1L1-9'], 10: audioMap['C1L1-10'],
-  11: audioMap['C1L1-11'], 12: audioMap['C1L1-12'], 13: audioMap['C1L1-13'], 14: audioMap['C1L1-14'], 15: audioMap['C1L1-15'],
-  16: audioMap['C1L1-16'], 17: audioMap['C1L1-17'], 18: audioMap['C1L1-18'], 19: audioMap['C1L1-19'], 20: audioMap['C1L1-20'],
-  21: audioMap['C1L1-21'],
+  2: audioMap['C1L1-1'], 3: audioMap['C1L1-2'], 4: audioMap['C1L1-3'], 5: audioMap['C1L1-4'], 6: audioMap['C1L1-5'],
+  7: audioMap['C1L1-6'], 8: audioMap['C1L1-7'], 9: audioMap['C1L1-8'], 10: audioMap['C1L1-9'], 11: audioMap['C1L1-10'],
+  12: audioMap['C1L1-11'], 13: audioMap['C1L1-12'], 14: audioMap['C1L1-13'], 15: audioMap['C1L1-14'], 16: audioMap['C1L1-15'],
+  17: audioMap['C1L1-16'], 18: audioMap['C1L1-17'], 19: audioMap['C1L1-18'], 20: audioMap['C1L1-19'], 21: audioMap['C1L1-20'],
+  22: audioMap['C1L1-21'],
 };
 
 const CARD_AUDIO = {
-  2: audioMap['일하러 서울에 가요.'], 4: audioMap['일하러 서울에 가요.'], 6: audioMap['친구가 저를 만나러 왔어요.'], 9: audioMap['취직하려고 한국어 공부를 해요.'],
-  11: audioMap['중국에 가려고 여권을 만들었어요.'], 12: audioMap['중국에 가려고 여권을 만들었어요.'],
-  13: audioMap['일하러 서울에 가요.'], 14: audioMap['친구가 저를 만나러 왔어요.'], 15: audioMap['취직하려고 한국어 공부를 해요.'], 16: audioMap['중국에 가려고 여권을 만들었어요.'],
+  3: audioMap['일하러 서울에 가요.'], 5: audioMap['일하러 서울에 가요.'], 7: audioMap['친구가 저를 만나러 왔어요.'], 10: audioMap['취직하려고 한국어 공부를 해요.'],
+  12: audioMap['중국에 가려고 여권을 만들었어요.'], 13: audioMap['중국에 가려고 여권을 만들었어요.'],
+  14: audioMap['일하러 서울에 가요.'], 15: audioMap['친구가 저를 만나러 왔어요.'], 16: audioMap['취직하려고 한국어 공부를 해요.'], 17: audioMap['중국에 가려고 여권을 만들었어요.'],
 };
 
 const CLICK_AUDIO = {
-  3: audioMap['일하러 서울에 가요.'],
-  5: audioMap['친구가 저를 만나러 왔어요.'],
-  8: audioMap['취직하려고 한국어 공부를 해요.'],
-  10: audioMap['중국에 가려고 여권을 만들었어요.'],
+  4: audioMap['일하러 서울에 가요.'],
+  6: audioMap['친구가 저를 만나러 왔어요.'],
+  9: audioMap['취직하려고 한국어 공부를 해요.'],
+  11: audioMap['중국에 가려고 여권을 만들었어요.'],
 };
 
 // 페이지 오디오 직후 카드 본문 문장 오디오를 1회 자동 재생하는 설명 페이지 (실라버스 Page 6, 9, 11)
-const AUTO_CLICK_PAGES = [5, 8, 10];
+const AUTO_CLICK_PAGES = [6, 9, 11];
 
 const SENTENCE_AUDIO = {
-  17: audioMap['일하러 서울에 가요.'], 18: audioMap['친구가 저를 만나러 왔어요.'], 19: audioMap['취직하려고 한국어 공부를 해요.'], 20: audioMap['중국에 가려고 여권을 만들었어요.'],
+  18: audioMap['일하러 서울에 가요.'], 19: audioMap['친구가 저를 만나러 왔어요.'], 20: audioMap['취직하려고 한국어 공부를 해요.'], 21: audioMap['중국에 가려고 여권을 만들었어요.'],
 };
 
 const EXERCISES = {
-  2: { type: 'repeat', maxAttempts: 1, expected: '일하러 서울에 가요' },
-  4: { type: 'repeat', maxAttempts: 1, expected: '일하러 서울에 가요' },
-  6: { type: 'repeat', maxAttempts: 1, expected: '친구가 저를 만나러 왔어요' },
-  9: { type: 'repeat', maxAttempts: 1, expected: '취직하려고 한국어 공부를 해요' },
-  11: { type: 'repeat', maxAttempts: 1, expected: '중국에 가려고 여권을 만들었어요' },
+  3: { type: 'repeat', maxAttempts: 1, expected: '일하러 서울에 가요' },
+  5: { type: 'repeat', maxAttempts: 1, expected: '일하러 서울에 가요' },
+  7: { type: 'repeat', maxAttempts: 1, expected: '친구가 저를 만나러 왔어요' },
+  10: { type: 'repeat', maxAttempts: 1, expected: '취직하려고 한국어 공부를 해요' },
   12: { type: 'repeat', maxAttempts: 1, expected: '중국에 가려고 여권을 만들었어요' },
-  13: { type: 'hide', maxAttempts: 2, expected: '일하러 서울에 가요' },
-  14: { type: 'hide', maxAttempts: 2, expected: '친구가 저를 만나러 왔어요' },
-  15: { type: 'hide', maxAttempts: 2, expected: '취직하려고 한국어 공부를 해요' },
-  16: { type: 'hide', maxAttempts: 2, expected: '중국에 가려고 여권을 만들었어요' },
-  17: { type: 'trad', maxAttempts: 2, expected: '일하러 서울에 가요' },
-  18: { type: 'trad', maxAttempts: 2, expected: '친구가 저를 만나러 왔어요' },
-  19: { type: 'trad', maxAttempts: 2, expected: '취직하려고 한국어 공부를 해요' },
-  20: { type: 'trad', maxAttempts: 2, expected: '중국에 가려고 여권을 만들었어요' },
+  13: { type: 'repeat', maxAttempts: 1, expected: '중국에 가려고 여권을 만들었어요' },
+  14: { type: 'hide', maxAttempts: 2, expected: '일하러 서울에 가요' },
+  15: { type: 'hide', maxAttempts: 2, expected: '친구가 저를 만나러 왔어요' },
+  16: { type: 'hide', maxAttempts: 2, expected: '취직하려고 한국어 공부를 해요' },
+  17: { type: 'hide', maxAttempts: 2, expected: '중국에 가려고 여권을 만들었어요' },
+  18: { type: 'trad', maxAttempts: 2, expected: '일하러 서울에 가요' },
+  19: { type: 'trad', maxAttempts: 2, expected: '친구가 저를 만나러 왔어요' },
+  20: { type: 'trad', maxAttempts: 2, expected: '취직하려고 한국어 공부를 해요' },
+  21: { type: 'trad', maxAttempts: 2, expected: '중국에 가려고 여권을 만들었어요' },
 };
 const MSG = {
   SUCCESS_RETRY: 'Très bien, essayons encore une fois.',
@@ -543,7 +543,7 @@ const MSG = {
 /* ═══════════════════════════════════════
    STATE
    ═══════════════════════════════════════ */
-let currentPage = 0;
+let currentPage = 1;
 let currentAudio = null;
 let audioTimer = null;
 let cardAudioTimer = null;
@@ -667,7 +667,7 @@ async function startLesson() {
   playSfx('start');
   document.getElementById('progress-bar-container').style.display = 'block';
   document.getElementById('bottom-nav').style.display = 'flex';
-  goToPage(1);
+  goToPage(2);
 }
 
 function goToPage(n) {
@@ -688,15 +688,15 @@ function goToPage(n) {
 }
 
 function nextPage() {
-  if (currentPage < 21) goToPage(currentPage + 1);
+  if (currentPage < 22) goToPage(currentPage + 1);
 }
 
 function prevPage() {
-  if (currentPage > 0) goToPage(currentPage - 1);
+  if (currentPage > 1) goToPage(currentPage - 1);
 }
 
 function updateProgress() {
-  const pct = (currentPage / (TOTAL_PAGES - 1)) * 100;
+  const pct = ((currentPage - 1) / (TOTAL_PAGES - 1)) * 100;
   document.getElementById('progress-bar').style.width = pct + '%';
 }
 
@@ -707,15 +707,15 @@ function updateBottomBar() {
   const pageNum = document.getElementById('page-num');
   const activePage = document.getElementById('page-' + currentPage);
 
-  if (currentPage === 0 || currentPage === 21) {
+  if (currentPage === 1 || currentPage === 22) {
     nav.style.display = 'none';
     if (activePage) activePage.style.paddingBottom = '';
     return;
   }
   nav.style.display = 'flex';
   if (activePage) activePage.style.paddingBottom = 'calc(var(--nav-h) + 2.5vh)';
-  pageNum.textContent = (currentPage + 1) + '/' + TOTAL_PAGES;
-  prevBtn.disabled = (currentPage === 1);
+  pageNum.textContent = currentPage + '/' + TOTAL_PAGES;
+  prevBtn.disabled = (currentPage === 2);
 
   if (EXERCISES[currentPage]) {
     nextBtn.disabled = !pageState[currentPage]?.completed;
@@ -729,7 +729,7 @@ function updateBottomBar() {
    ═══════════════════════════════════════ */
 function handlePageEnter(n) {
   // Outro page
-  if (n === 21) {
+  if (n === 22) {
     playSfx('end');
     setTimeout(() => triggerLessonComplete(), 500);
     if (PAGE_AUDIO[n]) {
