@@ -104,8 +104,8 @@
     <div id="progress-bar" style="height:100%;background:#7c3aed;width:0%;transition:width 0.3s ease;"></div>
   </div>
 
-  <!-- ════════ PAGE 0 — COVER ════════ -->
-  <div class="page active flex-col bg-violet-50" id="page-0">
+  <!-- ════════ PAGE 1 — COVER ════════ -->
+  <div class="page active flex-col bg-violet-50" id="page-1">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <div class="flex flex-col items-center" style="gap:3vh;">
         <div style="width:clamp(3.5rem,max(12vw,12vh),99rem);height:clamp(3.5rem,max(12vw,12vh),99rem);border-radius:50%;background:linear-gradient(135deg,#7c3aed,#a78bfa);display:flex;align-items:center;justify-content:center;box-shadow:0 0.5vh 2vh rgba(124,58,237,0.25);flex-shrink:0;">
@@ -119,171 +119,171 @@
     </div>
   </div>
 
-  <!-- ════════ PAGE 1 — LISTEN AND REPEAT (실라버스 Page 2) ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-1">
-    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Écoutez et répétez la phrase suivante.</p>
-      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:1vh;width:100%;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);">
-        <p class="ko" id="q-1" onclick="playAudio(SENTENCES[4].audio)" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;cursor:pointer;">우리 집에 영화 보러 올래요?</p>
-        <p id="trans-1" style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Veux-tu venir chez moi pour regarder un film ?</p>
-        <button class="mic-btn disabled" id="mic-1" onclick="handleMicClick(1)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
-        <div class="feedback-area invisible-fb" id="feedback-1" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
-      </div>
-    </div>
-  </div>
-  <!-- ════════ PAGE 2 — LISTEN AND REPEAT (실라버스 Page 3) ════════ -->
+  <!-- ════════ PAGE 2 — LISTEN AND REPEAT (실라버스 Page 2) ════════ -->
   <div class="page flex-col bg-violet-50" id="page-2">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Écoutez et répétez la phrase suivante.</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:1vh;width:100%;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);">
-        <p class="ko" id="q-2" onclick="playAudio(SENTENCES[5].audio)" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;cursor:pointer;">빵을 먹으러 오세요.</p>
-        <p id="trans-2" style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Venez manger du pain.</p>
+        <p class="ko" id="q-2" onclick="playAudio(SENTENCES[4].audio)" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;cursor:pointer;">우리 집에 영화 보러 올래요?</p>
+        <p id="trans-2" style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Veux-tu venir chez moi pour regarder un film ?</p>
         <button class="mic-btn disabled" id="mic-2" onclick="handleMicClick(2)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-2" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
     </div>
   </div>
-  <!-- ════════ PAGE 3 — LISTEN AND REPEAT (실라버스 Page 4) ════════ -->
+  <!-- ════════ PAGE 3 — LISTEN AND REPEAT (실라버스 Page 3) ════════ -->
   <div class="page flex-col bg-violet-50" id="page-3">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Écoutez et répétez la phrase suivante.</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:1vh;width:100%;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);">
-        <p class="ko" id="q-3" onclick="playAudio(SENTENCES[6].audio)" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;cursor:pointer;">노래를 들으러 콘서트에 가요.</p>
-        <p id="trans-3" style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je vais au concert pour écouter des chansons.</p>
+        <p class="ko" id="q-3" onclick="playAudio(SENTENCES[5].audio)" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;cursor:pointer;">빵을 먹으러 오세요.</p>
+        <p id="trans-3" style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Venez manger du pain.</p>
         <button class="mic-btn disabled" id="mic-3" onclick="handleMicClick(3)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-3" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
     </div>
   </div>
-  <!-- ════════ PAGE 4 — LISTEN AND REPEAT (실라버스 Page 5) ════════ -->
+  <!-- ════════ PAGE 4 — LISTEN AND REPEAT (실라버스 Page 4) ════════ -->
   <div class="page flex-col bg-violet-50" id="page-4">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Écoutez et répétez la phrase suivante.</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:1vh;width:100%;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);">
-        <p class="ko" id="q-4" onclick="playAudio(SENTENCES[7].audio)" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;cursor:pointer;">비행기 표를 사려고 돈을 모아요.</p>
-        <p id="trans-4" style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je mets de l’argent de côté pour acheter un billet d’avion.</p>
+        <p class="ko" id="q-4" onclick="playAudio(SENTENCES[6].audio)" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;cursor:pointer;">노래를 들으러 콘서트에 가요.</p>
+        <p id="trans-4" style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je vais au concert pour écouter des chansons.</p>
         <button class="mic-btn disabled" id="mic-4" onclick="handleMicClick(4)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-4" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
     </div>
   </div>
-  <!-- ════════ PAGE 5 — LISTEN AND REPEAT (실라버스 Page 6) ════════ -->
+  <!-- ════════ PAGE 5 — LISTEN AND REPEAT (실라버스 Page 5) ════════ -->
   <div class="page flex-col bg-violet-50" id="page-5">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Écoutez et répétez la phrase suivante.</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:1vh;width:100%;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);">
-        <p class="ko" id="q-5" onclick="playAudio(SENTENCES[8].audio)" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;cursor:pointer;">옷을 팔려고 가게를 열었어요.</p>
-        <p id="trans-5" style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai ouvert un magasin pour vendre des vêtements.</p>
+        <p class="ko" id="q-5" onclick="playAudio(SENTENCES[7].audio)" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;cursor:pointer;">비행기 표를 사려고 돈을 모아요.</p>
+        <p id="trans-5" style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je mets de l’argent de côté pour acheter un billet d’avion.</p>
         <button class="mic-btn disabled" id="mic-5" onclick="handleMicClick(5)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-5" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
     </div>
   </div>
-  <!-- ════════ PAGE 6 — TRAD MCQ KR-FR (실라버스 Page 7) ════════ -->
+  <!-- ════════ PAGE 6 — LISTEN AND REPEAT (실라버스 Page 6) ════════ -->
   <div class="page flex-col bg-violet-50" id="page-6">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez la bonne traduction de la phrase suivante.</p>
-      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:1.5vh;width:100%;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);">
-        <p class="ko" id="mcq-q-6" onclick="playAudio(SENTENCES[3].audio)" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;cursor:pointer;"></p>
-        <div id="mcq-opts-6" class="mcq-opts"></div>
+      <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Écoutez et répétez la phrase suivante.</p>
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:1vh;width:100%;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);">
+        <p class="ko" id="q-6" onclick="playAudio(SENTENCES[8].audio)" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;cursor:pointer;">옷을 팔려고 가게를 열었어요.</p>
+        <p id="trans-6" style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai ouvert un magasin pour vendre des vêtements.</p>
+        <button class="mic-btn disabled" id="mic-6" onclick="handleMicClick(6)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
+        <div class="feedback-area invisible-fb" id="feedback-6" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
     </div>
   </div>
-  <!-- ════════ PAGE 7 — TRAD MCQ KR-FR (실라버스 Page 8) ════════ -->
+  <!-- ════════ PAGE 7 — TRAD MCQ KR-FR (실라버스 Page 7) ════════ -->
   <div class="page flex-col bg-violet-50" id="page-7">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez la bonne traduction de la phrase suivante.</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:1.5vh;width:100%;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);">
-        <p class="ko" id="mcq-q-7" onclick="playAudio(SENTENCES[6].audio)" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;cursor:pointer;"></p>
+        <p class="ko" id="mcq-q-7" onclick="playAudio(SENTENCES[3].audio)" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;cursor:pointer;"></p>
         <div id="mcq-opts-7" class="mcq-opts"></div>
       </div>
     </div>
   </div>
-  <!-- ════════ PAGE 8 — TRAD MCQ KR-FR (실라버스 Page 9) ════════ -->
+  <!-- ════════ PAGE 8 — TRAD MCQ KR-FR (실라버스 Page 8) ════════ -->
   <div class="page flex-col bg-violet-50" id="page-8">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez la bonne traduction de la phrase suivante.</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:1.5vh;width:100%;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);">
-        <p class="ko" id="mcq-q-8" onclick="playAudio(SENTENCES[5].audio)" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;cursor:pointer;"></p>
+        <p class="ko" id="mcq-q-8" onclick="playAudio(SENTENCES[6].audio)" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;cursor:pointer;"></p>
         <div id="mcq-opts-8" class="mcq-opts"></div>
       </div>
     </div>
   </div>
-  <!-- ════════ PAGE 9 — TRAD MCQ FR-KR (실라버스 Page 10) ════════ -->
+  <!-- ════════ PAGE 9 — TRAD MCQ KR-FR (실라버스 Page 9) ════════ -->
   <div class="page flex-col bg-violet-50" id="page-9">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez la bonne traduction de la phrase suivante.</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:1.5vh;width:100%;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);">
-        <p id="mcq-q-9" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;color:#1e1b2e;">Je mets de l’argent de côté pour acheter un billet d’avion.</p>
+        <p class="ko" id="mcq-q-9" onclick="playAudio(SENTENCES[5].audio)" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;cursor:pointer;"></p>
         <div id="mcq-opts-9" class="mcq-opts"></div>
-        <button id="valider-9" onclick="mcqValider(9)" disabled class="valider-btn">Valider</button>
       </div>
     </div>
   </div>
-  <!-- ════════ PAGE 10 — TRAD MCQ FR-KR (실라버스 Page 11) ════════ -->
+  <!-- ════════ PAGE 10 — TRAD MCQ FR-KR (실라버스 Page 10) ════════ -->
   <div class="page flex-col bg-violet-50" id="page-10">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez la bonne traduction de la phrase suivante.</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:1.5vh;width:100%;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);">
-        <p id="mcq-q-10" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;color:#1e1b2e;">Un ami est venu me voir.</p>
+        <p id="mcq-q-10" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;color:#1e1b2e;">Je mets de l’argent de côté pour acheter un billet d’avion.</p>
         <div id="mcq-opts-10" class="mcq-opts"></div>
         <button id="valider-10" onclick="mcqValider(10)" disabled class="valider-btn">Valider</button>
       </div>
     </div>
   </div>
-  <!-- ════════ PAGE 11 — LISTEN MCQ (실라버스 Page 12) ════════ -->
+  <!-- ════════ PAGE 11 — TRAD MCQ FR-KR (실라버스 Page 11) ════════ -->
   <div class="page flex-col bg-violet-50" id="page-11">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez la bonne traduction de la phrase suivante.</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:1.5vh;width:100%;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);">
-        <button class="audio-q-btn" id="mcq-q-11" onclick="playAudio(SENTENCES[4].audio)"><i class="ph-fill ph-speaker-high" style="font-size:var(--btn);"></i></button>
+        <p id="mcq-q-11" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;color:#1e1b2e;">Un ami est venu me voir.</p>
         <div id="mcq-opts-11" class="mcq-opts"></div>
+        <button id="valider-11" onclick="mcqValider(11)" disabled class="valider-btn">Valider</button>
       </div>
     </div>
   </div>
-  <!-- ════════ PAGE 12 — LISTEN MCQ (실라버스 Page 13) ════════ -->
+  <!-- ════════ PAGE 12 — LISTEN MCQ (실라버스 Page 12) ════════ -->
   <div class="page flex-col bg-violet-50" id="page-12">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez la bonne traduction de la phrase suivante.</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:1.5vh;width:100%;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);">
-        <button class="audio-q-btn" id="mcq-q-12" onclick="playAudio(SENTENCES[8].audio)"><i class="ph-fill ph-speaker-high" style="font-size:var(--btn);"></i></button>
+        <button class="audio-q-btn" id="mcq-q-12" onclick="playAudio(SENTENCES[4].audio)"><i class="ph-fill ph-speaker-high" style="font-size:var(--btn);"></i></button>
         <div id="mcq-opts-12" class="mcq-opts"></div>
       </div>
     </div>
   </div>
-  <!-- ════════ PAGE 13 — TRAD SPEAKING (실라버스 Page 14) ════════ -->
+  <!-- ════════ PAGE 13 — LISTEN MCQ (실라버스 Page 13) ════════ -->
   <div class="page flex-col bg-violet-50" id="page-13">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Dites la phrase suivante en coréen.</p>
-      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:1vh;width:100%;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);">
-        <div style="display:flex;align-items:center;gap:0.5vw;justify-content:center;">
-          <button onclick="playAnswerAudio(13)" id="answer-13" class="listen-btn disabled" style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:clamp(1.5rem,max(3vw,3vh),2rem);padding:0;display:flex;align-items:center;"><i class="ph-fill ph-speaker-high"></i></button>
-          <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="blank" data-page="13" data-answer="취직하려고">◯◯◯◯◯</span> 한국어 <span class="blank" data-page="13" data-answer="공부">◯◯</span>를 해요.</p>
-        </div>
-        <p id="trans-13" style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’étudie le coréen pour trouver un emploi.</p>
-        <button class="mic-btn disabled" id="mic-13" onclick="handleMicClick(13)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
-        <div class="feedback-area invisible-fb" id="feedback-13" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
+      <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez la bonne traduction de la phrase suivante.</p>
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:1.5vh;width:100%;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);">
+        <button class="audio-q-btn" id="mcq-q-13" onclick="playAudio(SENTENCES[8].audio)"><i class="ph-fill ph-speaker-high" style="font-size:var(--btn);"></i></button>
+        <div id="mcq-opts-13" class="mcq-opts"></div>
       </div>
     </div>
   </div>
-  <!-- ════════ PAGE 14 — TRAD SPEAKING (실라버스 Page 15) ════════ -->
+  <!-- ════════ PAGE 14 — TRAD SPEAKING (실라버스 Page 14) ════════ -->
   <div class="page flex-col bg-violet-50" id="page-14">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Dites la phrase suivante en coréen.</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:1vh;width:100%;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);">
         <div style="display:flex;align-items:center;gap:0.5vw;justify-content:center;">
           <button onclick="playAnswerAudio(14)" id="answer-14" class="listen-btn disabled" style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:clamp(1.5rem,max(3vw,3vh),2rem);padding:0;display:flex;align-items:center;"><i class="ph-fill ph-speaker-high"></i></button>
-          <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="blank" data-page="14" data-answer="일하러">◯◯◯</span> <span class="blank" data-page="14" data-answer="서울에">◯◯◯</span> <span class="blank" data-page="14" data-answer="가요">◯◯</span>.</p>
+          <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="blank" data-page="14" data-answer="취직하려고">◯◯◯◯◯</span> 한국어 <span class="blank" data-page="14" data-answer="공부">◯◯</span>를 해요.</p>
         </div>
-        <p id="trans-14" style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je vais à Séoul pour travailler.</p>
+        <p id="trans-14" style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’étudie le coréen pour trouver un emploi.</p>
         <button class="mic-btn disabled" id="mic-14" onclick="handleMicClick(14)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-14" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
     </div>
   </div>
-
-  <!-- ════════ PAGE 15 — OUTRO (실라버스 Page 16) ════════ -->
+  <!-- ════════ PAGE 15 — TRAD SPEAKING (실라버스 Page 15) ════════ -->
   <div class="page flex-col bg-violet-50" id="page-15">
+    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
+      <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Dites la phrase suivante en coréen.</p>
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:1vh;width:100%;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);">
+        <div style="display:flex;align-items:center;gap:0.5vw;justify-content:center;">
+          <button onclick="playAnswerAudio(15)" id="answer-15" class="listen-btn disabled" style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:clamp(1.5rem,max(3vw,3vh),2rem);padding:0;display:flex;align-items:center;"><i class="ph-fill ph-speaker-high"></i></button>
+          <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="blank" data-page="15" data-answer="일하러">◯◯◯</span> <span class="blank" data-page="15" data-answer="서울에">◯◯◯</span> <span class="blank" data-page="15" data-answer="가요">◯◯</span>.</p>
+        </div>
+        <p id="trans-15" style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je vais à Séoul pour travailler.</p>
+        <button class="mic-btn disabled" id="mic-15" onclick="handleMicClick(15)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
+        <div class="feedback-area invisible-fb" id="feedback-15" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 16 — OUTRO (실라버스 Page 16) ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-16">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:2vh;">
         <div style="background:rgba(255,255,255,0.7);border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.1);">
@@ -301,7 +301,7 @@
   </div>
 
 <script>
-let currentPage = 0;
+let currentPage = 1;
 let currentAudio = null;
 let audioTimer = null;
 let micTimer = null;
@@ -328,13 +328,13 @@ const SENTENCES = [
 ];
 
 const EXERCISES = {
-  1: { type: 'repeat', maxAttempts: 2, answer: SENTENCES[4] },
-  2: { type: 'repeat', maxAttempts: 2, answer: SENTENCES[5] },
-  3: { type: 'repeat', maxAttempts: 2, answer: SENTENCES[6] },
-  4: { type: 'repeat', maxAttempts: 2, answer: SENTENCES[7] },
-  5: { type: 'repeat', maxAttempts: 2, answer: SENTENCES[8] },
-  13: { type: 'speak', maxAttempts: 2, answer: SENTENCES[2] },
-  14: { type: 'speak', maxAttempts: 2, answer: SENTENCES[0] },
+  2: { type: 'repeat', maxAttempts: 2, answer: SENTENCES[4] },
+  3: { type: 'repeat', maxAttempts: 2, answer: SENTENCES[5] },
+  4: { type: 'repeat', maxAttempts: 2, answer: SENTENCES[6] },
+  5: { type: 'repeat', maxAttempts: 2, answer: SENTENCES[7] },
+  6: { type: 'repeat', maxAttempts: 2, answer: SENTENCES[8] },
+  14: { type: 'speak', maxAttempts: 2, answer: SENTENCES[2] },
+  15: { type: 'speak', maxAttempts: 2, answer: SENTENCES[0] },
 };
 
 const TOTAL_PAGES = 16;
@@ -378,59 +378,59 @@ function updateBottomBar() {
   const pageNum = document.getElementById('page-num');
   const activePage = document.getElementById('page-' + currentPage);
 
-  if (currentPage === 0 || currentPage === 15) {
+  if (currentPage === 1 || currentPage === 16) {
     nav.style.display = 'none';
     if (activePage) activePage.style.paddingBottom = '';
     return;
   }
   nav.style.display = 'flex';
   if (activePage) activePage.style.paddingBottom = 'calc(var(--nav-h) + 2.5vh)';
-  pageNum.textContent = (currentPage + 1) + '/' + TOTAL_PAGES;
-  prevBtn.disabled = (currentPage === 1);
+  pageNum.textContent = currentPage + '/' + TOTAL_PAGES;
+  prevBtn.disabled = (currentPage === 2);
   nextBtn.disabled = !pageState[currentPage]?.completed;
 }
 
 // 객관식 문제 — 실라버스 원문 그대로 (answer: 정답 선지 번호, 0부터 시작). 선지 순서는 입장 시 섞음
-const MCQ_KR = { 6: 3, 7: 6, 8: 5 };    // 문제 문장 인덱스: S4, S7, S6
-const MCQ_FR = { 9: 7, 10: 1 };         // 문제 문장 인덱스: S8, S2
-const LISTEN = { 11: 4, 12: 8 };        // 문제 문장 인덱스: S5, S9
+const MCQ_KR = { 7: 3, 8: 6, 9: 5 };    // 문제 문장 인덱스: S4, S7, S6
+const MCQ_FR = { 10: 7, 11: 1 };         // 문제 문장 인덱스: S8, S2
+const LISTEN = { 12: 4, 13: 8 };        // 문제 문장 인덱스: S5, S9
 const MCQ_DATA = {
-  6: { answer: 1, options: [
+  7: { answer: 1, options: [
     'Je vais en Chine pour faire un passeport.',
     'J’ai fait mon passeport pour aller en Chine.',
     'Je suis allé en Chine pour faire un passeport.',
   ] },
-  7: { answer: 0, options: [
+  8: { answer: 0, options: [
     'Je vais au concert pour écouter des chansons.',
     'Pour écouter une chanson, il faut aller au concert.',
     'J’écoute des chansons pour aller au concert.',
     'Pour aller au concert, j’écoute des chansons.',
   ] },
-  8: { answer: 3, options: [
+  9: { answer: 3, options: [
     'Mangez du pain pour venir ici.',
     'Veuillez manger pour venir.',
     'Allez manger du pain.',
     'Venez manger du pain.',
   ] },
-  9: { answer: 0, options: [
+  10: { answer: 0, options: [
     '비행기 표를 사려고 돈을 모아요.',
     '돈을 모으려고 비행기 표를 사요.',
     '돈을 모으러 비행기 표를 사요.',
     '비행기 표를 사러 돈을 모아요.',
   ] },
-  10: { answer: 2, options: [
+  11: { answer: 2, options: [
     '친구가 와서 저를 봐요.',
     '친구가 오러 저를 만났어요.',
     '친구가 저를 만나러 왔어요.',
     '친구가 왔어러 저를 만나요.',
   ] },
-  11: { answer: 0, options: [
+  12: { answer: 0, options: [
     'Veux-tu venir chez moi pour regarder un film ?',
     'Veux-tu regarder un film pour venir chez moi ?',
     'Faut-il venir chez moi pour regarder un film ?',
     'Est-ce que tu regardes un film et viens chez moi ?',
   ] },
-  12: { answer: 1, options: [
+  13: { answer: 1, options: [
     'Afin de vendre des vêtements, le magasin s’ouvre.',
     'J’ai ouvert un magasin pour vendre des vêtements.',
     'Je vais ouvrir un magasin pour vendre des vêtements.',
@@ -456,14 +456,14 @@ function handlePageEnter(n) {
   }
 
   // 첫 방문 — 문제 오디오 입장 시 1회 자동 재생 (페이지 전환 효과음과 겹치지 않도록 0.3초 후)
-  if (n === 15) {
+  if (n === 16) {
     playSfx('end');
     setTimeout(() => triggerLessonComplete(), 500);
     return;
   }
   if (EXERCISES[n]) {
     const a = EXERCISES[n].answer.audio;
-    if (n <= 5 && a) {
+    if (n <= 6 && a) {
       audioTimer = setTimeout(() => playAudio(a, () => { micTimer = setTimeout(() => activateMic(n), 300); }), 300);
     } else {
       micTimer = setTimeout(() => activateMic(n), 300);
@@ -755,7 +755,7 @@ async function startLesson() {
   playSfx('start');
   document.getElementById('progress-bar-container').style.display = 'block';
   document.getElementById('bottom-nav').style.display = 'flex';
-  goToPage(1);
+  goToPage(2);
 }
 
 function goToPage(n) {
@@ -780,11 +780,11 @@ function nextPage() {
 }
 
 function prevPage() {
-  if (currentPage > 0) goToPage(currentPage - 1);
+  if (currentPage > 1) goToPage(currentPage - 1);
 }
 
 function updateProgress() {
-  const pct = (currentPage / (TOTAL_PAGES - 1)) * 100;
+  const pct = ((currentPage - 1) / (TOTAL_PAGES - 1)) * 100;
   document.getElementById('progress-bar').style.width = pct + '%';
 }
 
