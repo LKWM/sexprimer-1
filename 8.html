@@ -85,7 +85,7 @@
     .res-ko { flex:1; font-family:'Noto Sans KR',sans-serif; font-weight:700; color:#1e1b2e; text-align:left; line-height:1.35; font-size:clamp(0.8rem,max(2vw,2vh),1.15rem); }
     .res-fr { flex:1; font-weight:500; color:#6b7280; text-align:left; line-height:1.35; font-size:clamp(0.75rem,max(1.9vw,1.9vh),1.05rem); }
     @media (orientation: landscape) and (max-height: 520px) {
-      #page-3 > div { gap: 1.2vh; }
+      #page-4 > div { gap: 1.2vh; }
       #resultat-title { font-size: clamp(0.8rem, 2.6vh, 1.2rem) !important; }
       #resultat-list { gap: 0.8vh; }
       .res-card { padding: 0.7vh 1.5vw; gap: 0.3vh; }
@@ -132,7 +132,7 @@
 <body class="bg-violet-50">
 
   <!-- ════════ PAGE 0 — COVER ════════ -->
-  <div class="page active flex-col bg-violet-50" id="page-0">
+  <div class="page active flex-col bg-violet-50" id="page-1">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <div class="flex flex-col items-center" style="gap:3vh;">
         <div style="width:clamp(3.5rem,max(12vw,12vh),99rem);height:clamp(3.5rem,max(12vw,12vh),99rem);border-radius:50%;background:linear-gradient(135deg,#7c3aed,#a78bfa);display:flex;align-items:center;justify-content:center;box-shadow:0 0.5vh 2vh rgba(124,58,237,0.25);flex-shrink:0;">
@@ -147,7 +147,7 @@
   </div>
 
   <!-- ════════ PAGE 1 — GOALS ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-1">
+  <div class="page flex-col bg-violet-50" id="page-2">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:2vh;">
       <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Vous passez le contrôle de l’immigration dans un aéroport en Corée. Répondez aux questions de l’agent en coréen et atteignez tous les objectifs suivants. Vous devez atteindre tous les objectifs en 10 tours maximum.</p>
       <div style="display:flex;flex-direction:column;gap:2vh;width:100%;">
@@ -187,7 +187,7 @@
   </div>
 
   <!-- ════════ PAGE 2 — CONVERSATION ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-2" style="justify-content:flex-start;padding-top:3vh;">
+  <div class="page flex-col bg-violet-50" id="page-3" style="justify-content:flex-start;padding-top:3vh;">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;flex:1;min-height:0;">
       <!-- 목표 배너 (순서대로 하나씩) -->
       <div id="objectif-wrap" style="width:100%;flex-shrink:0;position:relative;">
@@ -224,7 +224,7 @@
   </div>
 
   <!-- ════════ PAGE 3 — RÉSULTAT (노션 [Résultat]) ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-3">
+  <div class="page flex-col bg-violet-50" id="page-4">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:2vh;">
       <p id="resultat-title" class="ko" style="font-size:clamp(1.05rem,max(2.8vw,2.8vh),1.5rem);font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#7c3aed;text-align:center;">Résultat</p>
       <div id="resultat-list" style="display:flex;flex-direction:column;gap:1.2vh;width:100%;"></div>
@@ -235,7 +235,7 @@
   </div>
 
   <script>
-let currentPage = 0;
+let currentPage = 1;
 const TOTAL_PAGES = 4;
 let toneReady = false;
 let ringSynth = null, hangupSynth = null;
@@ -367,7 +367,7 @@ function playSfx(type) {
 async function startLesson() {
   await initTone();
   playSfx('start');
-  goToPage(1);
+  goToPage(2);
 }
 
 function goToPage(n) {
@@ -375,7 +375,7 @@ function goToPage(n) {
   playSfx('pageTurn');
 
   // 대화 페이지를 벗어나는 경우 라이브 리소스 정리
-  if (currentPage === 2 && n !== 2) teardownLive();
+  if (currentPage === 3 && n !== 3) teardownLive();
 
   const oldPage = document.getElementById('page-' + currentPage);
   if (oldPage) oldPage.classList.remove('active');
@@ -393,7 +393,7 @@ function goToPage(n) {
 function updateBottomBar() {
   const convBar = document.getElementById('conv-bottom');
   const activePage = document.getElementById('page-' + currentPage);
-  if (currentPage === 2) {
+  if (currentPage === 3) {
     // 대화 페이지: 하단 공간을 항상 확보 (종료 시 Continuer가 나타나도 레이아웃이 움직이지 않음)
     convBar.style.display = 'flex';
     if (activePage) activePage.style.paddingBottom = 'calc(var(--nav-h) + 2.5vh)';
@@ -557,13 +557,13 @@ document.addEventListener('click', (e) => {
   if (!e.target.closest('#objectif-wrap')) toggleObjectifDropdown(true);
 });
 
-// ── 목표/종료 감지: 실라버스 Conversation flow의 통과/실패 키 문구 기준 (전사 누적 버퍼, 청크 분할 대응) ──
+// ── 목표/종료 감지: 실라버스 Conversation flow의 통과/실패 키 기준 (통과 키=추가된 구분 문장, 실패 키=실패 질문. 전사 누적 버퍼, 청크 분할 대응) ──
 // 통과 키 = 목표 통과 시 에이전트가 말하는 전환 문구, 실패 키 = 실패 시 바꿔 묻는 문구
-const GOAL_EVENTS = [
-  { n: 1, pass: /에서\s*오셨군요/, fail: /어느\s*나라\s*사람이에요/ },                        // Q2-1 (Q1 통과) / Q1 실패 질문
-  { n: 2, pass: /알겠습니다[.!]?\s*한국\s*여행\s*계획/, fail: /한국\s*여행\s*계획(을)?\s*말해\s*주(세)?요/ },   // Q3-1 / Q3-2
-  { n: 3, pass: /그렇군요[.!]?\s*다른\s*계획은\s*없습니까/, fail: /다른\s*계획은\s*없습니까/ },                 // Q4-1 / Q4-2
-  { n: 4, pass: /알겠습니다[.!]?\s*입국\s*심사가\s*완료됐습니다/, fail: /입국\s*심사가\s*완료됐습니다/ },       // Q5-1 / Q5-2
+const GOAL_KEYS = [
+  { n: 1, pass: /\uc5d0\uc11c\s*\uc624\uc168\uad70\uc694/, fail: /\uc5b4\ub290\s*\ub098\ub77c\s*\uc0ac\ub78c\uc774\uc5d0\uc694/ },
+  { n: 2, pass: /\uc54c\uaca0\uc2b5\ub2c8\ub2e4/, fail: /\ud55c\uad6d\s*\uc5ec\ud589\s*\uacc4\ud68d(\uc744)?\s*\ub9d0\ud574\s*\uc8fc(\uc138)?\uc694/ },
+  { n: 3, pass: /\uadf8\ub807\uad70\uc694/, fail: /\ub2e4\ub978\s*\uacc4\ud68d\uc740\s*\uc5c6\uc2b5\ub2c8\uae4c/ },
+  { n: 4, pass: /\uc54c\uaca0\uc2b5\ub2c8\ub2e4/, fail: /\uc785\uad6d\s*\uc2ec\uc0ac\uac00\s*\uc644\ub8cc\ub410\uc2b5\ub2c8\ub2e4/ },
 ];
 const RE_BYE_PHRASE = /입국\s*심사가\s*완료됐습니다/;   // Q5-1/Q5-2 마지막 인사 = 대화 종료 지점
 let agentSaidBye = false, byeShown = false, awaitingUserBye = false;
@@ -571,9 +571,12 @@ let agentSaidBye = false, byeShown = false, awaitingUserBye = false;
 function processAgentText(chunk) {
   agentTurnText += chunk;
   // 통과 키 우선, 아니면 실패 키 (실패 키 문구가 통과 문구의 부분 문자열이므로 순서 고정)
-  for (const g of GOAL_EVENTS) {
-    if (g.pass.test(agentTurnText)) goalPassed(g.n);
-    else if (g.fail.test(agentTurnText)) goalFailed(g.n);
+  // 현재(첫 미결) 목표의 키만 평가: 통과 키 우선, 통과 키 불일치 시에만 실패 키
+  const cur = passedGoals.findIndex((pp, i) => !pp && !failedGoals[i]);
+  if (cur !== -1 && GOAL_KEYS[cur]) {
+    const k = GOAL_KEYS[cur];
+    if (k.pass.test(agentTurnText)) goalPassed(k.n);
+    else if (k.fail.test(agentTurnText)) goalFailed(k.n);
   }
   if (RE_BYE_PHRASE.test(agentTurnText)) agentSaidBye = true;
   let display = agentTurnText.replace(/<[^<>]*>/g, '');
@@ -639,7 +642,7 @@ async function startConversation() {
   showLiveStatus(null);
 
   // 대화 페이지로 전환 (하단 공간 확보된 화면)
-  if (currentPage !== 2) goToPage(2);
+  if (currentPage !== 3) goToPage(3);
   updateConvBottom();
 
   try {
@@ -1070,7 +1073,7 @@ function finalizeEnd() {
 function continueToOutro() {
   document.getElementById('turns-exhausted-msg').style.display = 'none';
   document.getElementById('bye-msg').style.display = 'none';
-  goToPage(3);
+  goToPage(4);
 }
 
 function teardownLive() {
@@ -1104,7 +1107,7 @@ function updateConvBottom() {
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) {
     micOff();
-  } else if (currentPage === 2 && conversationStarted && !conversationEnded && !endPending) {
+  } else if (currentPage === 3 && conversationStarted && !conversationEnded && !endPending) {
     micOn();
   }
 });
