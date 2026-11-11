@@ -511,10 +511,11 @@ function appendUserBubble() {
 }
 
 let passedGoals = [false, false, false, false];
+let failedGoals = [false, false, false, false];
 
 function updateObjectifBanner() {
   // 배너에는 아직 통과하지 못한 가장 앞 목표를 표시 (모두 통과 시 마지막 목표 유지)
-  let idx = passedGoals.findIndex(p => !p);
+  let idx = passedGoals.findIndex((p, i) => !p && !failedGoals[i]);
   if (idx === -1) idx = OBJECTIFS.length - 1;
   objectifIndex = idx;
   const o = OBJECTIFS[idx];
@@ -556,26 +557,26 @@ document.addEventListener('click', (e) => {
   if (!e.target.closest('#objectif-wrap')) toggleObjectifDropdown(true);
 });
 
-// ── 목표/종료 감지: 백엔드 Conversation flow의 특정 문구를 에이전트가 말하면 목표 통과/종료 처리 ──
-// (텍스트 상태 마커는 음성으로 읽히는 문제가 있어 폐기 — 문구는 전사 누적 버퍼에서 감시, 청크 분할 대응)
-// 실라버스 [Conversation]: 목표 달성 여부는 Agent가 전송하는 <통과> 메시지를 기준으로 한다 (화면 미표시)
-const RE_PASS_MARKER = /<(?:(?:목표\s*)?(\d+)\s*통과|통과)>/g;   // <목표 N 통과> 또는 <통과>
-const RE_END_MARKER = /<대화\s*종료>/;
+// ── 목표/종료 감지: 실라버스 Conversation flow의 통과/실패 키 문구 기준 (전사 누적 버퍼, 청크 분할 대응) ──
+// 통과 키 = 목표 통과 시 에이전트가 말하는 전환 문구, 실패 키 = 실패 시 바꿔 묻는 문구
+const GOAL_EVENTS = [
+  { n: 1, pass: /에서\s*오셨군요/, fail: /어느\s*나라\s*사람이에요/ },                        // Q2-1 (Q1 통과) / Q1 실패 질문
+  { n: 2, pass: /알겠습니다[.!]?\s*한국\s*여행\s*계획/, fail: /한국\s*여행\s*계획(을)?\s*말해\s*주(세)?요/ },   // Q3-1 / Q3-2
+  { n: 3, pass: /그렇군요[.!]?\s*다른\s*계획은\s*없습니까/, fail: /다른\s*계획은\s*없습니까/ },                 // Q4-1 / Q4-2
+  { n: 4, pass: /알겠습니다[.!]?\s*입국\s*심사가\s*완료됐습니다/, fail: /입국\s*심사가\s*완료됐습니다/ },       // Q5-1 / Q5-2
+];
 const RE_BYE_PHRASE = /입국\s*심사가\s*완료됐습니다/;   // Q5-1/Q5-2 마지막 인사 = 대화 종료 지점
 let agentSaidBye = false, byeShown = false, awaitingUserBye = false;
 
 function processAgentText(chunk) {
   agentTurnText += chunk;
-  // <통과> 마커 감지 → 해당 목표 통과 처리 (번호 없으면 현재 목표)
-  let mm;
-  RE_PASS_MARKER.lastIndex = 0;
-  while ((mm = RE_PASS_MARKER.exec(agentTurnText)) !== null) {
-    goalPassed(mm[1] ? parseInt(mm[1], 10) : (objectifIndex + 1));
+  // 통과 키 우선, 아니면 실패 키 (실패 키 문구가 통과 문구의 부분 문자열이므로 순서 고정)
+  for (const g of GOAL_EVENTS) {
+    if (g.pass.test(agentTurnText)) goalPassed(g.n);
+    else if (g.fail.test(agentTurnText)) goalFailed(g.n);
   }
-  // <대화 종료> 마커 또는 Q5 마지막 인사 문구 → 종료 (발화는 끝까지 재생 후)
-  if (RE_END_MARKER.test(agentTurnText)) agentSaidBye = true;
   if (RE_BYE_PHRASE.test(agentTurnText)) agentSaidBye = true;
-  let display = agentTurnText.replace(/<[^<>]*>/g, '');   // 마커/꺽쇠 안내문은 화면 미표시
+  let display = agentTurnText.replace(/<[^<>]*>/g, '');
   if (agentBubbleEl) { agentBubbleEl.textContent = display.trim(); scrollChat(); }
 }
 
@@ -597,6 +598,13 @@ function hideByeMsg() {
 function updateTurnsDisplay() {
   const left = Math.max(0, MAX_TURNS - turnsUsed);
   document.getElementById('turns-remaining').textContent = 'Nombre de tours restants : ' + left;
+}
+
+function goalFailed(n) {
+  const idx = n - 1;
+  if (idx < 0 || idx >= OBJECTIFS.length || passedGoals[idx] || failedGoals[idx]) return;
+  failedGoals[idx] = true;
+  updateObjectifBanner();   // 실패도 표시 없이 다음 목표로 전환
 }
 
 function goalPassed(n) {
