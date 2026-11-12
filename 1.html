@@ -87,9 +87,9 @@
 .expl-icon { font-size:clamp(1.5rem,max(3vw,3vh),2rem); color:#7c3aed; }
 .expl-ko { font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem); font-weight:700; text-align:center; }
 .expl-ko-sm { font-size:clamp(1.2rem,max(3vw,3vh),1.9rem); font-weight:700; }
-.expl-sub { font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem); font-weight:500; text-align:center; }
-.expl-sub2 { font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem); font-weight:500; text-align:center; color:#6b7280; font-style:italic; }
-.expl-text { font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem); font-weight:500; line-height:1.7; text-align:center; color:#1e1b2e; }
+.expl-sub { font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh); font-weight:500; text-align:center; }
+.expl-sub2 { font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh); font-weight:500; text-align:center; color:#6b7280; font-style:italic; }
+.expl-text { font-size:min(clamp(0.99rem,max(2.53vw,2.53vh),1.43rem),3vh); font-weight:500; line-height:1.7; text-align:center; color:#1e1b2e; }
 @media (orientation: landscape) {
   .expl-cards { flex-direction:row; flex-wrap:wrap; justify-content:center; align-items:stretch; }
   .expl-cards.stack { flex-direction:column; }
@@ -126,7 +126,7 @@
   <div class="page flex-col bg-violet-50" id="page-2">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:2vh;">
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);">
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#1e1b2e;">안녕하세요! Bienvenue dans « S’exprimer davantage (1) ». Dans ce chapitre, nous allons apprendre à expliquer la raison d’une action ou d’un déplacement.</p>
+        <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;">안녕하세요! Bienvenue dans « S’exprimer davantage (1) ». Dans ce chapitre, nous allons apprendre à expliquer la raison d’une action ou d’un déplacement.</p>
       </div>
     </div>
   </div>
@@ -134,11 +134,11 @@
   <!-- ════════ PAGE 3 — REPEAT S1-1 ════════ -->
   <div class="page flex-col bg-violet-50" id="page-3">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
+      <p class="ko" style="font-size:min(clamp(0.99rem,max(2.53vw,2.53vh),1.43rem),3vh);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">일하러</span> <span class="text-red-500">서울에 가요</span>.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-green-600">pour travailler</span> <span class="text-red-500">aller à Séoul</span></p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je vais à Séoul pour travailler.</p>
+        <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;"><span class="text-green-600">pour travailler</span> <span class="text-red-500">aller à Séoul</span></p>
+        <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je vais à Séoul pour travailler.</p>
         <button class="mic-btn disabled" id="mic-3" onclick="handleMicClick(3)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-3" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -162,18 +162,18 @@
           <p class="expl-sub2">Je vais à Séoul pour travailler.</p>
         </div>
       </div>
-      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);"><p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#1e1b2e;">Très bien ! « (으)러 » est un suffixe connectif qui exprime le but d’une action. On parle de « suffixe connectif » et non simplement de « suffixe », car il doit obligatoirement être suivi d’un autre mot.<br><br>Après « (으)러 », il faut un verbe qui exprime un déplacement, comme « 가다 », « 오다 » ou « 다니다 ».</p></div>
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);"><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;">Très bien ! « (으)러 » est un suffixe connectif qui exprime le but d’une action. On parle de « suffixe connectif » et non simplement de « suffixe », car il doit obligatoirement être suivi d’un autre mot.<br><br>Après « (으)러 », il faut un verbe qui exprime un déplacement, comme « 가다 », « 오다 » ou « 다니다 ».</p></div>
     </div>
   </div>
 
   <!-- ════════ PAGE 5 — REPEAT S1-2 ════════ -->
   <div class="page flex-col bg-violet-50" id="page-5">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
+      <p class="ko" style="font-size:min(clamp(0.99rem,max(2.53vw,2.53vh),1.43rem),3vh);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">일하러</span> <span class="text-red-500">서울에 가요</span>.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-green-600">pour travailler</span> <span class="text-red-500">aller à Séoul</span></p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je vais à Séoul pour travailler.</p>
+        <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;"><span class="text-green-600">pour travailler</span> <span class="text-red-500">aller à Séoul</span></p>
+        <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je vais à Séoul pour travailler.</p>
         <button class="mic-btn disabled" id="mic-5" onclick="handleMicClick(5)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-5" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -183,7 +183,7 @@
   <!-- ════════ PAGE 6 — S2 EXPLANATION ════════ -->
   <div class="page flex-col bg-violet-50" id="page-6">
     <div class="expl-wrap">
-      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);"><p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#1e1b2e;">Bien joué ! Cette phrase suit la même structure. Comme l’ami est déjà arrivé à l’endroit où je me trouve, on utilise « 왔어요 », la forme passée.</p></div>
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);"><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;">Bien joué ! Cette phrase suit la même structure. Comme l’ami est déjà arrivé à l’endroit où je me trouve, on utilise « 왔어요 », la forme passée.</p></div>
       <div class="expl-cards stack">
         <div class="expl-card card-clickable" onclick="playClickAudio(6, 0)">
           <div style="display:flex;align-items:center;gap:0.5vw;">
@@ -200,11 +200,11 @@
   <!-- ════════ PAGE 7 — REPEAT S2-1 ════════ -->
   <div class="page flex-col bg-violet-50" id="page-7">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
+      <p class="ko" style="font-size:min(clamp(0.99rem,max(2.53vw,2.53vh),1.43rem),3vh);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-blue-600">친구가</span> <span class="text-green-600">저를 만나러</span> <span class="text-purple-600">왔어요</span>.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-blue-600">Un ami</span> <span class="text-green-600">pour me rencontrer</span> <span class="text-purple-600">être venu</span></p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Un ami est venu me voir.</p>
+        <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;"><span class="text-blue-600">Un ami</span> <span class="text-green-600">pour me rencontrer</span> <span class="text-purple-600">être venu</span></p>
+        <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Un ami est venu me voir.</p>
         <button class="mic-btn disabled" id="mic-7" onclick="handleMicClick(7)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-7" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -236,7 +236,7 @@
           <p class="expl-sub">V2 <span class="text-violet-600">pour / afin de</span> V1</p>
         </div>
       </div>
-      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);"><p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#1e1b2e;">« (으)러 » et « (으)려고 » sont tous deux des suffixes connectifs qui s’ajoutent à un verbe pour exprimer le but d’une action. Ils ont un sens similaire à « pour » et « afin de » en français. Cependant, « (으)러 » doit être suivi d’un verbe qui exprime un déplacement, tandis que « (으)려고 » peut être utilisé avec tous les verbes, quel que soit leur sens.</p></div>
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);"><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;">« (으)러 » et « (으)려고 » sont tous deux des suffixes connectifs qui s’ajoutent à un verbe pour exprimer le but d’une action. Ils ont un sens similaire à « pour » et « afin de » en français. Cependant, « (으)러 » doit être suivi d’un verbe qui exprime un déplacement, tandis que « (으)려고 » peut être utilisé avec tous les verbes, quel que soit leur sens.</p></div>
     </div>
   </div>
 
@@ -249,7 +249,7 @@
           <p class="expl-sub">V2 <span class="text-violet-600">pour / afin de</span> V1</p>
         </div>
       </div>
-      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);"><p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#1e1b2e;">Cette fois, la phrase est un peu plus longue. Ici, le verbe de la proposition principale est « 공부하다 ». Comme il n’exprime pas un déplacement, il faut utiliser « 려고 ».</p></div>
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);"><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;">Cette fois, la phrase est un peu plus longue. Ici, le verbe de la proposition principale est « 공부하다 ». Comme il n’exprime pas un déplacement, il faut utiliser « 려고 ».</p></div>
       <div class="expl-cards stack">
         <div class="expl-card card-clickable" onclick="playClickAudio(9, 0)">
           <div style="display:flex;align-items:center;gap:0.5vw;">
@@ -266,11 +266,11 @@
   <!-- ════════ PAGE 10 — REPEAT S3-1 ════════ -->
   <div class="page flex-col bg-violet-50" id="page-10">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
+      <p class="ko" style="font-size:min(clamp(0.99rem,max(2.53vw,2.53vh),1.43rem),3vh);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">취직하려고</span> <span class="text-red-500">한국어 공부를 해요</span>.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-green-600">pour obtenir un emploi</span> <span class="text-red-500">étudier le coréen</span></p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’étudie le coréen pour trouver un emploi.</p>
+        <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;"><span class="text-green-600">pour obtenir un emploi</span> <span class="text-red-500">étudier le coréen</span></p>
+        <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’étudie le coréen pour trouver un emploi.</p>
         <button class="mic-btn disabled" id="mic-10" onclick="handleMicClick(10)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-10" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -280,7 +280,7 @@
   <!-- ════════ PAGE 11 — S4 EXPLANATION ════════ -->
   <div class="page flex-col bg-violet-50" id="page-11">
     <div class="expl-wrap">
-      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);"><p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#1e1b2e;">Cette phrase suit la même structure. « Aller en Chine » exprime le but, tandis que « faire son passeport » en est la conséquence. Comme le passeport a déjà été fait, le verbe de la proposition principale est au passé.</p></div>
+      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);"><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;">Cette phrase suit la même structure. « Aller en Chine » exprime le but, tandis que « faire son passeport » en est la conséquence. Comme le passeport a déjà été fait, le verbe de la proposition principale est au passé.</p></div>
       <div class="expl-cards stack">
         <div class="expl-card card-clickable" onclick="playClickAudio(11, 0)">
           <div style="display:flex;align-items:center;gap:0.5vw;">
@@ -297,11 +297,11 @@
   <!-- ════════ PAGE 12 — REPEAT S4-1 ════════ -->
   <div class="page flex-col bg-violet-50" id="page-12">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
+      <p class="ko" style="font-size:min(clamp(0.99rem,max(2.53vw,2.53vh),1.43rem),3vh);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">중국에 가려고</span> <span class="text-red-500">여권을 만들었어요</span>.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-green-600">pour aller en Chine</span> <span class="text-red-500">avoir fabriqué un passeport</span></p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai fait mon passeport pour aller en Chine.</p>
+        <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;"><span class="text-green-600">pour aller en Chine</span> <span class="text-red-500">avoir fabriqué un passeport</span></p>
+        <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai fait mon passeport pour aller en Chine.</p>
         <button class="mic-btn disabled" id="mic-12" onclick="handleMicClick(12)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-12" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -311,11 +311,11 @@
   <!-- ════════ PAGE 13 — REPEAT S4-2 ════════ -->
   <div class="page flex-col bg-violet-50" id="page-13">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
+      <p class="ko" style="font-size:min(clamp(0.99rem,max(2.53vw,2.53vh),1.43rem),3vh);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">중국에 가려고</span> <span class="text-red-500">여권을 만들었어요</span>.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-green-600">pour aller en Chine</span> <span class="text-red-500">avoir fabriqué un passeport</span></p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai fait mon passeport pour aller en Chine.</p>
+        <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;"><span class="text-green-600">pour aller en Chine</span> <span class="text-red-500">avoir fabriqué un passeport</span></p>
+        <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai fait mon passeport pour aller en Chine.</p>
         <button class="mic-btn disabled" id="mic-13" onclick="handleMicClick(13)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-13" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -325,13 +325,13 @@
   <!-- ════════ PAGE 14 — REPEAT S1-3 (HIDE) ════════ -->
   <div class="page flex-col bg-violet-50" id="page-14">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
+      <p class="ko" style="font-size:min(clamp(0.99rem,max(2.53vw,2.53vh),1.43rem),3vh);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <div style="display:flex;align-items:center;gap:0.5vw;justify-content:center;">
           <button onclick="playCardAudio(14)" id="listen-14" class="listen-btn" style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:clamp(1.5rem,max(3vw,3vh),2rem);padding:0;display:flex;align-items:center;"><i class="ph-fill ph-speaker-high"></i></button>
           <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">일하<span class="blank" data-page="14" data-answer="러">◯</span> 서울에 가요.</p>
         </div>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je vais à Séoul pour travailler.</p>
+        <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je vais à Séoul pour travailler.</p>
         <button class="mic-btn disabled" id="mic-14" onclick="handleMicClick(14)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-14" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -341,13 +341,13 @@
   <!-- ════════ PAGE 15 — REPEAT S2-3 (HIDE) ════════ -->
   <div class="page flex-col bg-violet-50" id="page-15">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
+      <p class="ko" style="font-size:min(clamp(0.99rem,max(2.53vw,2.53vh),1.43rem),3vh);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <div style="display:flex;align-items:center;gap:0.5vw;justify-content:center;">
           <button onclick="playCardAudio(15)" id="listen-15" class="listen-btn" style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:clamp(1.5rem,max(3vw,3vh),2rem);padding:0;display:flex;align-items:center;"><i class="ph-fill ph-speaker-high"></i></button>
           <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">친구가 저를 <span class="blank" data-page="15" data-answer="만나러">◯◯◯</span> 왔어요.</p>
         </div>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Un ami est venu me voir.</p>
+        <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Un ami est venu me voir.</p>
         <button class="mic-btn disabled" id="mic-15" onclick="handleMicClick(15)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-15" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -357,13 +357,13 @@
   <!-- ════════ PAGE 16 — REPEAT S3-3 (HIDE) ════════ -->
   <div class="page flex-col bg-violet-50" id="page-16">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
+      <p class="ko" style="font-size:min(clamp(0.99rem,max(2.53vw,2.53vh),1.43rem),3vh);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <div style="display:flex;align-items:center;gap:0.5vw;justify-content:center;">
           <button onclick="playCardAudio(16)" id="listen-16" class="listen-btn" style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:clamp(1.5rem,max(3vw,3vh),2rem);padding:0;display:flex;align-items:center;"><i class="ph-fill ph-speaker-high"></i></button>
           <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">취직하<span class="blank" data-page="16" data-answer="려고">◯◯</span> 한국어 공부를 해요.</p>
         </div>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’étudie le coréen pour trouver un emploi.</p>
+        <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’étudie le coréen pour trouver un emploi.</p>
         <button class="mic-btn disabled" id="mic-16" onclick="handleMicClick(16)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-16" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -373,13 +373,13 @@
   <!-- ════════ PAGE 17 — REPEAT S4-3 (HIDE) ════════ -->
   <div class="page flex-col bg-violet-50" id="page-17">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
+      <p class="ko" style="font-size:min(clamp(0.99rem,max(2.53vw,2.53vh),1.43rem),3vh);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <div style="display:flex;align-items:center;gap:0.5vw;justify-content:center;">
           <button onclick="playCardAudio(17)" id="listen-17" class="listen-btn" style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:clamp(1.5rem,max(3vw,3vh),2rem);padding:0;display:flex;align-items:center;"><i class="ph-fill ph-speaker-high"></i></button>
           <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">중국<span class="blank" data-page="17" data-answer="에">◯</span> <span class="blank" data-page="17" data-answer="가려고">◯◯◯</span> 여권을 만들었어요.</p>
         </div>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai fait mon passeport pour aller en Chine.</p>
+        <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai fait mon passeport pour aller en Chine.</p>
         <button class="mic-btn disabled" id="mic-17" onclick="handleMicClick(17)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-17" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -389,10 +389,10 @@
   <!-- ════════ PAGE 18 — TRAD S1-4 ════════ -->
   <div class="page flex-col bg-violet-50" id="page-18">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">한국어로 말해 보세요!</p>
+      <p class="ko" style="font-size:min(clamp(0.99rem,max(2.53vw,2.53vh),1.43rem),3vh);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">한국어로 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="blank" data-page="18" data-answer="일하러">◯◯◯</span> 서울에 가요.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je vais à Séoul pour travailler.</p>
+        <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je vais à Séoul pour travailler.</p>
         <button class="mic-btn disabled" id="mic-18" onclick="handleMicClick(18)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-18" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -402,10 +402,10 @@
   <!-- ════════ PAGE 19 — TRAD S2-4 ════════ -->
   <div class="page flex-col bg-violet-50" id="page-19">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">한국어로 말해 보세요!</p>
+      <p class="ko" style="font-size:min(clamp(0.99rem,max(2.53vw,2.53vh),1.43rem),3vh);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">한국어로 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">친구가 <span class="blank" data-page="19" data-answer="저를">◯◯</span> 만나러 <span class="blank" data-page="19" data-answer="왔어요">◯◯◯</span>.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Un ami est venu me voir.</p>
+        <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Un ami est venu me voir.</p>
         <button class="mic-btn disabled" id="mic-19" onclick="handleMicClick(19)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-19" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -415,10 +415,10 @@
   <!-- ════════ PAGE 20 — TRAD S3-4 ════════ -->
   <div class="page flex-col bg-violet-50" id="page-20">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">한국어로 말해 보세요!</p>
+      <p class="ko" style="font-size:min(clamp(0.99rem,max(2.53vw,2.53vh),1.43rem),3vh);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">한국어로 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="blank" data-page="20" data-answer="취직하려고">◯◯◯◯◯</span> 한국어 <span class="blank" data-page="20" data-answer="공부">◯◯</span>를 해요.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’étudie le coréen pour trouver un emploi.</p>
+        <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’étudie le coréen pour trouver un emploi.</p>
         <button class="mic-btn disabled" id="mic-20" onclick="handleMicClick(20)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-20" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -428,10 +428,10 @@
   <!-- ════════ PAGE 21 — TRAD S4-4 ════════ -->
   <div class="page flex-col bg-violet-50" id="page-21">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">한국어로 말해 보세요!</p>
+      <p class="ko" style="font-size:min(clamp(0.99rem,max(2.53vw,2.53vh),1.43rem),3vh);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">한국어로 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">중국에 <span class="blank" data-page="21" data-answer="가려고">◯◯◯</span> 여권을 <span class="blank" data-page="21" data-answer="만들었어요">◯◯◯◯◯</span>.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai fait mon passeport pour aller en Chine.</p>
+        <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai fait mon passeport pour aller en Chine.</p>
         <button class="mic-btn disabled" id="mic-21" onclick="handleMicClick(21)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-21" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -442,7 +442,7 @@
   <div class="page flex-col bg-violet-50" id="page-22">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:2vh;">
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);">
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#1e1b2e;">Bravo ! Maintenant, vous pouvez expliquer non seulement ce que vous faites, mais aussi pourquoi vous le faites et pourquoi vous vous rendez quelque part. Dans la prochaine leçon, nous allons revoir plus en détail la grammaire apprise aujourd’hui et créer de nouvelles phrases. À bientôt dans la prochaine leçon !</p>
+        <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;">Bravo ! Maintenant, vous pouvez expliquer non seulement ce que vous faites, mais aussi pourquoi vous le faites et pourquoi vous vous rendez quelque part. Dans la prochaine leçon, nous allons revoir plus en détail la grammaire apprise aujourd’hui et créer de nouvelles phrases. À bientôt dans la prochaine leçon !</p>
       </div>
     </div>
   </div>
