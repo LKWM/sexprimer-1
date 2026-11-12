@@ -105,11 +105,11 @@
 .gh-line { font-weight:800; color:#4c1d95; text-align:center; line-height:1.2; font-size:min(4rem,8vh,9vw); white-space:normal; }
 .gh-word { position:relative; }
 .gh-svg { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; overflow:visible; }
-.link-cards { display:flex; gap:1.5vw; justify-content:center; align-items:flex-start; flex-wrap:wrap; width:100%; }
+.link-cards { position:static; height:0; }
 .link-card { background:#fff; border:0.15vh solid #d8b4fe; border-radius:1vw; padding:0.6vh 1.4vw; display:flex; flex-direction:column; align-items:center; gap:0.1vh; }
 .lc-ko { font-size:min(1rem,2.2vh,4.4vw); font-weight:700; color:#4c1d95; }
 .lc-sub { font-size:min(0.95rem,2vh,4vw); color:#6b7280; font-weight:500; text-align:center; }
-.link-cards { display:flex; gap:1.2vw; justify-content:center; align-items:stretch; flex-wrap:nowrap; }
+.link-cards { position:static; height:0; display:block; }
 .link-card { background:#fff; border:0.15vh solid #d8b4fe; border-radius:1vw; padding:0.4vh 1.2vw; display:flex; align-items:center; justify-content:center; }
 .lc-ko { font-size:clamp(0.85rem,max(2vw,2vh),1.2rem); font-weight:700; }
 .lc-sub { font-size:min(clamp(0.7rem,max(1.6vw,1.6vh),1rem),2.2vh); color:#6b7280; font-weight:500; text-align:center; white-space:nowrap; }
@@ -362,31 +362,68 @@ function goToPage(n) {
 }
 
 
-/* 헤더 단어와 linked card를 곧은 선으로 정확히 연결한다 */
+/* 헤더 단어 위치에 따라 카드를 헤더 위/아래로 배치하고 곧은 선으로 연결 */
 function drawHeaderConnectors(n) {
   const page = document.getElementById('page-' + n);
   if (!page) return;
   const head = page.querySelector('.gram-head');
   if (!head) return;
+  const p = head.querySelector('.gh-line');
   const svg = head.querySelector('.gh-svg');
-  if (!svg) return;
+  const words = [...head.querySelectorAll('.gh-word')];
+  const cards = [...head.querySelectorAll('.link-card')];
+  if (!p || !svg || !words.length || !cards.length) return;
+
+  head.style.paddingTop = '0px';
+  head.style.paddingBottom = '0px';
+  cards.forEach(c => { c.style.position = ''; c.style.left = ''; c.style.top = ''; c.style.width = ''; });
+
+  const hb0 = head.getBoundingClientRect();
+  if (hb0.width < 2 || hb0.height < 2) return;
+  const pr0 = p.getBoundingClientRect();
+  const lh = parseFloat(getComputedStyle(p).lineHeight) || pr0.height || 1;
+  const lines = Math.max(1, Math.round(pr0.height / lh));
+  const cardW = Math.max(...cards.map(c => c.getBoundingClientRect().width || 0));
+  const cardH = Math.max(...cards.map(c => c.getBoundingClientRect().height || 0));
+  const gap = Math.max(6, hb0.height * 0.03);
+
+  head.style.paddingTop = (cardH + gap) + 'px';
+  head.style.paddingBottom = (cardH + gap) + 'px';
+
   const hb = head.getBoundingClientRect();
-  if (hb.width < 2 || hb.height < 2) return;
+  const pr = p.getBoundingClientRect();
   svg.setAttribute('viewBox', '0 0 ' + hb.width + ' ' + hb.height);
   let out = '';
-  head.querySelectorAll('.gh-word').forEach(w => {
-    const card = head.querySelector('.link-card[data-i="' + w.dataset.i + '"]');
+
+  words.forEach((w, i) => {
+    const card = cards[i];
     if (!card) return;
-    const wb = w.getBoundingClientRect(), cb = card.getBoundingClientRect();
-    if (!wb.height || !cb.height) return;
-    const x1 = wb.left + wb.width / 2 - hb.left;
-    const y1 = wb.bottom - hb.top;
-    const x2 = cb.left + cb.width / 2 - hb.left;
-    const y2 = cb.top - hb.top;
-    out += '<line x1="' + x1.toFixed(1) + '" y1="' + y1.toFixed(1) + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) +
-           '" stroke="#c4b5fd" stroke-width="1.5" stroke-linecap="round"/>';
-    out += '<circle cx="' + x1.toFixed(1) + '" cy="' + y1.toFixed(1) + '" r="2.2" fill="#c4b5fd"/>';
-    out += '<circle cx="' + x2.toFixed(1) + '" cy="' + y2.toFixed(1) + '" r="2.2" fill="#c4b5fd"/>';
+    const wb = w.getBoundingClientRect();
+    const firstLine = wb.top < pr.top + lh * 0.75;
+    const lastLine = wb.bottom > pr.bottom - lh * 0.75;
+    let above;
+    if (lines === 1) above = (i % 2 === 0);          // 한 줄이면 위/아래를 나눠 사용
+    else above = firstLine && !lastLine;              // 첫 줄 단어는 위, 그 외는 아래
+
+    const cx = wb.left + wb.width / 2;
+    let left = cx - cardW / 2;
+    left = Math.max(0, Math.min(left - hb.left, hb.width - cardW));
+    const top = above
+      ? (wb.top - hb.top - gap - cardH)
+      : (wb.bottom - hb.top + gap);
+
+    card.style.position = 'absolute';
+    card.style.width = cardW + 'px';
+    card.style.left = left + 'px';
+    card.style.top = Math.max(0, top) + 'px';
+
+    const x1 = cx - hb.left;
+    const y1 = above ? (wb.top - hb.top) : (wb.bottom - hb.top);
+    const x2 = left + cardW / 2;
+    const y2 = above ? Math.max(0, top) + cardH : Math.max(0, top);
+    out += '<line x1="' + x1.toFixed(1) + '" y1="' + y1.toFixed(1) + '" x2="' + x2.toFixed(1) +
+           '" y2="' + y2.toFixed(1) + '" stroke="#c4b5fd" stroke-width="1.5" stroke-linecap="round"/>';
+    out += '<circle cx="' + x1.toFixed(1) + '" cy="' + y1.toFixed(1) + '" r="2.4" fill="#c4b5fd"/>';
   });
   svg.innerHTML = out;
 }
