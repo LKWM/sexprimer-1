@@ -4,16 +4,12 @@
   <meta charset="UTF-8">
   <script>
   // ================================================================
-  // 모든 오디오 링크 목록 — 녹음 완료 후 링크 추가 시 자동 연동
+  // 한국어 발음 오디오 — 녹음 완료 후 링크 추가 시 자동 연동
   // ================================================================
   const audioMap = {
-      '일하러 서울에 가요.': 'https://res.cloudinary.com/de76i94ia/video/upload/v1793615915/C1S1-F_xilssy.mp3',
-      '친구가 저를 만나러 왔어요.': 'https://res.cloudinary.com/de76i94ia/video/upload/v1793615924/C1S2-F_ntrvjc.mp3',
-      '취직하려고 한국어 공부를 해요.': 'https://res.cloudinary.com/de76i94ia/video/upload/v1793615931/C1S3-F_d7sb4o.mp3',
-      '중국에 가려고 여권을 만들었어요.': 'https://res.cloudinary.com/de76i94ia/video/upload/v1793615940/C1S4-F_f04lu2.mp3',
       '우리 집에 영화 보러 올래요?': 'https://res.cloudinary.com/de76i94ia/video/upload/v1793615947/C1S5-M_wl4ogy.mp3',
       '빵을 먹으러 오세요.': 'https://res.cloudinary.com/de76i94ia/video/upload/v1793615955/C1S6-M_b5v55o.mp3',
-      '노래를 들으러 콘서트에 가요.': 'https://res.cloudinary.com/de76i94ia/video/upload/v1793615978/C1S7-M_eeuzmw.mp3',
+      '노래를 듣으러 콘서트에 가요.': 'https://res.cloudinary.com/de76i94ia/video/upload/v1793615978/C1S7-M_eeuzmw.mp3',
       '비행기 표를 사려고 돈을 모아요.': 'https://res.cloudinary.com/de76i94ia/video/upload/v1793615963/C1S8-M_ollhz5.mp3',
       '옷을 팔려고 가게를 열었어요.': 'https://res.cloudinary.com/de76i94ia/video/upload/v1793615970/C1S9-M_l2py3c.mp3',
   };
@@ -35,13 +31,10 @@
     }
     .page.active { opacity: 1; pointer-events: auto; }
     .ko { font-family: 'Noto Sans KR', sans-serif; }
-    .invisible { visibility: hidden; }
     .blank { color: #cbd5e1; font-weight: 400; }
     .blank.revealed { color: #5b21b6; font-weight: 700; transition: color 0.4s; }
     .blank-char { cursor: pointer; color: #7c3aed; }
     .blank-char.revealed { color: #5b21b6; font-weight: 700; transition: color 0.4s; }
-    .listen-btn { transition: opacity 0.15s; }
-    .listen-btn.disabled { opacity: 0.5; pointer-events: none; }
     .mic-btn {
       width: calc(var(--btn) * 2); height: calc(var(--btn) * 2);
       border-radius: 50%; border: none; background: #7c3aed; color: #fff;
@@ -52,7 +45,7 @@
     .mic-btn.disabled { background: #e9d5ff; cursor: not-allowed; opacity: 0.5; }
     .mic-btn.recording { background: #ef4444; animation: pulse 1s infinite; }
     @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
-    .feedback-area { height: 8vh; display: flex; align-items: center; justify-content: center; }
+    .feedback-area { min-height: 8vh; display: flex; align-items: center; justify-content: center; }
     .invisible-fb { visibility: hidden; }
     .visible-fb { visibility: visible; }
     .nav-btn {
@@ -62,81 +55,45 @@
       font-size: calc(var(--btn) * 0.4167); transition: opacity 0.15s;
     }
     .nav-btn:disabled { background: #e9d5ff; cursor: not-allowed; opacity: 0.5; }
-    .word-btn {
-      background: linear-gradient(135deg,#7c3aed,#4c1d95); color: #fff; border: none; border-radius: 1.2vw;
-      padding: 2.4vh 10vw; font-family: 'Noto Sans KR', sans-serif;
-      font-size: clamp(1.9rem, max(7vw, 7vh), 99rem); font-weight: 800; cursor: pointer;
-      box-shadow: 0 0.5vh 1.8vh rgba(124,58,237,0.2); transition: transform 0.15s;
-    }
-    .word-btn:hover { transform: scale(1.04); }
-    .word-btn:active { transform: scale(0.97); }
-    .option-btn {
-      background: #fff; border: 0.15vh solid #e9d5ff; border-radius: 1.2vw;
-      padding: 1.6vh 1.5vw; width: 100%; text-align: center; cursor: pointer;
-      font-size: clamp(0.9rem, max(2.2vw, 2.2vh), 1.3rem); font-weight: 600; color: #1e1b2e;
-      transition: background 0.15s, border-color 0.15s;
-    }
-    .option-btn:hover:not(:disabled) { background: #ede9fe; }
-    .option-btn.selected { background: #ede9fe; border-color: #7c3aed; }
-    .option-btn.correct { background: #dcfce7; border-color: #16a34a; color: #14532d; pointer-events: none; }
-    .option-btn.wrong { color: #ef4444; text-decoration: line-through; opacity: 0.55; pointer-events: none; }
-    .option-btn.matched { background: #dcfce7; border-color: #16a34a; color: #14532d; pointer-events: none; }
-    /* 정답란 버튼 (시안 1): 항상 같은 형태 — not clickable(회색) / clickable(보라) 상태만 색상으로 구별 */
-    .answer-btn { background:#fff; border:0.45vh solid #d1d5db; color:#9ca3af; border-radius:1vw; padding:1vh 6vw; min-width:40%; font-weight:700; text-align:center; }
-    .answer-btn.clickable { border-color:#7c3aed; color:#5b21b6; cursor:pointer; }
-    /* Valider 버튼: 항상 같은 형태 — 미선택·완료(disabled)=회색, 선택됨(enabled)=보라 */
-    .valider-btn { margin-top:0.5vh; border:none; border-radius:1vw; padding:1.2vh 7vw; font-family:'Nunito',sans-serif; font-size:clamp(0.85rem,max(2vw,2vh),99rem); font-weight:800; letter-spacing:0.06em; transition:background 0.2s,color 0.2s; background:linear-gradient(135deg,#7c3aed,#4c1d95); color:#fff; cursor:pointer; box-shadow:0 0.5vh 1.8vh rgba(124,58,237,0.2); }
-    .valider-btn:disabled { background:#e9d5ff; color:#9ca3af; cursor:not-allowed; box-shadow:none; }
-    .audio-q-btn { width:clamp(3rem,max(9vw,9vh),99rem); height:clamp(3rem,max(9vw,9vh),99rem); border-radius:50%; border:none; background:linear-gradient(135deg,#7c3aed,#a78bfa); color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.2); flex-shrink:0; }
-    .deck-arrow {
-      border: none; background: transparent; cursor: pointer; padding: 0; line-height: 1;
-      font-size: clamp(1.5rem, max(5vw, 5vh), 99rem); transition: opacity 0.15s;
-    }
-    .deck-arrow:disabled { opacity: 0.3; cursor: default; }
-    .mcq-opts { display: grid; grid-template-columns: 1fr; gap: 1vh; width: 100%; }
-    @media (orientation: landscape) { .mcq-opts { grid-template-columns: 1fr 1fr; } }
+    .card-clickable { cursor: pointer; transition: background 0.15s; }
+    .listen-btn { transition: opacity 0.15s; }
+    .listen-btn.disabled { opacity: 0.5; pointer-events: none; }
+    .card-clickable:hover { background: #ede9fe; }
 
-    .g-wrap { width:95%; max-width:90vw; display:flex; flex-direction:column; align-items:center; gap:1.5vh; }
-    .g-header { font-size:clamp(1.45rem,max(4.1vw,4.1vh),99rem); font-weight:900; color:#4c1d95; text-align:center; line-height:1.3; }
-    .g-linked-row { display:flex; gap:2.5vw; justify-content:center; flex-wrap:wrap; }
-    .g-linked { background:#fff; border:0.15vh solid #e9d5ff; border-radius:1vw; padding:1vh 2.2vw; text-align:center; box-shadow:0 0.3vh 1vh rgba(124,58,237,0.08); }
-    .g-linked-ko { font-size:clamp(0.9rem,max(2.2vw,2.2vh),99rem); font-weight:800; color:#4c1d95; }
-    .g-linked-sub { font-size:clamp(0.7rem,max(1.7vw,1.7vh),99rem); font-weight:500; color:#6b7280; font-style:italic; }
-    .g-text { font-size:clamp(0.72rem,max(1.8vw,1.8vh),99rem); font-weight:500; line-height:1.55; text-align:center; color:#4b5563; }
-    .g-consigne { font-size:clamp(0.85rem,max(2.2vw,2.2vh),99rem); font-weight:500; line-height:1.7; text-align:center; color:#1e1b2e; }
-    .rep-ko { font-size:clamp(1.25rem,max(3.4vw,3.4vh),99rem); font-weight:700; text-align:center; cursor:pointer; }
-    .rep-trans { font-size:clamp(0.85rem,max(2.1vw,2.1vh),99rem); font-weight:500; text-align:center; color:#6b7280; font-style:italic; }
-    .g-blank { display:inline-block; width:3ch; height:1em; background:#fff; border-radius:0.3vw; vertical-align:-0.12em; border:0.12vh solid #e5e7eb; }
-    .g-grid2 { display:grid; grid-template-columns:1fr; gap:1.1vh; width:100%; }
-    @media (orientation: landscape) { .g-grid2 { grid-template-columns:1fr 1fr; column-gap:2.5vw; } }
-    .g-cell { display:flex; flex-direction:column; align-items:center; gap:0.5vh; }
-    .g-pair { background:#f5f3ff; border:0.15vh solid #e9d5ff; border-radius:1vw; padding:1vh 1.6vw; display:flex; flex-direction:column; align-items:center; gap:0.3vh; width:100%; }
-    .g-pair-ko { font-size:clamp(0.85rem,max(2.1vw,2.1vh),99rem); font-weight:800; color:#4c1d95; text-align:center; }
-    .g-pair-sub { font-size:clamp(0.72rem,max(1.8vw,1.8vh),99rem); font-weight:600; color:#7c3aed; }
-    .g-pair-text { font-size:clamp(0.6rem,max(1.45vw,1.45vh),99rem); font-weight:500; line-height:1.4; text-align:center; color:#4b5563; }
-    .opt-wrap { display:flex; flex-direction:column; width:100%; font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem); }
-    .opt-long { font-size:clamp(0.68rem,max(1.75vw,1.75vh),99rem) !important; text-align:left !important; padding:1.1vh 1.4vw !important; }
-    .g-hint { font-size:0.72em; font-weight:500; color:#9ca3af; line-height:1.3; text-align:center; padding:0.3vh 0.5vw 0; min-height:2.6em; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-    .mcq-opts { display:flex; flex-direction:column; gap:0.9vh; width:100%; }
-
-    .expl-wrap { width:95%; max-width:90vw; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.4vh; height:100%; }
-    .expl-card { background:#fff; border:0.15vh solid #e9d5ff; border-radius:1vw; box-shadow:0 0.3vh 1vh rgba(124,58,237,0.08); display:flex; flex-direction:column; align-items:center; gap:0.4vh; }
-    .expl-text { font-size:clamp(0.8rem,max(2vw,2vh),1.15rem); font-weight:500; line-height:1.55; text-align:center; color:#4b5563; }
-    .g-hrow { display:flex; align-items:flex-start; justify-content:center; gap:1.2vw; }
-    .g-hcol { display:flex; flex-direction:column; align-items:center; gap:0.9vh; }
-    .g-tok { font-size:clamp(1.15rem,max(3.2vw,3.2vh),2rem); font-weight:800; color:#4c1d95; white-space:nowrap; text-align:center; }
-    .g-linked { background:#fff; border:0.15vh solid #e9d5ff; border-radius:1vw; padding:0.8vh 1.6vw; display:flex; flex-direction:column; align-items:center; text-align:center; box-shadow:0 0.3vh 1vh rgba(124,58,237,0.08); }
-    .g-linked b { font-size:clamp(0.85rem,max(2.2vw,2.2vh),1.4rem); font-weight:800; color:#4c1d95; }
-    .g-linked i { font-size:clamp(0.7rem,max(1.8vw,1.8vh),1.1rem); font-weight:500; color:#6b7280; font-style:italic; }
-    .g-ex { font-weight:700; color:#7c3aed; text-align:center; font-size:clamp(0.85rem,max(2.2vw,2.2vh),1.4rem); }
-    .g-grid { display:grid; grid-template-columns:1fr; gap:1vh; width:100%; }
-    @media (orientation: landscape) { .g-grid { grid-template-columns:1fr 1fr; } }
+/* ═══ EXPLANATION PAGES (13강 스타일) ═══ */
+.expl-wrap { width:95%; max-width:90vw; display:flex; flex-direction:column; gap:1.5vh; }
+.expl-cards { display:flex; flex-direction:column; gap:1.5vh; }
+.expl-card { background:#f5f3ff; border:0.15vh solid #e9d5ff; border-radius:1.2vw; padding:2vh 3vw; display:flex; flex-direction:column; align-items:center; gap:0.8vh; box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08); }
+.expl-icon { font-size:clamp(1.5rem,max(3vw,3vh),2rem); color:#7c3aed; }
+.expl-ko { font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem); font-weight:700; text-align:center; }
+.expl-ko-sm { font-size:clamp(1.2rem,max(3vw,3vh),1.9rem); font-weight:700; }
+.expl-sub { font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem); font-weight:500; text-align:center; }
+.expl-sub2 { font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem); font-weight:500; text-align:center; color:#6b7280; font-style:italic; }
+.expl-text { font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem); font-weight:500; line-height:1.7; text-align:center; color:#1e1b2e; }
+@media (orientation: landscape) {
+  .expl-cards { flex-direction:row; flex-wrap:wrap; justify-content:center; align-items:stretch; }
+  .expl-cards.stack { flex-direction:column; }
+  .expl-card { padding:1.5vh 2vw; }
+  .expl-icon { font-size:clamp(1.1rem,min(max(3vw,3vh),3.6vh),2rem); }
+  .expl-ko { font-size:clamp(1.05rem,min(max(3.5vw,3.5vh),4.6vh),2.3rem); }
+  .expl-ko-sm { font-size:clamp(0.95rem,min(max(3vw,3vh),3.6vh),1.9rem); }
+  .expl-sub, .expl-sub2 { font-size:clamp(0.8rem,min(max(2.2vw,2.2vh),3vh),1.3rem); }
+  .expl-text { font-size:clamp(0.8rem,min(max(2.3vw,2.3vh),3.2vh),1.3rem); line-height:1.5; }
+}
+    .expl-pair { display:flex; flex-direction:column; gap:0.8vh; align-items:center; width:100%; }
+    .expl-linkcard { background:#fff; border:0.15vh solid #e9d5ff; border-radius:1vw; padding:0.6vh 1.2vw; display:flex; flex-direction:column; align-items:center; }
     .g-blank { display:inline-block; width:3ch; height:0.9em; background:#fff; border:0.12vh solid #e5e7eb; border-radius:0.3vw; vertical-align:-0.1em; }
-    .opt-wrap { display:flex; flex-direction:column; width:100%; font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem); }
+    .opt-wrap { display:flex; flex-direction:column; width:100%; }
     .g-hint { font-size:0.72em; font-weight:500; color:#6b7280; line-height:1.25; text-align:center; min-height:2.5em; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; padding:0.2vh 0.4vw 0; }
     .opt-long { font-size:clamp(0.7rem,max(1.7vw,1.7vh),1.05rem) !important; text-align:left !important; line-height:1.4 !important; }
-    .g-grid4 { display:grid; grid-template-columns:1fr; gap:1.2vh; width:100%; align-content:center; }
-    @media (orientation: landscape) { .g-grid4 { grid-template-columns:1fr 1fr; gap:1.2vw; } }
+    .option-btn { background:#fff; border:0.15vh solid #e9d5ff; border-radius:1.2vw; padding:1.6vh 1.5vw; width:100%; text-align:center; cursor:pointer; font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem); font-weight:600; color:#1e1b2e; transition:background .15s,border-color .15s; }
+    .option-btn:hover:not(:disabled) { background:#ede9fe; }
+    .option-btn.selected { background:#ede9fe; border-color:#7c3aed; }
+    .option-btn.correct { background:#dcfce7; border-color:#16a34a; color:#14532d; pointer-events:none; }
+    .option-btn.wrong { background:#fee2e2; border-color:#ef4444; color:#7f1d1d; text-decoration:line-through; }
+    .valider-btn { margin-top:0.5vh; border:none; border-radius:1vw; padding:1.2vh 7vw; font-family:'Nunito',sans-serif; font-size:clamp(0.85rem,max(2vw,2vh),99rem); font-weight:800; letter-spacing:0.06em; background:linear-gradient(135deg,#7c3aed,#4c1d95); color:#fff; cursor:pointer; box-shadow:0 0.5vh 1.8vh rgba(124,58,237,0.2); }
+    .valider-btn:disabled { background:#e5e7eb; color:#9ca3af; cursor:not-allowed; box-shadow:none; }
+    @media (orientation: landscape) { .expl-pair { width:calc(50% - 0.75vw); } }
   </style>
 </head>
 <body>
@@ -146,312 +103,36 @@
     <div id="progress-bar" style="height:100%;background:#7c3aed;width:0%;transition:width 0.3s ease;"></div>
   </div>
 
+<div class="page active flex-col bg-violet-50" id="page-1"><div class="flex flex-col items-center" style="gap:3vh;"><div style="width:clamp(3.5rem,max(12vw,12vh),99rem);height:clamp(3.5rem,max(12vw,12vh),99rem);border-radius:50%;background:linear-gradient(135deg,#7c3aed,#a78bfa);display:flex;align-items:center;justify-content:center;box-shadow:0 0.5vh 2vh rgba(124,58,237,0.25);flex-shrink:0;"><i class="ph ph-book-open" style="font-size:clamp(1.75rem,max(6vw,6vh),99rem);color:#fff;"></i></div><p style="font-size:clamp(1.05rem,max(2.6vw,2.6vh),99rem);font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:#a78bfa;text-align:center;line-height:1.5;margin-bottom:1.5vh;"><span style="white-space:nowrap;">Chapitre 1 :</span> <span style="display:inline-block;">Le but d’une action</span></p><p style="font-size:clamp(0.8rem,max(1.8vw,1.8vh),99rem);font-weight:800;letter-spacing:0.18em;color:#a78bfa;text-align:center;">Grammaire 📖</p><h1 style="font-size:clamp(1.5rem,max(5vw,5vh),99rem);font-weight:900;color:#4c1d95;text-align:center;line-height:1.15;margin-top:-1.5vh;">-(으)러 vs -(으)려고</h1><button onclick="startLesson()" style="margin-top:1vh;background:linear-gradient(135deg,#7c3aed,#4c1d95);color:#fff;border:none;border-radius:1.2vw;padding:1.8vh 8vw;font-family:'Nunito',sans-serif;font-size:clamp(0.9rem,max(2.5vw,2.5vh),99rem);font-weight:800;letter-spacing:0.06em;cursor:pointer;box-shadow:0 0.5vh 1.8vh rgba(124,58,237,0.2);">Commencer</button></div></div>
+<div class="page flex-col bg-violet-50" id="page-2"><div class="expl-wrap"><div class="expl-cards stack"><div class="expl-card"><div style="display:inline-flex;align-items:flex-start;justify-content:center;gap:0.6vw;flex-wrap:wrap;"><div style="display:flex;flex-direction:column;align-items:center;"><span class="ko expl-ko">V1</span><span class="expl-linkcard"><span class="expl-sub">raison, objectif</span></span></div><span class="ko expl-ko">+(으)러 +</span><div style="display:flex;flex-direction:column;align-items:center;"><span class="ko expl-ko">V2</span><span class="expl-linkcard"><span class="expl-sub">verbe de déplacement</span></span></div><span class="ko expl-ko">= V2 <span class="text-violet-600">pour / afin de</span> V1</span></div></div></div><p class="expl-text">Comme « -(으)러 » s’utilise uniquement pour indiquer le <em>but d’un déplacement</em>, on ne peut employer que des verbes tels que <em>가다, 오다, 다니다, 들어가다, 나가다</em> comme le verbe prinicipal (V2).</p></div></div>
+<div class="page flex-col bg-violet-50" id="page-3"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;"><p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-orange-500">우리 집에</span> <span class="text-green-600">영화 보러</span> <span class="text-red-500">올래요?</span></p><p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-orange-500">chez moi</span> <span class="text-green-600">pour regarder un film</span> <span class="text-red-500">tu veux venir</span></p><p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Veux-tu venir chez moi pour regarder un film ?</p><button class="mic-btn disabled" id="mic-3" onclick="handleMicClick(3)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button><div class="feedback-area invisible-fb" id="feedback-3" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div></div><p class="expl-text">Comme « 보다 (regarder) » est le but, on a ajouté « 러 ». Le verbe est « 오다 », auquel on a ajouté « 래요 » pour former une question de proposition.</p></div></div>
+<div class="page flex-col bg-violet-50" id="page-4"><div class="expl-wrap"><div class="expl-cards"><div class="expl-pair"><div class="expl-card"><p class="ko expl-ko-sm">Voyelle + <span class="text-violet-600">러</span></p><p class="expl-sub2">보러</p></div><p class="expl-text">Après une voyelle, on ajoute « 러 ».</p></div><div class="expl-pair"><div class="expl-card"><p class="ko expl-ko-sm">Consonne + <span class="text-violet-600">으러</span></p><p class="expl-sub2">먹으러</p></div><p class="expl-text">Après une consonne, on ajoute « 으러 » pour la liaison.</p></div><div class="expl-pair"><div class="expl-card"><p class="ko expl-ko-sm">ㄷ → ㄹ + <span class="text-violet-600">으러</span></p><p class="expl-sub2">듣으러</p></div><p class="expl-text">Pour les verbes irréguliers dont la consonne finale du radical est « ㄷ », on remplace d’abord « ㄷ » par « ㄹ », puis on ajoute « 으러 » selon la règle générale des consonnes.</p></div><div class="expl-pair"><div class="expl-card"><p class="ko expl-ko-sm">ㄹ + <span class="text-violet-600">러</span></p><p class="expl-sub2">팔러</p></div><p class="expl-text">Si le radical se termine déjà par « ㄹ », on ajoute directement « 러 » sans liaison.</p></div></div></div></div>
+<div class="page flex-col bg-violet-50" id="page-5"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;"><p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">빵을 먹으러</span> <span class="text-red-500">오세요</span>.</p><p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-green-600">pour manger du pain</span> <span class="text-red-500">venez</span></p><p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Venez manger du pain.</p><button class="mic-btn disabled" id="mic-5" onclick="handleMicClick(5)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button><div class="feedback-area invisible-fb" id="feedback-5" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div></div></div></div>
+<div class="page flex-col bg-violet-50" id="page-6"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;"><p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">노래를 듣으러</span> <span class="text-red-500">콘서트에 가요</span>.</p><p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-green-600">pour écouter une chanson</span> <span class="text-red-500">aller au concert</span></p><p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je vais au concert pour écouter des chansons.</p><button class="mic-btn disabled" id="mic-6" onclick="handleMicClick(6)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button><div class="feedback-area invisible-fb" id="feedback-6" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div></div><p class="expl-text">Pour les verbes irréguliers dont la consonne finale du radical est « ㄷ », on remplace d’abord « ㄷ » par « ㄹ », puis on ajoute « 으러 » selon la règle générale des consonnes.</p></div></div>
+<div class="page flex-col bg-violet-50" id="page-7"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez ce qui convient pour compléter le blanc.</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;"><p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;" id="mcq-q-7"><span class="g-blank"></span> 서울에 가요.</p><p class="expl-sub2">Je vais à Séoul pour travailler.</p><div id="mcq-opts-7" style="display:flex;flex-direction:column;gap:1vh;width:100%;"></div></div></div></div>
+<div class="page flex-col bg-violet-50" id="page-8"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez ce qui convient pour compléter le blanc.</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;"><p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;" id="mcq-q-8">친구가 저를 <span class="g-blank"></span> 왔어요.</p><p class="expl-sub2">Un ami est venu me voir.</p><div id="mcq-opts-8" style="display:flex;flex-direction:column;gap:1vh;width:100%;"></div></div></div></div>
+<div class="page flex-col bg-violet-50" id="page-9"><div class="expl-wrap"><div class="expl-cards stack"><div class="expl-card"><div style="display:inline-flex;align-items:flex-start;justify-content:center;gap:0.6vw;flex-wrap:wrap;"><div style="display:flex;flex-direction:column;align-items:center;"><span class="ko expl-ko">V1</span><span class="expl-linkcard"><span class="expl-sub">raison, objectif</span></span></div><span class="ko expl-ko">+(으)려고 +</span><div style="display:flex;flex-direction:column;align-items:center;"><span class="ko expl-ko">V2</span><span class="expl-linkcard"><span class="expl-sub">verbe (action)</span></span></div><span class="ko expl-ko">= V2 <span class="text-violet-600">pour / afin de</span> V1</span></div></div></div><p class="expl-text">« -(으)려고 » s’utilise pour exprimer le <em>but d’une action</em>. On peut employer n’importe quel verbe comme un verbe prinicipal (V2).</p></div></div>
+<div class="page flex-col bg-violet-50" id="page-10"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;"><p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">비행기 표를 사려고</span> <span class="text-red-500">돈을 모아요</span>.</p><p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-green-600">pour acheter un billet d’avion</span> <span class="text-red-500">rassembler de l’argent</span></p><p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je mets de l’argent de côté pour acheter un billet d’avion.</p><button class="mic-btn disabled" id="mic-10" onclick="handleMicClick(10)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button><div class="feedback-area invisible-fb" id="feedback-10" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div></div><p class="expl-text">Comme « 돈을 모으다 (mettre de l’argent de côté) » est une action générale et non un déplacement, on ajoute « 려고 » après le but « 사다 (acheter) ».</p></div></div>
+<div class="page flex-col bg-violet-50" id="page-11"><div class="expl-wrap"><div class="expl-cards"><div class="expl-pair"><div class="expl-card"><p class="ko expl-ko-sm">Voyelle + <span class="text-violet-600">려고</span></p><p class="expl-sub2">사려고</p></div><p class="expl-text">Après une voyelle, on ajoute « 려고 ».</p></div><div class="expl-pair"><div class="expl-card"><p class="ko expl-ko-sm">Consonne + <span class="text-violet-600">으려고</span></p><p class="expl-sub2">먹으려고</p></div><p class="expl-text">Après une consonne, on ajoute « 으려고 » pour la liaison.</p></div><div class="expl-pair"><div class="expl-card"><p class="ko expl-ko-sm">ㄷ → ㄹ + <span class="text-violet-600">으러</span></p><p class="expl-sub2">듣으려고</p></div><p class="expl-text">Pour les verbes irréguliers dont la consonne finale du radical est « ㄷ », on remplace d’abord « ㄷ » par « ㄹ », puis on ajoute « 으려고 » selon la règle générale des consonnes.</p></div><div class="expl-pair"><div class="expl-card"><p class="ko expl-ko-sm">ㄹ + <span class="text-violet-600">려고</span></p><p class="expl-sub2">팔려고</p></div><p class="expl-text">Si le radical se termine déjà par « ㄹ », on ajoute directement « 려고 » sans liaison.</p></div></div></div></div>
+<div class="page flex-col bg-violet-50" id="page-12"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;"><p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">옷을 팔려고</span> <span class="text-red-500">가게를 열었어요</span>.</p><p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-green-600">pour vendre des vêtements</span> <span class="text-red-500">avoir ouvert un magasin</span></p><p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai ouvert un magasin pour vendre des vêtements.</p><button class="mic-btn disabled" id="mic-12" onclick="handleMicClick(12)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button><div class="feedback-area invisible-fb" id="feedback-12" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div></div><p class="expl-text">Comme le radical de « 팔다 » se termine par « ㄹ », on ajoute directement « 려고 », même s’il s’agit d’une consonne.</p></div></div>
+<div class="page flex-col bg-violet-50" id="page-13"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez ce qui convient pour compléter le blanc.</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;"><p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;" id="mcq-q-13">취직<span class="g-blank"></span> 한국어 공부를 해요.</p><p class="expl-sub2">J’étudie le coréen pour trouver un emploi.</p><div id="mcq-opts-13" style="display:flex;flex-direction:column;gap:1vh;width:100%;"></div></div></div></div>
+<div class="page flex-col bg-violet-50" id="page-14"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez l’explication correcte.</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;"><p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;" id="mcq-q-14"></p><div id="mcq-opts-14" style="display:flex;flex-direction:column;gap:1vh;width:100%;"></div><button id="valider-14" onclick="mcqValider(14)" disabled class="valider-btn">Valider</button></div></div></div>
+<div class="page flex-col bg-violet-50" id="page-15"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez ce qui convient pour compléter le blanc.</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;"><p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;" id="mcq-q-15">중국에 <span class="g-blank"></span> 여권을 만들었어요.</p><p class="expl-sub2">J’ai fait mon passeport pour aller en Chine.</p><div id="mcq-opts-15" style="display:flex;flex-direction:column;gap:1vh;width:100%;"></div><button id="valider-15" onclick="mcqValider(15)" disabled class="valider-btn">Valider</button></div></div></div>
+<div class="page flex-col bg-violet-50" id="page-16"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez ce qui convient pour compléter le blanc.</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;"><p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;" id="mcq-q-16">빵을 <span class="g-blank"></span> 오세요.</p><p class="expl-sub2">Venez manger du pain.</p><div id="mcq-opts-16" style="display:flex;flex-direction:column;gap:1vh;width:100%;"></div><button id="valider-16" onclick="mcqValider(16)" disabled class="valider-btn">Valider</button></div></div></div>
+<div class="page flex-col bg-violet-50" id="page-17"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez tout ce qui peut convenir pour compléter le blanc.</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;"><p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;" id="mcq-q-17">옷을 팔러 <span class="g-blank"></span></p><div id="mcq-opts-17" style="display:flex;flex-direction:column;gap:1vh;width:100%;"></div><button id="valider-17" onclick="mcqValider(17)" disabled class="valider-btn">Valider</button></div></div></div>
+<div class="page flex-col bg-violet-50" id="page-18"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:2vh;"><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);"><p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#1e1b2e;">Bravo ! Vous pouvez désormais distinguer « -(으)러 » et « -(으)려고 » et construire des phrases plus complexes!</p></div></div></div>
 
-  <!-- ════════ PAGE 1 — COVER ════════ -->
-  <div class="page active flex-col bg-violet-50" id="page-1">
-    <div class="flex flex-col items-center" style="gap:3vh;">
-      <div style="width:clamp(3.5rem,max(12vw,12vh),99rem);height:clamp(3.5rem,max(12vw,12vh),99rem);border-radius:50%;background:linear-gradient(135deg,#7c3aed,#a78bfa);display:flex;align-items:center;justify-content:center;box-shadow:0 0.5vh 2vh rgba(124,58,237,0.25);flex-shrink:0;">
-        <i class="ph ph-book-open" style="font-size:clamp(1.75rem,max(6vw,6vh),99rem);color:#fff;"></i>
-      </div>
-      <p style="font-size:clamp(1.05rem,max(2.6vw,2.6vh),99rem);font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:#a78bfa;text-align:center;line-height:1.5;margin-bottom:1.5vh;"><span style="white-space:nowrap;">Chapitre 1 :</span> <span style="display:inline-block;">Le but d’une action</span></p>
-      <p style="font-size:clamp(0.8rem,max(1.8vw,1.8vh),99rem);font-weight:800;letter-spacing:0.18em;color:#a78bfa;text-align:center;">Grammaire 📖</p>
-      <h1 style="font-size:clamp(1.5rem,max(5vw,5vh),99rem);font-weight:900;color:#4c1d95;text-align:center;line-height:1.15;margin-top:-1.5vh;">-(으)러 vs -(으)려고</h1>
-      <button onclick="startLesson()" style="margin-top:1vh;background:linear-gradient(135deg,#7c3aed,#4c1d95);color:#fff;border:none;border-radius:1.2vw;padding:1.8vh 8vw;font-family:'Nunito',sans-serif;font-size:clamp(0.9rem,max(2.5vw,2.5vh),99rem);font-weight:800;letter-spacing:0.06em;cursor:pointer;box-shadow:0 0.5vh 1.8vh rgba(124,58,237,0.2);transition:transform 0.15s;">Commencer</button>
-    </div>
-  </div>
-  <!-- ════════ PAGE 2 — EXPLANATION ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-2">
-    <div class="expl-wrap">
-      <div class="expl-cards stack">
-        <div class="expl-card">
-          <div style="display:flex;align-items:flex-start;justify-content:center;gap:1vw;flex-wrap:wrap;">
-          <span class="ko expl-ko">V1</span>
-            <div style="display:flex;flex-direction:column;align-items:center;gap:0.5vh;"><div style="background:#fff;border:0.15vh solid #e9d5ff;border-radius:1vw;padding:0.6vh 1.4vw;display:flex;flex-direction:column;align-items:center;gap:0.2vh;"><span class="ko expl-ko-sm">V1</span><span class="expl-sub">raison, objectif</span></div></div>
-            <span class="ko expl-ko">+(으)러 +</span>
-            <div style="display:flex;flex-direction:column;align-items:center;gap:0.5vh;">
-              <span class="ko expl-ko">V2</span><div style="background:#fff;border:0.15vh solid #e9d5ff;border-radius:1vw;padding:0.6vh 1.4vw;display:flex;flex-direction:column;align-items:center;gap:0.2vh;"><span class="ko expl-ko-sm">V2</span><span class="expl-sub">verbe de déplacement</span></div></div>
-            <span class="ko expl-ko">= V2 <span class="text-violet-600">pour / afin de</span> V1</span>
-          </div>
-        </div>
-      </div>
-      <p class="expl-text">Comme « -(으)러 » s’utilise uniquement pour indiquer le <em>but d’un déplacement</em>, on ne peut employer que des verbes tels que <em>가다, 오다, 다니다, 들어가다, 나가다</em> comme le verbe prinicipal (V2).</p>
-    </div>
-  </div>
-  <!-- ════════ PAGE 3 — REPEAT ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-3">
-    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
-      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
-        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-orange-500">우리 집에</span> <span class="text-green-600">영화 보러</span> <span class="text-red-500">올래요?</span></p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-orange-500">chez moi</span> <span class="text-green-600">pour regarder un film</span> <span class="text-red-500">tu veux venir</span></p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Veux-tu venir chez moi pour regarder un film ?</p>
-        <button class="mic-btn disabled" id="mic-3" onclick="handleMicClick(3)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
-        <div class="feedback-area invisible-fb" id="feedback-3" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
-      </div>
-      <p class="expl-text">Comme « 보다 (regarder) » est le but, on a ajouté « 러 ». Le verbe est « 오다 », auquel on a ajouté « 래요 » pour former une question de proposition.</p>
-    </div>
-  </div>
-  <!-- ════════ PAGE 4 — EXPLANATION GRID ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-4">
-    <div class="expl-wrap">
-      <div class="g-grid4">
-        <div style="display:flex;flex-direction:column;gap:0.8vh;">
-          <div class="expl-card" style="padding:1.2vh 1.6vw;">
-            <p class="ko expl-ko-sm">Voyelle + 러</p>
-            <p class="expl-sub">보러</p>
-          </div>
-          <p class="expl-text" style="font-size:clamp(0.68rem,max(1.7vw,1.7vh),1.05rem);">Après une voyelle, on ajoute « 러 ».</p>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:0.8vh;">
-          <div class="expl-card" style="padding:1.2vh 1.6vw;">
-            <p class="ko expl-ko-sm">Consonne + 으러</p>
-            <p class="expl-sub">먹으러</p>
-          </div>
-          <p class="expl-text" style="font-size:clamp(0.68rem,max(1.7vw,1.7vh),1.05rem);">Après une consonne, on ajoute « 으러 » pour la liaison.</p>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:0.8vh;">
-          <div class="expl-card" style="padding:1.2vh 1.6vw;">
-            <p class="ko expl-ko-sm">ㄷ → ㄹ + 으러</p>
-            <p class="expl-sub">들으러</p>
-          </div>
-          <p class="expl-text" style="font-size:clamp(0.68rem,max(1.7vw,1.7vh),1.05rem);">Pour les verbes irréguliers dont la consonne finale du radical est « ㄷ », on remplace d’abord « ㄷ » par « ㄹ », puis on ajoute « 으러 » selon la règle générale des consonnes.</p>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:0.8vh;">
-          <div class="expl-card" style="padding:1.2vh 1.6vw;">
-            <p class="ko expl-ko-sm">ㄹ + 러</p>
-            <p class="expl-sub">팔러</p>
-          </div>
-          <p class="expl-text" style="font-size:clamp(0.68rem,max(1.7vw,1.7vh),1.05rem);">Si le radical se termine déjà par « ㄹ », on ajoute directement « 러 » sans liaison.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- ════════ PAGE 5 — REPEAT ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-5">
-    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
-      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
-        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">빵을 먹으러</span> <span class="text-red-500">오세요</span></p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-green-600">pour manger du pain</span> <span class="text-red-500">venez</span></p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Venez manger du pain.</p>
-        <button class="mic-btn disabled" id="mic-5" onclick="handleMicClick(5)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
-        <div class="feedback-area invisible-fb" id="feedback-5" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
-      </div>
-    </div>
-  </div>
-  <!-- ════════ PAGE 6 — REPEAT ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-6">
-    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
-      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
-        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">노래를 들으러</span> <span class="text-red-500">콘서트에 가요</span></p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-green-600">pour écouter une chanson</span> <span class="text-red-500">aller au concert</span></p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je vais au concert pour écouter des chansons.</p>
-        <button class="mic-btn disabled" id="mic-6" onclick="handleMicClick(6)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
-        <div class="feedback-area invisible-fb" id="feedback-6" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
-      </div>
-      <p class="expl-text">Pour les verbes irréguliers dont la consonne finale du radical est « ㄷ », on remplace d’abord « ㄷ » par « ㄹ », puis on ajoute « 으러 » selon la règle générale des consonnes.</p>
-    </div>
-  </div>
-  <!-- ════════ PAGE 7 — MCQ ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-7">
-    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez ce qui convient pour compléter le blanc.</p>
-      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:1.5vh;width:100%;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);">
-        <p class="ko" id="mcq-q-7" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"></p>
-        <p style="font-size:clamp(0.85rem,max(2vw,2vh),1.2rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je vais à Séoul pour travailler.</p>
-        <div id="mcq-opts-7" class="mcq-opts"></div>
-      </div>
-    </div>
-  </div>
-  <!-- ════════ PAGE 8 — MCQ ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-8">
-    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez ce qui convient pour compléter le blanc.</p>
-      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:1.5vh;width:100%;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);">
-        <p class="ko" id="mcq-q-8" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"></p>
-        <p style="font-size:clamp(0.85rem,max(2vw,2vh),1.2rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Un ami est venu me voir.</p>
-        <div id="mcq-opts-8" class="mcq-opts"></div>
-      </div>
-    </div>
-  </div>
-  <!-- ════════ PAGE 9 — EXPLANATION ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-9">
-    <div class="expl-wrap">
-      <div class="expl-cards stack">
-        <div class="expl-card">
-          <div style="display:flex;align-items:flex-start;justify-content:center;gap:1vw;flex-wrap:wrap;">
-            <span class="ko expl-ko">V1</span>
-            <div style="display:flex;flex-direction:column;align-items:center;gap:0.5vh;"><div style="background:#fff;border:0.15vh solid #e9d5ff;border-radius:1vw;padding:0.6vh 1.4vw;display:flex;flex-direction:column;align-items:center;gap:0.2vh;"><span class="ko expl-ko-sm">V1</span><span class="expl-sub">raison, objectif</span></div></div>
-            <span class="ko expl-ko">+(으)려고 +</span>
-            <div style="display:flex;flex-direction:column;align-items:center;gap:0.5vh;"><span class="ko expl-ko">V2</span><div style="background:#fff;border:0.15vh solid #e9d5ff;border-radius:1vw;padding:0.6vh 1.4vw;display:flex;flex-direction:column;align-items:center;gap:0.2vh;"><span class="ko expl-ko-sm">V2</span><span class="expl-sub">verbe (action)</span></div></div>
-            <span class="ko expl-ko">= V2 <span class="text-violet-600">pour / afin de</span> V1</span>
-          </div>
-        </div>
-      </div>
-      <p class="expl-text">« -(으)려고 » s’utilise pour exprimer le <em>but d’une action</em>. On peut employer n’importe quel verbe comme un verbe prinicipal (V2).</p>
-    </div>
-  </div>
-  <!-- ════════ PAGE 10 — REPEAT ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-10">
-    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
-      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:1vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;">
-        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">비행기 표를 사려고</span> <span class="text-red-500">돈을 모아요</span>.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-green-600">pour acheter un billet d’avion</span> <span class="text-red-500">rassembler de l’argent</span></p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je mets de l’argent de côté pour acheter un billet d’avion.</p>
-        <button class="mic-btn disabled" id="mic-10" onclick="handleMicClick(10)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
-        <div class="feedback-area invisible-fb" id="feedback-10" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
-      </div>
-      <p class="expl-text">Comme « 돈을 모으다 (mettre de l’argent de côté) » est une action générale et non un déplacement, on ajoute « 려고 » après le but « 사다 (acheter) ».</p>
-    </div>
-  </div>
-  <!-- ════════ PAGE 11 — EXPLANATION GRID ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-11">
-    <div class="expl-wrap">
-      <div class="g-grid4">
-        <div style="display:flex;flex-direction:column;gap:0.8vh;">
-          <div class="expl-card" style="padding:1.2vh 1.6vw;"><p class="ko expl-ko-sm">Voyelle + 려고</p><p class="expl-sub">사려고</p></div>
-          <p class="expl-text" style="font-size:clamp(0.68rem,max(1.7vw,1.7vh),1.05rem);">Après une voyelle, on ajoute « 려고 ».</p>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:0.8vh;">
-          <div class="expl-card" style="padding:1.2vh 1.6vw;"><p class="ko expl-ko-sm">Consonne + 으려고</p><p class="expl-sub">먹으려고</p></div>
-          <p class="expl-text" style="font-size:clamp(0.68rem,max(1.7vw,1.7vh),1.05rem);">Après une consonne, on ajoute « 으려고 » pour la liaison.</p>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:0.8vh;">
-          <div class="expl-card" style="padding:1.2vh 1.6vw;"><p class="ko expl-ko-sm">ㄷ → ㄹ + 으러</p><p class="expl-sub">들으려고</p></div>
-          <p class="expl-text" style="font-size:clamp(0.68rem,max(1.7vw,1.7vh),1.05rem);">Pour les verbes irréguliers dont la consonne finale du radical est « ㄷ », on remplace d’abord « ㄷ » par « ㄹ », puis on ajoute « 으려고 » selon la règle générale des consonnes.</p>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:0.8vh;">
-          <div class="expl-card" style="padding:1.2vh 1.6vw;"><p class="ko expl-ko-sm">ㄹ + 려고</p><p class="expl-sub">팔려고</p></div>
-          <p class="expl-text" style="font-size:clamp(0.68rem,max(1.7vw,1.7vh),1.05rem);">Si le radical se termine déjà par « ㄹ », on ajoute directement « 려고 » sans liaison.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- ════════ PAGE 12 — REPEAT ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-12">
-    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
-      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:1vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;">
-        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">옷을 팔려고</span> <span class="text-red-500">가게를 열었어요</span>.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-green-600">pour vendre des vêtements</span> <span class="text-red-500">avoir ouvert un magasin</span></p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai ouvert un magasin pour vendre des vêtements.</p>
-        <button class="mic-btn disabled" id="mic-12" onclick="handleMicClick(12)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
-        <div class="feedback-area invisible-fb" id="feedback-12" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
-      </div>
-      <p class="expl-text">Comme le radical de « 팔다 » se termine par « ㄹ », on ajoute directement « 려고 », même s’il s’agit d’une consonne.</p>
-    </div>
-  </div>
-  <!-- ════════ PAGE 13 — MCQ ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-13">
-    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez ce qui convient pour compléter le blanc.</p>
-      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:1.5vh;width:100%;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);">
-        <p class="ko" id="mcq-q-13" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"></p>
-        <p style="font-size:clamp(0.85rem,max(2vw,2vh),1.2rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’étudie le coréen pour trouver un emploi.</p>
-        <div id="mcq-opts-13" class="mcq-opts"></div>
-      </div>
-    </div>
-  </div>
-  <!-- ════════ PAGE 14 — MCQ ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-14">
-    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez l’explication correcte.</p>
-      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:1.5vh;width:100%;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);">
-        <p class="ko" id="mcq-q-14" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"></p>
-        <div id="mcq-opts-14" class="mcq-opts"></div>
-        <button id="valider-14" onclick="mcqValider(14)" disabled class="valider-btn">Valider</button>
-      </div>
-    </div>
-  </div>
-  <!-- ════════ PAGE 15 — MCQ ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-15">
-    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez ce qui convient pour compléter le blanc.</p>
-      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:1.5vh;width:100%;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);">
-        <p class="ko" id="mcq-q-15" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"></p>
-        <p style="font-size:clamp(0.85rem,max(2vw,2vh),1.2rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai fait mon passeport pour aller en Chine.</p>
-        <div id="mcq-opts-15" class="mcq-opts"></div>
-        <button id="valider-15" onclick="mcqValider(15)" disabled class="valider-btn">Valider</button>
-      </div>
-    </div>
-  </div>
-  <!-- ════════ PAGE 16 — MCQ ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-16">
-    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez ce qui convient pour compléter le blanc.</p>
-      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:1.5vh;width:100%;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);">
-        <p class="ko" id="mcq-q-16" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"></p>
-        <p style="font-size:clamp(0.85rem,max(2vw,2vh),1.2rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Venez manger du pain.</p>
-        <div id="mcq-opts-16" class="mcq-opts"></div>
-        <button id="valider-16" onclick="mcqValider(16)" disabled class="valider-btn">Valider</button>
-      </div>
-    </div>
-  </div>
-  <!-- ════════ PAGE 17 — MCQ ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-17">
-    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez tout ce qui peut convenir pour compléter le blanc.</p>
-      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:1.5vh;width:100%;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);">
-        <p class="ko" id="mcq-q-17" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"></p>
-        <div id="mcq-opts-17" class="mcq-opts"></div>
-        <button id="valider-17" onclick="mcqValider(17)" disabled class="valider-btn">Valider</button>
-      </div>
-    </div>
-  </div>
-  <!-- ════════ PAGE 18 — OUTRO ════════ -->
-  <div class="page flex-col bg-violet-50" id="page-18">
-    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:2vh;">
-      <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);">
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#1e1b2e;">Bravo ! Vous pouvez désormais distinguer « -(으)러 » et « -(으)려고 » et construire des phrases plus complexes!</p>
-      </div>
-    </div>
-  </div>
-
-  <div id="bottom-nav" style="position:fixed;bottom:0;left:0;width:100%;height:var(--nav-h);display:none;align-items:center;justify-content:space-between;padding:0 2.5vw;background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);border-top:0.15vh solid #e9d5ff;z-index:150;">
+  <!-- ════════ BOTTOM NAV ════════ -->
+  <div id="bottom-nav" style="position:fixed;bottom:0;left:0;width:100%;height:var(--nav-h);display:none;align-items:center;justify-content:space-between;padding:0 2.5vw;background:rgba(255,255,255,0.95);backdrop-filter:blur(1vmin);border-top:0.15vh solid #e9d5ff;z-index:150;">
     <button class="nav-btn" id="prev-btn" onclick="prevPage()"><i class="ph ph-caret-left"></i></button>
     <span id="page-num" style="font-size:calc(var(--btn) * 0.4167);font-weight:700;color:#4a4466;"></span>
     <button class="nav-btn" id="next-btn" onclick="nextPage()"><i class="ph ph-caret-right"></i></button>
   </div>
 
 <script>
-let currentPage = 1;
-let currentAudio = null;
-let audioTimer = null;
-let micTimer = null;
-let toneReady = false;
-let correctSound, errorSound, transitionSynth, completionSynth, startSynth;
-let activeRecorder = null;
-let recordingTimeout = null;
-let isDiscarding = false;
-let isRecording = false;
-let pendingStop = false;
-const pageState = {};
-const visitedPages = new Set();
-
-const SENTENCES = [
-  { ko: '일하러 서울에 가요.', fr: 'Je vais à Séoul pour travailler.', audio: audioMap['일하러 서울에 가요.'] },
-  { ko: '친구가 저를 만나러 왔어요.', fr: 'Un ami est venu me voir.', audio: audioMap['친구가 저를 만나러 왔어요.'] },
-  { ko: '취직하려고 한국어 공부를 해요.', fr: 'J’étudie le coréen pour trouver un emploi.', audio: audioMap['취직하려고 한국어 공부를 해요.'] },
-  { ko: '중국에 가려고 여권을 만들었어요.', fr: 'J’ai fait mon passeport pour aller en Chine.', audio: audioMap['중국에 가려고 여권을 만들었어요.'] },
-  { ko: '우리 집에 영화 보러 올래요?', fr: 'Veux-tu venir chez moi pour regarder un film ?', audio: audioMap['우리 집에 영화 보러 올래요?'] },
-  { ko: '빵을 먹으러 오세요.', fr: 'Venez manger du pain.', audio: audioMap['빵을 먹으러 오세요.'] },
-  { ko: '노래를 들으러 콘서트에 가요.', fr: 'Je vais au concert pour écouter des chansons.', audio: audioMap['노래를 들으러 콘서트에 가요.'] },
-  { ko: '비행기 표를 사려고 돈을 모아요.', fr: 'Je mets de l’argent de côté pour acheter un billet d’avion.', audio: audioMap['비행기 표를 사려고 돈을 모아요.'] },
-  { ko: '옷을 팔려고 가게를 열었어요.', fr: 'J’ai ouvert un magasin pour vendre des vêtements.', audio: audioMap['옷을 팔려고 가게를 열었어요.'] },
-];
-
-const EXERCISES = {
-  3: { type: 'repeat', maxAttempts: 99, answer: SENTENCES[4] },
-  5: { type: 'repeat', maxAttempts: 99, answer: SENTENCES[5] },
-  6: { type: 'repeat', maxAttempts: 99, answer: SENTENCES[6] },
-  10: { type: 'repeat', maxAttempts: 99, answer: SENTENCES[7] },
-  12: { type: 'repeat', maxAttempts: 99, answer: SENTENCES[8] },
-};
-
-const TOTAL_PAGES = 18;
-const GATED = new Set([3, 5, 6, 10, 12, 7, 8, 13, 14, 15, 16, 17]);
+/* ═══════════════════════════════════════
+   CONFIG
+   ═══════════════════════════════════════ */
 const GEMINI_URL = 'https://coreeno.base44.app/functions/GeminiChatSecure';
 let lessonPermit = null;
 let lessonId = null;
@@ -480,232 +161,56 @@ function geminiErrorMessage(error) {
   return "Erreur de connexion. Veuillez réessayer.";
 }
 
+const TOTAL_PAGES = 18;
 
-const CHOSUNG = ['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
-const JUNGSUNG = ['ㅏ','ㅐ','ㅑ','ㅒ','ㅓ','ㅔ','ㅕ','ㅖ','ㅗ','ㅘ','ㅙ','ㅚ','ㅛ','ㅜ','ㅝ','ㅞ','ㅟ','ㅠ','ㅡ','ㅢ','ㅣ'];
-const JONGSUNG = ['','ㄱ','ㄲ','ㄳ','ㄴ','ㄵ','ㄶ','ㄷ','ㄸ','ㄹ','ㄺ','ㄻ','ㄼ','ㄽ','ㄾ','ㄿ','ㅀ','ㅁ','ㅂ','ㅄ','ㅅ','ㅆ','ㅇ','ㅈ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+const PAGE_AUDIO = {};
+const CARD_AUDIO = {};
+const CLICK_AUDIO = {};
+const AUTO_CLICK_PAGES = [];
 
-function updateBottomBar() {
-  const nav = document.getElementById('bottom-nav');
-  const prevBtn = document.getElementById('prev-btn');
-  const nextBtn = document.getElementById('next-btn');
-  const pageNum = document.getElementById('page-num');
-  const activePage = document.getElementById('page-' + currentPage);
-
-  if (currentPage === 1 || currentPage === TOTAL_PAGES) {
-    nav.style.display = 'none';
-    if (activePage) activePage.style.paddingBottom = '';
-    return;
-  }
-  nav.style.display = 'flex';
-  if (activePage) activePage.style.paddingBottom = 'calc(var(--nav-h) + 2.5vh)';
-  pageNum.textContent = currentPage + '/' + TOTAL_PAGES;
-  prevBtn.disabled = (currentPage === 2);
-  nextBtn.disabled = GATED.has(currentPage) ? !pageState[currentPage]?.completed : false;
-}
-
-// 객관식 — 실라버스 원문 그대로 (선지 순서 유지, 페이지 1-기반)
-const MCQ_CFG = {
-  7:  { mode: 'instant', q: '[blank] 서울에 가요.', sub2: 'Je vais à Séoul pour travailler.', opts: ['일하러', '일러', '일으러', '일하다러'], answers: [0] },
-  8:  { mode: 'instant', q: '친구가 저를 [blank] 왔어요.', sub2: 'Un ami est venu me voir.', opts: ['만나하러', '만날러', '만나러', '만나으러'], answers: [2] },
-  13: { mode: 'instant', q: '취직[blank] 한국어 공부를 해요.', sub2: 'J’étudie le coréen pour trouver un emploi.', opts: ['할려고', '하러고', '하려고', '하다려고'], answers: [2] },
-  14: { mode: 'valider-single', opts: [
-      'Si le verbe de la proposition principale est un déplacement , on ne peut utiliser que « (으)러 » pour exprimer le but.',
-      'Si le verbe de la proposition principale est une action, on ne peut utiliser que « (으)려고 » pour exprimer le but.',
-      'Si le verbe de la proposition principale est une action, on peut utiliser « (으)러 » pour exprimer le but.'],
-      hints: { 0: 'Le déplacement est également inclus dans l’action.', 2: '« (으)러 » s’utilise uniquement pour un déplacement.' }, answers: [1] },
-  15: { mode: 'valider-multi', consigne: 'Choisissez ce qui convient pour compléter le blanc.', q: '중국에 [blank] 여권을 만들었어요.', sub2: 'J’ai fait mon passeport pour aller en Chine.', opts: ['갈려고', '가러', '가려고', '가으러', '간려고'], answers: [2] },
-  16: { mode: 'valider-multi', consigne: 'Choisissez ce qui convient pour compléter le blanc.', q: '빵을 [blank] 오세요.', sub2: 'Venez manger du pain.', opts: ['먹려고', '머러', '먹으려고', '먹러', '먹으러', '먹으고'], answers: [4] },
-  17: { mode: 'valider-multi', q: '옷을 팔러 [blank]', opts: ['시장에 가요', '가게를 열었어요', '시장에 왔어요', '가게를 모아요'],
-      hints: { 1: 'Comme « 열다 » n’est pas un déplacement, on ne peut pas utiliser « (으)러 » pour exprimer le but.', 3: '« 가게(magasin) » avec « 모으다(rassembler) » ne forme pas de sens.' }, answers: [0, 2] },
+const SENTENCE_AUDIO = {
+  3: audioMap['우리 집에 영화 보러 올래요?'],
+  5: audioMap['빵을 먹으러 오세요.'],
+  6: audioMap['노래를 듣으러 콘서트에 가요.'],
+  10: audioMap['비행기 표를 사려고 돈을 모아요.'],
+  12: audioMap['옷을 팔려고 가게를 열었어요.'],
 };
-function isMcqPage(n) { return MCQ_CFG[n] !== undefined; }
-function renderBlankSentence(text) { return text.split('[blank]').join('<span class="g-blank"></span>'); }
-function handlePageEnter(n) {
-  const isReturning = visitedPages.has(n);
-  visitedPages.add(n);
-  if (isReturning) {
-    if (pageState[n]?.completed) { restoreState(n); }
-    else if (EXERCISES[n]) { activateMic(n); }
-    else if (isMcqPage(n)) { renderMCQ(n); }
-    return;
-  }
-  if (n === TOTAL_PAGES) {
-    playSfx('end');
-    setTimeout(() => triggerLessonComplete(), 500);
-    return;
-  }
-  if (EXERCISES[n]) {
-    const a = EXERCISES[n].answer.audio;
-    if (a) audioTimer = setTimeout(() => playAudio(a, () => { micTimer = setTimeout(() => activateMic(n), 300); }), 300);
-    else micTimer = setTimeout(() => activateMic(n), 300);
-  } else if (isMcqPage(n)) {
-    renderMCQ(n);
-  }
-}
-function renderMCQ(pageNum) {
-  const cfg = MCQ_CFG[pageNum];
-  if (!pageState[pageNum]) pageState[pageNum] = { completed: false, wrong: new Set(), selected: new Set(), hintShown: new Set() };
-  const st = pageState[pageNum];
-  const qEl = document.getElementById('mcq-q-' + pageNum);
-  if (qEl && cfg.q) qEl.innerHTML = renderBlankSentence(cfg.q);
-  const container = document.getElementById('mcq-opts-' + pageNum);
-  if (!container) return;
-  container.innerHTML = '';
-  cfg.opts.forEach((text, idx) => {
-    const wrap = document.createElement('div');
-    wrap.className = 'opt-wrap';
-    const btn = document.createElement('button');
-    btn.className = 'option-btn ko' + (cfg.hints ? ' opt-long' : '');
-    btn.textContent = text;
-    btn.onclick = () => mcqClick(pageNum, btn, idx);
-    if (st.wrong.has(idx)) btn.classList.add('wrong');
-    if (st.selected.has(idx)) btn.classList.add('selected');
-    if (st.selected.has(idx) && cfg.answers.includes(idx)) btn.classList.add('correct');
-    if (st.completed && cfg.answers.includes(idx)) btn.classList.add('correct');
-    wrap.appendChild(btn);
-    {
-      const h = document.createElement('p');
-      h.className = 'g-hint' + (cfg.hints && cfg.hints[idx] && st.hintShown.has(idx) ? '' : ' invisible');
-      if (cfg.hints && cfg.hints[idx]) h.textContent = cfg.hints[idx];
-      wrap.appendChild(h);
-    }
-    container.appendChild(wrap);
-  });
-  const vb = document.getElementById('valider-' + pageNum);
-  if (vb) vb.disabled = st.selected.size === 0 || st.completed;
-}
-function mcqClick(pageNum, btn, idx) {
-  const cfg = MCQ_CFG[pageNum], st = pageState[pageNum];
-  if (st.completed || st.wrong.has(idx)) return;
-  if (cfg.mode === 'instant') {
-    if (cfg.answers.includes(idx)) { playSfx('correct'); st.completed = true; btn.classList.add('correct'); updateBottomBar(); }
-    else { playSfx('wrong'); st.wrong.add(idx); btn.classList.add('wrong'); }
-    return;
-  }
-  if (cfg.mode === 'valider-single') {
-    st.selected = new Set([idx]);
-    if (cfg.hints && cfg.hints[idx]) st.hintShown.add(idx);
-    renderMCQ(pageNum);
-    return;
-  }
-  if (st.selected.has(idx)) st.selected.delete(idx); else st.selected.add(idx);
-  renderMCQ(pageNum);
-}
-function mcqValider(pageNum) {
-  const cfg = MCQ_CFG[pageNum], st = pageState[pageNum];
-  if (st.completed || st.selected.size === 0) return;
-  const sel = [...st.selected].sort((a, b) => a - b);
-  const ans = [...cfg.answers].sort((a, b) => a - b);
-  const exact = sel.length === ans.length && sel.every((v, i) => v === ans[i]);
-  if (exact) {
-    playSfx('correct');
-    st.completed = true;
-    const btns = [...document.querySelectorAll('#mcq-opts-' + pageNum + ' .option-btn')];
-    sel.forEach(i => btns[i].classList.add('correct'));
-    const vb = document.getElementById('valider-' + pageNum);
-    if (vb) vb.disabled = true;
-    updateBottomBar();
-    return;
-  }
-  playSfx('wrong');
-  sel.forEach(i => {
-    if (cfg.answers.includes(i)) return;
-    if (cfg.hints) st.hintShown.add(i);
-    else st.wrong.add(i);
-    st.selected.delete(i);
-  });
-  renderMCQ(pageNum);
-}
 
-function evaluateResult(pageNum, isPass, transcript, score) {
-  const ex = EXERCISES[pageNum];
-  const state = pageState[pageNum];
-  const micBtn = document.getElementById('mic-' + pageNum);
+const EXERCISES = {
+  3: { type: 'repeat', maxAttempts: 2, expected: '우리 집에 영화 보러 올래요' },
+  5: { type: 'repeat', maxAttempts: 2, expected: '빵을 먹으러 오세요' },
+  6: { type: 'repeat', maxAttempts: 2, expected: '노래를 듣으러 콘서트에 가요' },
+  10: { type: 'repeat', maxAttempts: 2, expected: '비행기 표를 사려고 돈을 모아요' },
+  12: { type: 'repeat', maxAttempts: 2, expected: '옷을 팔려고 가게를 열었어요' },
+};
+const MSG = {
+  SUCCESS_RETRY: 'Très bien, essayons encore une fois.',
+  SUCCESS_END:   'Très bien ! Passez à la suite.',
+  FAIL_RETRY:    'On y est presque ! Essayons encore une fois.',
+  FAIL_END:      'Bien essayé ! Passez à la suite.',
+  ANSWER_REVEAL: 'Bien essayé ! Voici la bonne réponse.',
+};
 
-  if (ex.type === 'repeat') {
-    // 1회차 성공/실패 → 효과음 + 다음 버튼 활성화, 1회 더 시도 가능 / 2회차 종료
-    if (isPass) {
-      playSfx('correct');
-      state.passed = true;
-      state.completed = true;
-      showFeedback(pageNum, transcript, score, true);
-    } else {
-      playSfx('wrong');
-      state.completed = false;
-      showFeedback(pageNum, transcript, score, false);
-    }
-    if (state.attempts >= ex.maxAttempts) {
-      disableMic(pageNum);
-    } else {
-      setTimeout(() => {
-        if (!isRecording && !currentAudio) {
-          micBtn.classList.remove('disabled');
-          micBtn.innerHTML = '<i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i>';
-        }
-      }, 1500);
-    }
-  } else {
-    // Trad Speaking: 시작 시 회색 동그라미 / 1회 실패 → 동그라미 보라색 clickable (원하는 칸만 공개)
-    // 성공하거나 2회 실패 → 정답 텍스트 전체 공개 + 오디오 clickable 활성화
-    if (isPass) {
-      playSfx('correct');
-      state.passed = true;
-      state.completed = true;
-      showFeedback(pageNum, transcript, score, true);
-      disableMic(pageNum);
-      revealAnswerText(pageNum);
-      revealAnswerAudio(pageNum);
-      const w = ex.answer;
-      if (w.audio) audioTimer = setTimeout(() => { playAudio(w.audio); }, 500);
-    } else {
-      playSfx('wrong');
-      if (state.attempts < ex.maxAttempts) {
-        // 1회 실패: 동그라미를 보라색 clickable로 전환
-        enableBlankClicks(pageNum);
-        showFeedback(pageNum, transcript, score, false);
-        setTimeout(() => {
-          if (!state.completed) {
-            micBtn.classList.remove('disabled');
-            micBtn.innerHTML = '<i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i>';
-          }
-        }, 1500);
-      } else {
-        // 2회 실패: 정답 텍스트 전체 공개 + 오디오 clickable 활성화 (자동 전환 없음)
-        state.completed = true;
-        revealAnswerText(pageNum);
-        revealAnswerAudio(pageNum);
-        showFeedback(pageNum, transcript, score, false);
-        disableMic(pageNum);
-        const w = ex.answer;
-        if (w.audio) audioTimer = setTimeout(() => { playAudio(w.audio); }, 500);
-      }
-    }
-  }
+/* ═══════════════════════════════════════
+   STATE
+   ═══════════════════════════════════════ */
+let currentPage = 1;
+let currentAudio = null;
+let audioTimer = null;
+let cardAudioTimer = null;
+let micTimer = null;
+let toneReady = false;
+let correctSound, errorSound, transitionSynth, completionSynth, startSynth;
+let activeRecorder = null;
+let recordingTimeout = null;
+let isDiscarding = false;
+let isRecording = false;
+const pageState = {};
+const visitedPages = new Set();
 
-  updateBottomBar();
-}
-
-function restoreState(pageNum) {
-  const state = pageState[pageNum];
-  if (!state?.completed) return;
-
-  if (isMcqPage(pageNum)) {
-    renderMCQ(pageNum);
-    return;
-  }
-  if (EXERCISES[pageNum]) {
-    disableMic(pageNum);
-    if (state.feedback) {
-      showFeedback(pageNum, state.feedback.transcript || '', state.feedback.score, state.feedback.passed);
-    }
-    if (EXERCISES[pageNum].type === 'speak') {
-      revealAnswerText(pageNum);
-      revealAnswerAudio(pageNum);
-    }
-  }
-}
-
+/* ═══════════════════════════════════════
+   SOUND EFFECTS (Tone.js)
+   ═══════════════════════════════════════ */
 async function initTone() {
   await Tone.start();
   correctSound = new Tone.Synth({ oscillator: { type: "sine" } }).toDestination();
@@ -740,6 +245,9 @@ function playSfx(type) {
   }
 }
 
+/* ═══════════════════════════════════════
+   AUDIO MANAGEMENT
+   ═══════════════════════════════════════ */
 function playAudio(url, onEnded) {
   stopAudio();
   currentAudio = new Audio(url);
@@ -749,14 +257,16 @@ function playAudio(url, onEnded) {
     self._done = true;
     if (onEnded) onEnded();
     if (currentAudio === self) currentAudio = null;
-    if (!audioTimer) syncMicAudioState();
+    // 이어질 오디오가 예약돼 있으면 동기화 보류 (깜빡임 방지)
+    if (!audioTimer && !cardAudioTimer) syncMicAudioState();
   };
   currentAudio.onended = done;
   currentAudio.onerror = done;
-  syncMicAudioState();
+  syncMicAudioState(); // 오디오 재생 중 → 마이크 비활성
   currentAudio.play().catch(e => { console.warn('Audio autoplay blocked:', e); done(); });
 }
 
+/* 오디오가 재생 중이지 않을 땐 마이크가 항상 활성 (2026-09-12 규칙) */
 function syncMicAudioState() {
   const n = currentPage;
   if (!EXERCISES[n]) return;
@@ -778,25 +288,31 @@ function stopAudio() {
     currentAudio = null;
   }
   if (audioTimer) { clearTimeout(audioTimer); audioTimer = null; }
+  if (cardAudioTimer) { clearTimeout(cardAudioTimer); cardAudioTimer = null; }
   if (micTimer) { clearTimeout(micTimer); micTimer = null; }
 }
 
-function activateMic(n) {
-  const micBtn = document.getElementById('mic-' + n);
-  if (micBtn) {
-    micBtn.classList.remove('disabled');
-  }
+function playCardAudio(pageNum) {
+  if (isRecording) return; // 말하기 사용 중 듣기 버튼 차단
+  if (CARD_AUDIO[pageNum]) playAudio(CARD_AUDIO[pageNum]);
 }
 
-function disableMic(pageNum) {
-  const micBtn = document.getElementById('mic-' + pageNum);
-  if (micBtn) {
-    micBtn.classList.add('disabled');
-    micBtn.classList.remove('recording');
-    micBtn.innerHTML = '<i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i>';
-  }
+function setListenDisabled(pageNum, disabled) {
+  const btn = document.getElementById('listen-' + pageNum);
+  if (btn) btn.classList.toggle('disabled', disabled);
 }
 
+function playClickAudio(pageNum, idx = 0) {
+  if (isRecording) return; // 말하기 사용 중 오디오 재생 차단
+  const entry = CLICK_AUDIO[pageNum];
+  if (!entry) return;
+  const url = Array.isArray(entry) ? entry[idx] : entry;
+  if (url) playAudio(url);
+}
+
+/* ═══════════════════════════════════════
+   NAVIGATION
+   ═══════════════════════════════════════ */
 async function startLesson() {
   await initTone();
   playSfx('start');
@@ -823,7 +339,7 @@ function goToPage(n) {
 }
 
 function nextPage() {
-  if (currentPage < TOTAL_PAGES) goToPage(currentPage + 1);
+  if (currentPage < 22) goToPage(currentPage + 1);
 }
 
 function prevPage() {
@@ -835,24 +351,96 @@ function updateProgress() {
   document.getElementById('progress-bar').style.width = pct + '%';
 }
 
+function updateBottomBar() {
+  const nav = document.getElementById('bottom-nav');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const pageNum = document.getElementById('page-num');
+  const activePage = document.getElementById('page-' + currentPage);
+
+  if (currentPage === 1 || currentPage === 22) {
+    nav.style.display = 'none';
+    if (activePage) activePage.style.paddingBottom = '';
+    return;
+  }
+  nav.style.display = 'flex';
+  if (activePage) activePage.style.paddingBottom = 'calc(var(--nav-h) + 2.5vh)';
+  pageNum.textContent = currentPage + '/' + TOTAL_PAGES;
+  prevBtn.disabled = (currentPage === 2);
+
+  if (EXERCISES[currentPage] || isMcqPage(currentPage)) {
+    nextBtn.disabled = !pageState[currentPage]?.completed;
+  } else {
+    nextBtn.disabled = false;
+  }
+}
+
+/* ═══════════════════════════════════════
+   PAGE ENTER HANDLER
+   ═══════════════════════════════════════ */
+function handlePageEnter(n) {
+  // Outro page
+  if (n === TOTAL_PAGES) {
+    playSfx('end');
+    setTimeout(() => triggerLessonComplete(), 500);
+    if (PAGE_AUDIO[n]) {
+      audioTimer = setTimeout(() => playAudio(PAGE_AUDIO[n]), 300);
+    }
+    return;
+  }
+
+  // Returning to visited page
+  const isReturning = visitedPages.has(n);
+  visitedPages.add(n);
+
+  if (isReturning) {
+    if (pageState[n]?.completed) {
+      restoreState(n);
+    } else if (EXERCISES[n]) {
+      startExerciseChain(n);
+    } else if (isMcqPage(n)) {
+      renderMCQ(n);
+    }
+    return;
+  }
+
+  // First visit
+  if (isMcqPage(n)) { renderMCQ(n); return; }
+  startExerciseChain(n);
+}
+
+function startExerciseChain(n) {
+  setListenDisabled(n, false);
+  if (EXERCISES[n] && SENTENCE_AUDIO[n]) {
+    audioTimer = setTimeout(() => { playAudio(SENTENCE_AUDIO[n]); }, 300);
+  } else if (EXERCISES[n]) {
+    micTimer = setTimeout(() => activateMic(n), 300);
+  }
+}
+
+function activateMic(n) {
+  const micBtn = document.getElementById('mic-' + n);
+  if (micBtn) {
+    micBtn.classList.remove('disabled');
+  }
+}
+
+function isExercisePage(n) {
+  return EXERCISES[n] !== undefined;
+}
+
+/* ═══════════════════════════════════════
+   SPEECH RECOGNITION (Gemini API)
+   ═══════════════════════════════════════ */
 async function handleMicClick(pageNum) {
-  if (!EXERCISES[pageNum]) return;
-  const st = pageState[pageNum];
-  // [버그수정] Listen and repeat 1회차 이후 재시도 가능 — completed는 다음 버튼 활성화용 (실라버스: 1회 더 시도 가능 / 2회차 종료)
-  if (EXERCISES[pageNum].type === 'repeat') {
-    if ((st?.attempts || 0) >= EXERCISES[pageNum].maxAttempts) return;
-  } else if (st?.completed) return;
+  if (!EXERCISES[pageNum] || pageState[pageNum]?.completed) return;
   const micBtn = document.getElementById('mic-' + pageNum);
   if (micBtn.classList.contains('disabled')) return;
 
   if (!isRecording) {
     await startRecording(pageNum);
   } else {
-    // 실제 클릭 시간보다 0.3초 더 녹음해 발화 끊김 방지 (실라버스 규정)
-    pendingStop = true;
-    micBtn.classList.remove('recording');
-    micBtn.innerHTML = '<i class="ph ph-spinner" style="font-size:var(--btn);animation:spin 1s linear infinite;"></i>';
-    setTimeout(() => { if (pendingStop) stopRecording(); }, 300);
+    stopRecording();
   }
 }
 
@@ -860,7 +448,9 @@ async function startRecording(pageNum) {
   const micBtn = document.getElementById('mic-' + pageNum);
   const feedbackEl = document.getElementById('feedback-' + pageNum);
 
+  // 말하기 사용 중 오디오 재생 차단: 녹음 시작 시 재생 중인 오디오 정지
   stopAudio();
+  setListenDisabled(pageNum, true);
 
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -904,6 +494,7 @@ async function startRecording(pageNum) {
 
   } catch (err) {
     console.error('Mic access error:', err);
+    setListenDisabled(pageNum, false);
     if (feedbackEl) {
       feedbackEl.textContent = 'Micro inaccessible. Réessayez.';
       feedbackEl.className = 'feedback-area visible-fb';
@@ -913,13 +504,17 @@ async function startRecording(pageNum) {
 }
 
 function stopRecording() {
-  pendingStop = false;
   if (activeRecorder && isRecording) {
     activeRecorder.stop();
     isRecording = false;
     clearTimeout(recordingTimeout);
   }
 }
+
+/* ── Jamo-based Levenshtein similarity scoring (2026-09-07) ── */
+const CHOSUNG = ['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+const JUNGSUNG = ['ㅏ','ㅐ','ㅑ','ㅒ','ㅓ','ㅔ','ㅕ','ㅖ','ㅗ','ㅘ','ㅙ','ㅚ','ㅛ','ㅜ','ㅝ','ㅞ','ㅟ','ㅠ','ㅡ','ㅢ','ㅣ'];
+const JONGSUNG = ['','ㄱ','ㄲ','ㄳ','ㄴ','ㄵ','ㄶ','ㄷ','ㄸ','ㄹ','ㄺ','ㄻ','ㄼ','ㄽ','ㄾ','ㄿ','ㅀ','ㅁ','ㅂ','ㅄ','ㅅ','ㅆ','ㅇ','ㅈ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
 
 function normalizeSpeech(s) {
   return (s || '').replace(/[^가-힣ㄱ-ㅣA-Za-z0-9]/g, '');
@@ -969,7 +564,7 @@ async function processGeminiChat(audioBase64, mimeType, pageNum) {
   if (!ex) return;
 
   if (!pageState[pageNum]) {
-    pageState[pageNum] = { completed: false, passed: false, attempts: 0, feedback: null, answerShown: false };
+    pageState[pageNum] = { completed: false, passed: false, attempts: 0, feedback: null, blanksRevealed: false };
   }
   pageState[pageNum].attempts++;
 
@@ -984,6 +579,7 @@ async function processGeminiChat(audioBase64, mimeType, pageNum) {
   let transcript = "";
   let isPass = false;
   let score = 0;
+  let bestIdx = 0;
 
   try {
     if (!lessonPermit || !lessonId) throw new Error('Lesson permit is not available yet.');
@@ -1000,11 +596,16 @@ async function processGeminiChat(audioBase64, mimeType, pageNum) {
 
     // Gemini returns ONLY the verbatim transcription (2026-09-07 rule)
     transcript = resultText;
-
-    // 자/모 단위 일치도 — 전사값이 정답의 80% 이상이면 통과
-    score = jamoSimilarity(ex.answer.ko, transcript);
-    isPass = score >= 80;
     geminiErrorStreak = 0;
+
+    // Score = jamo(consonant/vowel)-decomposed Levenshtein similarity vs the expected answer
+    // 복수 정답 처리: 제시된 모든 정답을 인정하고, 발화값과 가장 유사한 답을 선택 (Golden Rule)
+    const candidates = Array.isArray(ex.expected) ? ex.expected : [ex.expected];
+    candidates.forEach((cand, i) => {
+      const sc = jamoSimilarity(cand, transcript);
+      if (sc > score) { score = sc; bestIdx = i; }
+    });
+    isPass = score >= 80;
 
   } catch (error) {
     console.warn("Gemini API Error:", error);
@@ -1013,67 +614,249 @@ async function processGeminiChat(audioBase64, mimeType, pageNum) {
     score = null;
   }
 
-  evaluateResult(pageNum, isPass, transcript, score);
+  evaluateResult(pageNum, isPass, transcript, score, bestIdx);
 }
 
 /* ═══════════════════════════════════════
-   TRAD SPEAKING — 빈칸(◯) 처리
-   시작: 회색 동그라미 / 1회 실패: 보라색 clickable (클릭한 칸만 글자 공개) / 성공·2회 실패: 전체 공개
+   EVALUATION
    ═══════════════════════════════════════ */
-function enableBlankClicks(pageNum) {
-  document.querySelectorAll('[data-page="' + pageNum + '"].blank').forEach(el => {
-    if (el.dataset.clickable === '1') return;
-    const answer = el.dataset.answer || '';
-    const count = el.textContent.length;
-    el.textContent = '';
-    for (let i = 0; i < count; i++) {
-      const c = document.createElement('span');
-      c.className = 'blank-char';
-      c.textContent = '◯';
-      c.addEventListener('click', () => {
-        if (!answer[i]) return;
-        c.textContent = answer[i];
-        c.classList.add('revealed');
-      });
-      el.appendChild(c);
-    }
-    el.dataset.clickable = '1';
+const MCQ_CFG = {
+  7:  { mode: 'instant', q: '<span class="g-blank"></span> 서울에 가요.', opts: ['일하러', '일러', '일으러', '일하다러'], answers: [0] },
+  8:  { mode: 'instant', q: '친구가 저를 <span class="g-blank"></span> 왔어요.', opts: ['만나하러', '만날러', '만나러', '만나으러'], answers: [2] },
+  13: { mode: 'instant', q: '취직<span class="g-blank"></span> 한국어 공부를 해요.', opts: ['할려고', '하러고', '하려고', '하다려고'], answers: [2] },
+  14: { mode: 'valider', opts: ['Si le verbe de la proposition principale est un déplacement , on ne peut utiliser que « (으)러 » pour exprimer le but.', 'Si le verbe de la proposition principale est une action, on ne peut utiliser que « (으)려고 » pour exprimer le but.', 'Si le verbe de la proposition principale est une action, on peut utiliser « (으)러 » pour exprimer le but.'], hints: {0: 'Le déplacement est également inclus dans l’action.', 2: '« (으)러 » s’utilise uniquement pour un déplacement.'}, answers: [1] },
+  15: { mode: 'valider-multi', opts: ['갈려고', '가러', '가려고', '가으러', '간려고'], answers: [2] },
+  16: { mode: 'valider-multi', opts: ['먹려고', '머러', '먹으려고', '먹러', '먹으러', '먹으고'], answers: [4] },
+  17: { mode: 'valider-multi', opts: ['시장에 가요', '가게를 열었어요', '시장에 왔어요', '가게를 모아요'], hints: {1: 'Comme « 열다 » n’est pas un déplacement, on ne peut pas utiliser « (으)러 » pour exprimer le but.', 3: '« 가게(magasin) » avec « 모으다(rassembler) » ne forme pas de sens.'}, answers: [0, 2] },
+};
+function isMcqPage(n) { return MCQ_CFG[n] !== undefined; }
+function renderMCQ(pageNum) {
+  const cfg = MCQ_CFG[pageNum];
+  if (!pageState[pageNum]) pageState[pageNum] = { completed: false, wrong: new Set(), selected: new Set(), hintShown: new Set() };
+  const st = pageState[pageNum];
+  const container = document.getElementById('mcq-opts-' + pageNum);
+  if (!container) return;
+  container.innerHTML = '';
+  cfg.opts.forEach((text, idx) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'opt-wrap';
+    const btn = document.createElement('button');
+    btn.className = 'option-btn ko' + (cfg.hints ? ' opt-long' : '');
+    btn.textContent = text;
+    btn.onclick = () => mcqClick(pageNum, btn, idx);
+    if (st.wrong.has(idx)) btn.classList.add('wrong');
+    if (st.selected.has(idx)) btn.classList.add('selected');
+    if (st.selected.has(idx) && cfg.answers.includes(idx)) btn.classList.add('correct');
+    if (st.completed && cfg.answers.includes(idx)) btn.classList.add('correct');
+    wrap.appendChild(btn);
+    const h = document.createElement('p');
+    h.className = 'g-hint' + (cfg.hints && cfg.hints[idx] && st.hintShown.has(idx) ? '' : ' invisible');
+    if (cfg.hints && cfg.hints[idx]) h.textContent = cfg.hints[idx];
+    wrap.appendChild(h);
+    container.appendChild(wrap);
   });
+  const vb = document.getElementById('valider-' + pageNum);
+  if (vb) vb.disabled = st.selected.size === 0 || st.completed;
 }
-
-function revealAnswerText(pageNum) {
-  document.querySelectorAll('[data-page="' + pageNum + '"].blank').forEach(el => {
-    el.textContent = el.dataset.answer;
-    el.classList.add('revealed');
+function mcqClick(pageNum, btn, idx) {
+  const cfg = MCQ_CFG[pageNum], st = pageState[pageNum];
+  if (st.completed || st.wrong.has(idx)) return;
+  if (cfg.mode === 'instant') {
+    if (cfg.answers.includes(idx)) { playSfx('correct'); st.completed = true; btn.classList.add('correct'); updateBottomBar(); }
+    else { playSfx('wrong'); st.wrong.add(idx); btn.classList.add('wrong'); }
+    return;
+  }
+  if (cfg.hints && cfg.hints[idx] && !cfg.answers.includes(idx)) st.hintShown.add(idx);
+  if (cfg.answers.length === 1) { st.selected = new Set([idx]); }
+  else if (st.selected.has(idx)) { st.selected.delete(idx); }
+  else { st.selected.add(idx); }
+  renderMCQ(pageNum);
+}
+function mcqValider(pageNum) {
+  const cfg = MCQ_CFG[pageNum], st = pageState[pageNum];
+  if (st.completed || st.selected.size === 0) return;
+  const sel = [...st.selected].sort((a, b) => a - b);
+  const ans = [...cfg.answers].sort((a, b) => a - b);
+  const exact = sel.length === ans.length && sel.every((v, i) => v === ans[i]);
+  if (exact) {
+    playSfx('correct');
+    st.completed = true;
+    renderMCQ(pageNum);
+    updateBottomBar();
+    return;
+  }
+  playSfx('wrong');
+  if (!st.hintShown) st.hintShown = new Set();
+  sel.forEach(i => {
+    if (cfg.answers.includes(i)) return;
+    if (cfg.hints) { st.hintShown.add(i); st.selected.delete(i); }
+    else { st.wrong.add(i); st.selected.delete(i); }
   });
-  if (pageState[pageNum]) pageState[pageNum].answerShown = true;
+  renderMCQ(pageNum);
 }
 
-function revealAnswerAudio(pageNum) {
-  const btn = document.getElementById('answer-' + pageNum);
-  if (btn) btn.classList.remove('disabled');
-}
-
-function playAnswerAudio(pageNum) {
-  const btn = document.getElementById('answer-' + pageNum);
-  if (btn && btn.classList.contains('disabled')) return;
+function evaluateResult(pageNum, isPass, transcript, score, bestIdx = 0) {
+  setListenDisabled(pageNum, false);
   const ex = EXERCISES[pageNum];
-  if (ex && ex.answer && ex.answer.audio) playAudio(ex.answer.audio);
+  const state = pageState[pageNum];
+  const micBtn = document.getElementById('mic-' + pageNum);
+  const feedbackEl = document.getElementById('feedback-' + pageNum);
+  const transcriptEl = document.getElementById('transcript-' + pageNum);
+
+  if (isPass) {
+    playSfx('correct');
+    state.passed = true;
+    state.completed = true;
+
+    if (ex.type === 'repeat') {
+      showFeedback(pageNum, MSG.SUCCESS_END, 'success', transcript, score);
+    } else {
+      // hide or trad: reveal blanks
+      showFeedback(pageNum, MSG.SUCCESS_END, 'success', transcript, score);
+      revealBlanks(pageNum, bestIdx === 1);
+      if (ex.type === 'trad') {
+        setTimeout(() => {
+          stopAudio();
+          if (SENTENCE_AUDIO[pageNum]) playAudio(SENTENCE_AUDIO[pageNum]);
+        }, 500);
+      }
+    }
+    disableMic(pageNum);
+  } else {
+    playSfx('wrong');
+
+    if (ex.type === 'repeat') {
+      // 통과해야 다음 페이지 (Golden Rule 7 문구: 1차 FAIL_RETRY / 2차 FAIL_END)
+      state.completed = false;
+      showFeedback(pageNum, state.attempts < 2 ? MSG.FAIL_RETRY : MSG.FAIL_END, 'fail', transcript, score);
+      setTimeout(() => {
+        if (micBtn && !pageState[pageNum].completed) {
+          micBtn.classList.remove('disabled');
+          micBtn.innerHTML = '<i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i>';
+        }
+      }, 1500);
+    } else {
+      // hide or trad: check attempts
+      if (state.attempts < ex.maxAttempts) {
+        // Can retry (2026-09-12 rule): Repeat (hide) = NO reveal, audio replay only / Trad = reveal the answer, no audio
+        if (ex.type === 'trad') revealBlanks(pageNum);
+        showFeedback(pageNum, MSG.FAIL_RETRY, 'fail', transcript, score);
+        if (ex.type === 'hide' && CARD_AUDIO[pageNum]) {
+          // Replay the sentence audio only (2026-09-12: no answer reveal) — mic re-enables via syncMicAudioState
+          audioTimer = setTimeout(() => {
+            playAudio(CARD_AUDIO[pageNum]);
+          }, 1500);
+        } else {
+          setTimeout(() => {
+            micBtn.classList.remove('disabled');
+            micBtn.innerHTML = '<i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i>';
+          }, 1500);
+        }
+      } else {
+        // Max attempts reached
+        state.completed = true;
+        showFeedback(pageNum, MSG.ANSWER_REVEAL, 'fail', transcript, score);
+        revealBlanks(pageNum);
+        if (ex.type === 'trad') {
+          setTimeout(() => {
+            stopAudio();
+            if (SENTENCE_AUDIO[pageNum]) playAudio(SENTENCE_AUDIO[pageNum]);
+          }, 500);
+        }
+        disableMic(pageNum);
+      }
+    }
+  }
+
+  updateBottomBar();
 }
 
-function showFeedback(pageNum, transcript, score, isPass) {
+function showFeedback(pageNum, message, type, transcript, score) {
   const el = document.getElementById('feedback-' + pageNum);
   if (!el) return;
-  const color = isPass ? '#16a34a' : '#f97316';
-  let html = '';
+  var color = (type === 'success' ? '#16a34a' : '#f97316');
+  var html = '';
   if (transcript) html += '<span style="font-weight:500;color:#6b7280;">« ' + transcript + ' »</span> ';
-  if (typeof score !== 'undefined' && score !== null) html += '<span style="font-weight:700;color:' + color + ';">' + score + '/100</span>';
+  if (typeof score !== 'undefined' && score !== null) html += '<span style="font-weight:700;color:' + color + ';">' + score + '/100</span> ';
+  html += '<span>' + message + '</span>';
   el.innerHTML = '<div style="text-align:center;">' + html + '</div>';
   el.className = 'feedback-area visible-fb';
-  el.style.color = isPass ? '#16a34a' : '#f97316';
-  if (pageState[pageNum]) pageState[pageNum].feedback = { transcript: transcript || '', score: score, passed: isPass };
+  el.style.color = type === 'success' ? '#16a34a' : '#f97316';
+  if (pageState[pageNum]) pageState[pageNum].feedback = { message, type, transcript: transcript || '', score: score };
 }
 
+function disableMic(pageNum) {
+  const micBtn = document.getElementById('mic-' + pageNum);
+  if (micBtn) {
+    micBtn.classList.add('disabled');
+    micBtn.classList.remove('recording');
+    micBtn.innerHTML = '<i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i>';
+  }
+}
+
+function revealBlanks(pageNum, useAlt = false) {
+  document.querySelectorAll('[data-page="' + pageNum + '"].blank').forEach(el => {
+    el.textContent = (useAlt && el.dataset.alt) ? el.dataset.alt : el.dataset.answer;
+    el.classList.add('revealed');
+  });
+  if (pageState[pageNum]) { pageState[pageNum].blanksRevealed = true; pageState[pageNum].revealedAlt = useAlt; }
+}
+
+function restoreState(pageNum) {
+  const state = pageState[pageNum];
+  if (!state?.completed) return;
+
+  disableMic(pageNum);
+  setListenDisabled(pageNum, false);
+
+  if (state.feedback) {
+    showFeedback(pageNum, state.feedback.message, state.feedback.type, state.feedback.transcript || '', state.feedback.score);
+  }
+
+  if (state.blanksRevealed) {
+    revealBlanks(pageNum, state.revealedAlt);
+  }
+}
+
+/* ═══════════════════════════════════════
+   BLANK CLICK REVEAL (Trad pages)
+   동그라미(◯)를 클릭하면 해당 글자만 공개. 시도 횟수와 무관, 페널티 없음.
+   기존 공개(정답 시 / 과제 종료 시)는 revealBlanks가 그대로 처리.
+   ═══════════════════════════════════════ */
+function initBlankClicks() {
+  Object.keys(EXERCISES).forEach(k => {
+    if (EXERCISES[k].type !== 'trad') return;
+    document.querySelectorAll('[data-page="' + k + '"].blank').forEach(el => {
+      const answer = el.dataset.answer || '';
+      const count = el.textContent.length;
+      el.textContent = '';
+      for (let i = 0; i < count; i++) {
+        const c = document.createElement('span');
+        c.className = 'blank-char';
+        c.textContent = '◯';
+        c.addEventListener('click', () => {
+          if (!answer[i]) return;
+          c.textContent = answer[i];
+          c.classList.add('revealed');
+        });
+        el.appendChild(c);
+      }
+    });
+  });
+}
+
+/* ═══════════════════════════════════════
+   LESSON COMPLETE
+   ═══════════════════════════════════════ */
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    stopAudio();
+  } else {
+    resumeCurrentPage();
+  }
+});
+
+// 탭 복귀 시 중단된 오디오 체인 재개: 마이크가 죽어 있으면 다시 활성화 경로로 수렴
 function resumeCurrentPage() {
   const n = currentPage;
   if (!EXERCISES[n]) return;
@@ -1082,23 +865,24 @@ function resumeCurrentPage() {
   if (currentAudio) return;
   const micBtn = document.getElementById('mic-' + n);
   if (!micBtn || !micBtn.classList.contains('disabled')) return;
-  activateMic(n);
+  if (pageState[n]?.attempts > 0 && CARD_AUDIO[n]) {
+    // 재시도 중이었던 경우: 카드 오디오만 재생 — 종료 시 syncMicAudioState가 활성화
+    playAudio(CARD_AUDIO[n]);
+  } else {
+    startExerciseChain(n);
+  }
 }
+window.addEventListener('pagehide', () => { stopAudio(); });
+window.addEventListener('beforeunload', () => { stopAudio(); });
 
 function triggerLessonComplete() {
   window.parent.postMessage({ type: 'lesson_complete' }, '*');
 }
 
-document.addEventListener('visibilitychange', () => {
-  if (document.hidden) {
-    stopAudio();
-  } else {
-    resumeCurrentPage();
-  }
-});
-window.addEventListener('pagehide', () => { stopAudio(); });
-window.addEventListener('beforeunload', () => { stopAudio(); });
+// Add spin keyframe for spinner
+const style = document.createElement('style');
+style.textContent = '@keyframes spin { from{transform:rotate(0)} to{transform:rotate(360deg)} } .ph-spinner{animation:spin 1s linear infinite}';
+document.head.appendChild(style);
 
+initBlankClicks();
 </script>
-</body>
-</html>
