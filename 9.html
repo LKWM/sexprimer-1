@@ -87,9 +87,9 @@
 .expl-icon { font-size:clamp(1.5rem,max(3vw,3vh),2rem); color:#7c3aed; }
 .expl-ko { font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem); font-weight:700; text-align:center; }
 .expl-ko-sm { font-size:clamp(1.2rem,max(3vw,3vh),1.9rem); font-weight:700; }
-.expl-sub { font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem); font-weight:500; text-align:center; }
-.expl-sub2 { font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem); font-weight:500; text-align:center; color:#6b7280; font-style:italic; }
-.expl-text { font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem); font-weight:500; line-height:1.7; text-align:center; color:#1e1b2e; }
+.expl-sub { font-size:clamp(1.089rem,max(2.662vw,2.662vh),1.573rem); font-weight:500; text-align:center; }
+.expl-sub2 { font-size:clamp(1.089rem,max(2.662vw,2.662vh),1.573rem); font-weight:500; text-align:center; color:#6b7280; font-style:italic; }
+.expl-text { font-size:clamp(0.99rem,max(2.53vw,2.53vh),1.43rem); font-weight:500; line-height:1.7; text-align:center; color:#1e1b2e; }
 @media (orientation: landscape) {
   .expl-cards { flex-direction:row; flex-wrap:wrap; justify-content:center; align-items:stretch; }
   .expl-cards.stack { flex-direction:column; }
@@ -97,8 +97,8 @@
   .expl-icon { font-size:clamp(1.1rem,min(max(3vw,3vh),3.6vh),2rem); }
   .expl-ko { font-size:clamp(1.05rem,min(max(3.5vw,3.5vh),4.6vh),2.3rem); }
   .expl-ko-sm { font-size:clamp(0.95rem,min(max(3vw,3vh),3.6vh),1.9rem); }
-  .expl-sub, .expl-sub2 { font-size:clamp(0.8rem,min(max(2.2vw,2.2vh),3vh),1.3rem); }
-  .expl-text { font-size:clamp(0.8rem,min(max(2.3vw,2.3vh),3.2vh),1.3rem); line-height:1.5; }
+  .expl-sub, .expl-sub2 { font-size:clamp(0.88rem,min(max(2.42vw,2.42vh),3.3vh),1.43rem); }
+  .expl-text { font-size:clamp(0.88rem,min(max(2.53vw,2.53vh),3.52vh),1.43rem); line-height:1.5; }
 }
   </style>
 </head>
@@ -126,7 +126,7 @@
   <div class="page flex-col bg-violet-50" id="page-2">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:2vh;">
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);">
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#1e1b2e;">Bonjour ! Ravi de vous retrouver. Aujourd’hui, on va apprendre à parler de ce qu’on a décidé de faire et de ce qu’on a l’intention de faire dans un avenir proche.</p>
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;color:#1e1b2e;">Bonjour ! Ravi de vous retrouver. Aujourd’hui, on va apprendre à parler de ce qu’on a décidé de faire et de ce qu’on a l’intention de faire dans un avenir proche.</p>
       </div>
     </div>
   </div>
@@ -137,8 +137,8 @@
       <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-blue-600">살을 빼</span><span class="text-purple-600">기로 했어요</span>.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-blue-600">perdre du poids</span> <span class="text-purple-600">avoir décidé de</span></p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai décidé de perdre du poids.</p>
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;"><span class="text-blue-600">perdre du poids</span> <span class="text-purple-600">avoir décidé de</span></p>
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai décidé de perdre du poids.</p>
         <button class="mic-btn disabled" id="mic-3" onclick="handleMicClick(3)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-3" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -172,8 +172,8 @@
       <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-blue-600">살을 빼</span><span class="text-purple-600">기로 했어요</span>.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-blue-600">perdre du poids</span> <span class="text-purple-600">avoir décidé de</span></p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai décidé de perdre du poids.</p>
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;"><span class="text-blue-600">perdre du poids</span> <span class="text-purple-600">avoir décidé de</span></p>
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai décidé de perdre du poids.</p>
         <button class="mic-btn disabled" id="mic-5" onclick="handleMicClick(5)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-5" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -186,8 +186,8 @@
       <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">술</span>을 <span class="text-purple-600">끊</span><span class="text-red-500">기로 했어요</span>.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-green-600">alcool</span> <span class="text-purple-600">arrêter</span> <span class="text-red-500">avoir décidé de</span></p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai décidé d’arrêter l’alcool.</p>
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;"><span class="text-green-600">alcool</span> <span class="text-purple-600">arrêter</span> <span class="text-red-500">avoir décidé de</span></p>
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai décidé d’arrêter l’alcool.</p>
         <button class="mic-btn disabled" id="mic-6" onclick="handleMicClick(6)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-6" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -230,8 +230,8 @@
       <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">술</span>을 <span class="text-purple-600">끊</span><span class="text-red-500">기로 했어요</span>.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-green-600">alcool</span> <span class="text-purple-600">arrêter</span> <span class="text-red-500">avoir décidé de</span></p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai décidé d’arrêter l’alcool.</p>
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;"><span class="text-green-600">alcool</span> <span class="text-purple-600">arrêter</span> <span class="text-red-500">avoir décidé de</span></p>
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai décidé d’arrêter l’alcool.</p>
         <button class="mic-btn disabled" id="mic-8" onclick="handleMicClick(8)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-8" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -265,8 +265,8 @@
       <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-orange-500">여자 친구와</span> <span class="text-purple-600">결혼하</span><span class="text-red-500">려고 해요</span>.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-orange-500">avec copine</span> <span class="text-purple-600">se marier</span> <span class="text-red-500">compter</span></p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je compte me marier avec ma copine.</p>
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;"><span class="text-orange-500">avec copine</span> <span class="text-purple-600">se marier</span> <span class="text-red-500">compter</span></p>
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je compte me marier avec ma copine.</p>
         <button class="mic-btn disabled" id="mic-10" onclick="handleMicClick(10)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-10" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -279,8 +279,8 @@
       <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-orange-500">여자 친구와</span> <span class="text-purple-600">결혼하</span><span class="text-red-500">려고 해요</span>.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-orange-500">avec copine</span> <span class="text-purple-600">se marier</span> <span class="text-red-500">compter</span></p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je compte me marier avec ma copine.</p>
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;"><span class="text-orange-500">avec copine</span> <span class="text-purple-600">se marier</span> <span class="text-red-500">compter</span></p>
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je compte me marier avec ma copine.</p>
         <button class="mic-btn disabled" id="mic-11" onclick="handleMicClick(11)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-11" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -293,8 +293,8 @@
       <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">머리</span>를 <span class="text-purple-600">자르</span><span class="text-red-500">려고 해요</span>.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-green-600">cheveux</span> <span class="text-purple-600">couper</span> <span class="text-red-500">compter</span></p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je compte me faire couper les cheveux.</p>
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;"><span class="text-green-600">cheveux</span> <span class="text-purple-600">couper</span> <span class="text-red-500">compter</span></p>
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je compte me faire couper les cheveux.</p>
         <button class="mic-btn disabled" id="mic-12" onclick="handleMicClick(12)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-12" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -307,8 +307,8 @@
       <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">머리</span>를 <span class="text-purple-600">자르</span><span class="text-red-500">려고 해요</span>.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;"><span class="text-green-600">cheveux</span> <span class="text-purple-600">couper</span> <span class="text-red-500">compter</span></p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je compte me faire couper les cheveux.</p>
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;"><span class="text-green-600">cheveux</span> <span class="text-purple-600">couper</span> <span class="text-red-500">compter</span></p>
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je compte me faire couper les cheveux.</p>
         <button class="mic-btn disabled" id="mic-13" onclick="handleMicClick(13)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-13" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -324,7 +324,7 @@
           <button onclick="playCardAudio(14)" id="listen-14" class="listen-btn" style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:clamp(1.5rem,max(3vw,3vh),2rem);padding:0;display:flex;align-items:center;"><i class="ph-fill ph-speaker-high"></i></button>
           <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">살을 빼<span class="blank" data-page="14" data-answer="기로">◯◯</span> 했어요.</p>
         </div>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai décidé de perdre du poids.</p>
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai décidé de perdre du poids.</p>
         <button class="mic-btn disabled" id="mic-14" onclick="handleMicClick(14)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-14" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -340,7 +340,7 @@
           <button onclick="playCardAudio(15)" id="listen-15" class="listen-btn" style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:clamp(1.5rem,max(3vw,3vh),2rem);padding:0;display:flex;align-items:center;"><i class="ph-fill ph-speaker-high"></i></button>
           <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">술을 끊기로 <span class="blank" data-page="15" data-answer="했어요">◯◯◯</span>.</p>
         </div>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai décidé d’arrêter l’alcool.</p>
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai décidé d’arrêter l’alcool.</p>
         <button class="mic-btn disabled" id="mic-15" onclick="handleMicClick(15)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-15" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -356,7 +356,7 @@
           <button onclick="playCardAudio(16)" id="listen-16" class="listen-btn" style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:clamp(1.5rem,max(3vw,3vh),2rem);padding:0;display:flex;align-items:center;"><i class="ph-fill ph-speaker-high"></i></button>
           <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">여자 친구와 결혼<span class="blank" data-page="16" data-answer="하려고">◯◯◯</span> 해요.</p>
         </div>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je compte me marier avec ma copine.</p>
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je compte me marier avec ma copine.</p>
         <button class="mic-btn disabled" id="mic-16" onclick="handleMicClick(16)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-16" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -372,7 +372,7 @@
           <button onclick="playCardAudio(17)" id="listen-17" class="listen-btn" style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:clamp(1.5rem,max(3vw,3vh),2rem);padding:0;display:flex;align-items:center;"><i class="ph-fill ph-speaker-high"></i></button>
           <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">머리를 자르<span class="blank" data-page="17" data-answer="려고">◯◯</span> <span class="blank" data-page="17" data-answer="해요">◯◯</span>.</p>
         </div>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je compte me faire couper les cheveux.</p>
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je compte me faire couper les cheveux.</p>
         <button class="mic-btn disabled" id="mic-17" onclick="handleMicClick(17)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-17" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -385,7 +385,7 @@
       <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">한국어로 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">살을 <span class="blank" data-page="18" data-answer="빼기로">◯◯◯</span> 했어요.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai décidé de perdre du poids.</p>
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai décidé de perdre du poids.</p>
         <button class="mic-btn disabled" id="mic-18" onclick="handleMicClick(18)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-18" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -398,7 +398,7 @@
       <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">한국어로 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">술을 <span class="blank" data-page="19" data-answer="끊기로">◯◯◯</span> <span class="blank" data-page="19" data-answer="했어요">◯◯◯</span>.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai décidé d’arrêter l’alcool.</p>
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">J’ai décidé d’arrêter l’alcool.</p>
         <button class="mic-btn disabled" id="mic-19" onclick="handleMicClick(19)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-19" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -411,7 +411,7 @@
       <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">한국어로 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">여자 친구와 <span class="blank" data-page="20" data-answer="결혼하려고">◯◯◯◯◯</span> 해요.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je compte me marier avec ma copine.</p>
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je compte me marier avec ma copine.</p>
         <button class="mic-btn disabled" id="mic-20" onclick="handleMicClick(20)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-20" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -424,7 +424,7 @@
       <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">한국어로 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
         <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">머리를 <span class="blank" data-page="21" data-answer="자르려고">◯◯◯◯</span> <span class="blank" data-page="21" data-answer="해요">◯◯</span>.</p>
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je compte me faire couper les cheveux.</p>
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je compte me faire couper les cheveux.</p>
         <button class="mic-btn disabled" id="mic-21" onclick="handleMicClick(21)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-21" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
       </div>
@@ -435,7 +435,7 @@
   <div class="page flex-col bg-violet-50" id="page-22">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:2vh;">
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);">
-        <p style="font-size:clamp(0.9rem,max(2.2vw,2.2vh),1.3rem);font-weight:500;text-align:center;color:#1e1b2e;">Bravo ! Vous pouvez maintenant dire quelles décisions vous avez prises, et vous pouvez aussi parler des projets que vous et d’autres personnes avez l’intention de réaliser dans un avenir proche. Dans la prochaine leçon, on comparera les points de grammaire appris jusqu’ici et on analysera divers exemples ensemble. Alors, on se retrouve à la prochaine !</p>
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;color:#1e1b2e;">Bravo ! Vous pouvez maintenant dire quelles décisions vous avez prises, et vous pouvez aussi parler des projets que vous et d’autres personnes avez l’intention de réaliser dans un avenir proche. Dans la prochaine leçon, on comparera les points de grammaire appris jusqu’ici et on analysera divers exemples ensemble. Alors, on se retrouve à la prochaine !</p>
       </div>
     </div>
   </div>
