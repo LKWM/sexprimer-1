@@ -427,7 +427,7 @@ function fitPageContent(n) {
 window.addEventListener('resize', () => { if (currentPage) { layoutHeaderCards(currentPage); fitPageContent(currentPage); } });
 
 function nextPage() {
-  if (currentPage < 22) goToPage(currentPage + 1);
+  if (currentPage < TOTAL_PAGES) goToPage(currentPage + 1);
 }
 
 function prevPage() {
@@ -446,7 +446,7 @@ function updateBottomBar() {
   const pageNum = document.getElementById('page-num');
   const activePage = document.getElementById('page-' + currentPage);
 
-  if (currentPage === 1 || currentPage === 22) {
+  if (currentPage === 1 || currentPage === TOTAL_PAGES) {
     nav.style.display = 'none';
     if (activePage) activePage.style.paddingBottom = '';
     return;
