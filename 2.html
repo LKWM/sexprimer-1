@@ -81,6 +81,7 @@
     .option-btn.selected { background: #ede9fe; border-color: #7c3aed; }
     .option-btn.correct { background: #dcfce7; border-color: #16a34a; color: #14532d; pointer-events: none; }
     .option-btn.wrong { color: #ef4444; text-decoration: line-through; opacity: 0.55; pointer-events: none; }
+    .mcq-valider .option-btn.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; opacity: 1; }
     .option-btn.matched { background: #dcfce7; border-color: #16a34a; color: #14532d; pointer-events: none; }
     /* 정답란 버튼 (시안 1): 항상 같은 형태 — not clickable(회색) / clickable(보라) 상태만 색상으로 구별 */
     .answer-btn { background:#fff; border:0.45vh solid #d1d5db; color:#9ca3af; border-radius:1vw; padding:1vh 6vw; min-width:40%; font-weight:700; text-align:center; }
@@ -174,7 +175,7 @@
 <div class="page flex-col bg-violet-50" id="page-17"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez tout ce qui peut convenir pour compléter le blanc.</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);width:100%;gap:1.5vh;"><p id="mcq-q-17" class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;color:#1e1b2e;">옷을 팔러 <span class="g-blank"></span></p><div id="mcq-opts-17" class="mcq-opts"></div><button id="valider-17" onclick="mcqValider(17)" disabled class="valider-btn">Valider</button></div></div></div>
 <div class="page flex-col bg-violet-50" id="page-18">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
-      <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:2vh;">
+      <div style="width:100%;display:flex;flex-direction:column;gap:2vh;">
         <div style="background:rgba(255,255,255,0.7);border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.1);">
           <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Bravo ! Vous pouvez désormais distinguer « -(으)러 » et « -(으)려고 » et construire des phrases plus complexes!</p>
         </div>
@@ -317,6 +318,7 @@ function renderMCQ(n) {
   const st = mcqState(n);
   const box = document.getElementById('mcq-opts-' + n);
   if (!box) return;
+  box.className = 'mcq-opts' + (cfg.mode === 'instant' ? '' : ' mcq-valider');
   box.innerHTML = '';
   cfg.opts.forEach((text, idx) => {
     const wrap = document.createElement('div');
@@ -365,7 +367,7 @@ function mcqSelect(n, idx) {
     renderMCQ(n);
     return;
   }
-  if (st.wrong.has(idx)) return;
+  if (st.wrong.has(idx) || st.green.has(idx)) return;
   if (cfg.mode === 'valider-single') {
     // 단일 선택: 다른 옵션을 누르면 교체, 같은 옵션을 다시 누르면 취소
     st.selected = st.selected.has(idx) ? new Set() : new Set([idx]);
@@ -380,24 +382,26 @@ function mcqValider(n) {
   const st = mcqState(n);
   if (st.completed || st.selected.size === 0) return;
   const sel = [...st.selected].sort((a, b) => a - b);
-  const ans = [...cfg.answers].sort((a, b) => a - b);
-  const exact = sel.length === ans.length && sel.every((v, i) => v === ans[i]);
+  const all = new Set([...st.green, ...sel]);
+  const exact = cfg.answers.every(a => all.has(a)) && [...all].every(i => cfg.answers.indexOf(i) !== -1);
+  sel.forEach(i => {
+    if (cfg.answers.indexOf(i) !== -1) {
+      st.green.add(i);
+    } else {
+      st.wrong.add(i);
+      if (cfg.hints && cfg.hints[i] !== undefined) st.hintShown.add(i);
+    }
+  });
+  st.selected = new Set();
   if (exact) {
     playSfx('correct');
-    st.green = new Set(cfg.answers);
-    st.selected = new Set();
+    cfg.answers.forEach(a => st.green.add(a));
     st.completed = true;
     renderMCQ(n);
     updateBottomBar();
     return;
   }
   playSfx('wrong');
-  sel.forEach(i => {
-    if (cfg.answers.indexOf(i) !== -1) return;
-    if (cfg.hints && cfg.hints[i] !== undefined) st.hintShown.add(i);
-    else st.wrong.add(i);
-  });
-  st.selected = new Set();
   renderMCQ(n);
 }
 
