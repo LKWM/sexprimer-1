@@ -120,12 +120,12 @@
     .g-hint { font-size:clamp(0.62rem,max(1.35vw,1.35vh),0.85rem); color:#6b7280; font-weight:500; text-align:center; line-height:1.25; padding:0.3vh 0.4vw 0; min-height:calc(2 * 1.25em); }
     .g-hint.invisible, .invisible { visibility:hidden; }
   .gram-head { position:relative; width:100%; display:flex; flex-direction:column; align-items:center; gap:0.4vh; }
-.gh-line { white-space:nowrap; }
+.gh-line { white-space:nowrap; font-size:clamp(2.4rem,max(6vw,6vh),3.8rem); }
 .gh-sub { white-space:nowrap; }
-.link-cards { position:absolute; inset:0 0 auto 0; height:0; }
+.link-cards { position:absolute; top:0; left:0; right:0; height:0; }
 .gh-word { position:relative; }
 .link-cards { position:static; height:0; display:block; }
-.link-card { position:absolute; white-space:nowrap; }
+.link-card { position:absolute; top:0; white-space:nowrap; }
 .gh-svg { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; overflow:visible; }
   </style>
 </head>
@@ -419,47 +419,62 @@ function layoutHeaderCards(n) {
 
   const hb = head.getBoundingClientRect();
   if (hb.width < 2) return;
-  const cw = cards.map(c => c.getBoundingClientRect().width || 0);
-  const ch = Math.max(...cards.map(c => c.getBoundingClientRect().height || 0));
-  const gap = Math.max(3, hb.height * 0.012);
-  head.style.paddingTop = (ch + gap) + 'px';
+
+  // 카드 높이 + 연결선 자리 + 카드와 헤더 사이 최소 간격을 모두 확보
+  const cardH = Math.max(...cards.map(c => c.getBoundingClientRect().height || 0));
+  const lineSpace = Math.max(8, hb.height * 0.028);
+  const cardGap = Math.max(5, hb.height * 0.014);
+  head.style.paddingTop = (cardH + lineSpace + cardGap) + 'px';
 
   const hb2 = head.getBoundingClientRect();
-  const place = [];
+  const avail = hb2.width;
+
+  const items = [];
   words.forEach((w, i) => {
     const card = cards[i];
-    if (!card || !cw[i]) return;
-    const wb = w.getBoundingClientRect();
-    const wc = wb.left + wb.width / 2 - hb2.left;
-    place.push({ card, wc, wtop: wb.top - hb2.top, w: cw[i], left: wc - cw[i] / 2 });
+    if (!card) return;
+    const wr = w.getBoundingClientRect();
+    const cw = card.getBoundingClientRect().width || 0;
+    if (!cw) return;
+    items.push({ card, w: cw, wc: wr.left + wr.width / 2 - hb2.left, wtop: wr.top - hb2.top, left: wr.left + wr.width / 2 - hb2.left - cw / 2 });
   });
-  place.sort((a, b) => a.left - b.left);
-  for (let i = 0; i < place.length; i++) {
-    place[i].left = Math.max(2, Math.min(place[i].left, hb2.width - place[i].w - 2));
+  if (!items.length) return;
+
+  const GAP = Math.max(8, avail * 0.012);
+  const sorted = [...items].sort((a, b) => a.left - b.left);
+  let overlaps = false;
+  for (let i = 1; i < sorted.length; i++) {
+    if (sorted[i].left < sorted[i - 1].left + sorted[i - 1].w + GAP) overlaps = true;
   }
-  for (let i = 1; i < place.length; i++) {
-    const need = place[i - 1].left + place[i - 1].w + 8;
-    if (place[i].left < need) place[i].left = need;
-  }
-  for (let i = place.length - 1; i >= 0; i--) {
-    const maxLeft = (i === place.length - 1) ? hb2.width - place[i].w - 2 : place[i + 1].left - place[i].w - 8;
-    if (place[i].left > maxLeft) place[i].left = maxLeft;
+
+  if (overlaps) {
+    // 카드끼리 겹칠 때만 그룹으로 묶어 대칭 배치 (필요한 밀림을 최소화)
+    const total = sorted.reduce((sum, o) => sum + o.w, 0) + GAP * (sorted.length - 1);
+    const mid = sorted.reduce((sum, o) => sum + o.wc, 0) / sorted.length;
+    let x = Math.max(2, Math.min(mid - total / 2, avail - total - 2));
+    sorted.forEach(o => { o.left = x; x += o.w + GAP; });
+  } else {
+    items.forEach(o => { o.left = Math.max(2, Math.min(o.left, avail - o.w - 2)); });
   }
 
   let lines = '';
-  place.forEach(p => {
-    const top = Math.max(0, p.wtop - gap - ch);
-    p.card.style.left = p.left + 'px';
-    p.card.style.top = top + 'px';
-    const cardCenter = p.left + p.w / 2;
-    if (Math.abs(cardCenter - p.wc) > 2) {
-      lines += '<line x1="' + p.wc.toFixed(1) + '" y1="' + (p.wtop).toFixed(1) + '" x2="' + cardCenter.toFixed(1) +
-               '" y2="' + (top + ch).toFixed(1) + '" stroke="#c4b5fd" stroke-width="1.5" stroke-linecap="round"/>';
+  items.forEach(o => {
+    o.card.style.left = o.left + 'px';
+    o.card.style.top = '0px';
+    const cardCenter = o.left + o.w / 2;
+    const displaced = Math.abs(cardCenter - o.wc) > Math.max(8, avail * 0.012);
+    if (displaced) {
+      const y1 = cardH + lineSpace * 0.2;
+      const y2 = o.wtop - cardGap * 0.35;
+      if (y2 - y1 > 2) {
+        lines += '<line x1="' + cardCenter.toFixed(1) + '" y1="' + y1.toFixed(1) + '" x2="' + o.wc.toFixed(1) + '" y2="' + y2.toFixed(1) + '" stroke="#c4b5fd" stroke-width="1.5" stroke-linecap="round"/>';
+      }
     }
   });
+
   const svg = head.querySelector('.gh-svg');
   if (svg) {
-    svg.setAttribute('viewBox', '0 0 ' + hb2.width.toFixed(1) + ' ' + hb2.height.toFixed(1));
+    svg.setAttribute('viewBox', '0 0 ' + hb2.width + ' ' + hb2.height);
     svg.innerHTML = lines;
   }
 }
