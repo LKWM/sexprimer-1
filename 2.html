@@ -94,6 +94,7 @@
       font-size: clamp(1.5rem, max(5vw, 5vh), 99rem); transition: opacity 0.15s;
     }
     .deck-arrow:disabled { opacity: 0.3; cursor: default; }
+    .g-blank { display:inline-block; width:3ch; height:1em; background:#fff; border-radius:0.3vw; vertical-align:-0.12em; border:0.12vh solid #e5e7eb; }
     .mcq-opts { display: grid; grid-template-columns: 1fr; gap: 1vh; width: 100%; }
     @media (orientation: landscape) { .mcq-opts { grid-template-columns: 1fr 1fr; } }
       .card-clickable { cursor: pointer; transition: background 0.15s; }
@@ -116,7 +117,7 @@
   .expl-sub, .expl-sub2 { font-size:clamp(0.8rem,min(max(2.2vw,2.2vh),3vh),1.3rem); }
   .expl-text { font-size:clamp(0.8rem,min(max(2.3vw,2.3vh),3.2vh),1.3rem); line-height:1.5; }
       .opt-wrap { display:flex; flex-direction:column; width:100%; }
-    .option-btn.long { font-size:clamp(0.72rem,max(1.7vw,1.7vh),1rem) !important; text-align:left !important; line-height:1.4 !important; }
+    .option-btn.long { font-size:clamp(0.72rem,max(1.7vw,1.7vh),1rem) !important; text-align:center !important; line-height:1.4 !important; }
     .g-hint { font-size:clamp(0.62rem,max(1.35vw,1.35vh),0.85rem); color:#6b7280; font-weight:500; text-align:center; line-height:1.25; padding:0.3vh 0.4vw 0; }
     .g-hint.invisible, .invisible { visibility:hidden; }
   .gram-head { position:relative; width:100%; display:flex; flex-direction:column; align-items:center; gap:0.4vh; }
@@ -144,7 +145,7 @@
           <i class="ph ph-book-open" style="font-size:clamp(1.75rem,max(6vw,6vh),99rem);color:#fff;"></i>
         </div>
         <p style="font-size:clamp(1.05rem,max(2.6vw,2.6vh),99rem);font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:#a78bfa;text-align:center;line-height:1.5;"><span style="white-space:nowrap;">Chapitre 1 :</span> <span style="display:inline-block;">Le but d’une action</span></p>
-        <p style="font-size:clamp(1.28rem,max(2.88vw,2.88vh),99rem);font-weight:800;letter-spacing:0.18em;color:#a78bfa;text-align:center;">Grammaire 📖</p>
+        <p style="font-size:clamp(1.28rem,max(2.88vw,2.88vh),99rem);font-weight:800;letter-spacing:0.18em;color:#a78bfa;text-align:center;margin-top:-1.5vh;">Grammaire 📖</p>
         <h1 style="font-size:clamp(1.5rem,max(5vw,5vh),99rem);font-weight:900;color:#4c1d95;text-align:center;line-height:1.15;margin-top:-1.5vh;">-(으)러 vs -(으)려고</h1>
         <button onclick="startLesson()" style="margin-top:1vh;background:linear-gradient(135deg,#7c3aed,#4c1d95);color:#fff;border:none;border-radius:1.2vw;padding:1.8vh 8vw;font-family:'Nunito',sans-serif;font-size:clamp(0.9rem,max(2.5vw,2.5vh),99rem);font-weight:800;letter-spacing:0.06em;cursor:pointer;box-shadow:0 0.5vh 1.8vh rgba(124,58,237,0.2);transition:transform 0.15s;">Commencer</button>
       </div>
@@ -158,17 +159,17 @@
 <div class="page flex-col bg-violet-50" id="page-4"><div class="expl-wrap"><div class="expl-cards stack"><div class="expl-card"><p class="ko expl-ko-sm">Voyelle + 러</p><p class="expl-sub">보러</p></div><div class="text-box-il" id="text-4" style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);"><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;">Après une voyelle, on ajoute « 러 ».</p></div><div class="expl-card"><p class="ko expl-ko-sm">Consonne + 으러</p><p class="expl-sub">먹으러</p></div><div class="text-box-il" id="text-4" style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);"><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;">Après une consonne, on ajoute « 으러 » pour la liaison.</p></div><div class="expl-card"><p class="ko expl-ko-sm">ㄷ → ㄹ + 으러</p><p class="expl-sub">들으러</p></div><div class="text-box-il" id="text-4" style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);"><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;">Pour les verbes irréguliers dont la consonne finale du radical est « ㄷ », on remplace d’abord « ㄷ » par « ㄹ », puis on ajoute « 으러 » selon la règle générale des consonnes.</p></div><div class="expl-card"><p class="ko expl-ko-sm">ㄹ + 러</p><p class="expl-sub">팔러</p></div><div class="text-box-il" id="text-4" style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);"><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;">Si le radical se termine déjà par « ㄹ », on ajoute directement « 러 » sans liaison.</p></div></div></div></div>
 <div class="page flex-col bg-violet-50" id="page-5"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);width:100%;gap:1vh;"><p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">빵을 먹으러</span> <span class="text-red-500">오세요</span>.</p><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;"><span class="text-green-600">pour manger du pain</span> <span class="text-red-500">venez</span></p><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;font-style:italic;color:#6b7280;">Venez manger du pain.</p><button class="mic-btn" id="mic-5" onclick="handleMicClick(5)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button><div class="feedback-area invisible-fb" id="feedback-5" style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;"></div><div id="transcript-5" style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;color:#6b7280;min-height:2vh;"></div></div></div></div>
 <div class="page flex-col bg-violet-50" id="page-6"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);width:100%;gap:1vh;"><p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">노래를 들으러</span> <span class="text-red-500">콘서트에 가요</span>.</p><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;"><span class="text-green-600">pour écouter une chanson</span> <span class="text-red-500">aller au concert</span></p><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;font-style:italic;color:#6b7280;">Je vais au concert pour écouter des chansons.</p><button class="mic-btn" id="mic-6" onclick="handleMicClick(6)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button><div class="feedback-area invisible-fb" id="feedback-6" style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;"></div><div id="transcript-6" style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;color:#6b7280;min-height:2vh;"></div></div><div class="text-box-il" id="text-6" style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);"><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;">Pour les verbes irréguliers dont la consonne finale du radical est « ㄷ », on remplace d’abord « ㄷ » par « ㄹ », puis on ajoute « 으러 » selon la règle générale des consonnes.</p></div></div></div>
-<div class="page flex-col bg-violet-50" id="page-7"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez ce qui convient pour compléter le blanc.</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);width:100%;gap:1.5vh;"><p id="mcq-q-7" class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;color:#1e1b2e;"><span class="blank">◯◯◯</span> 서울에 가요.</p><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;font-style:italic;color:#6b7280;">Je vais à Séoul pour travailler.</p><div id="mcq-opts-7" class="mcq-opts"></div></div></div></div>
-<div class="page flex-col bg-violet-50" id="page-8"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez ce qui convient pour compléter le blanc.</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);width:100%;gap:1.5vh;"><p id="mcq-q-8" class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;color:#1e1b2e;">친구가 저를 <span class="blank">◯◯◯</span> 왔어요.</p><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;font-style:italic;color:#6b7280;">Un ami est venu me voir.</p><div id="mcq-opts-8" class="mcq-opts"></div></div></div></div>
+<div class="page flex-col bg-violet-50" id="page-7"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez ce qui convient pour compléter le blanc.</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);width:100%;gap:1.5vh;"><p id="mcq-q-7" class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;color:#1e1b2e;"><span class="g-blank"></span> 서울에 가요.</p><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;font-style:italic;color:#6b7280;">Je vais à Séoul pour travailler.</p><div id="mcq-opts-7" class="mcq-opts"></div></div></div></div>
+<div class="page flex-col bg-violet-50" id="page-8"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez ce qui convient pour compléter le blanc.</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);width:100%;gap:1.5vh;"><p id="mcq-q-8" class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;color:#1e1b2e;">친구가 저를 <span class="g-blank"></span> 왔어요.</p><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;font-style:italic;color:#6b7280;">Un ami est venu me voir.</p><div id="mcq-opts-8" class="mcq-opts"></div></div></div></div>
 <div class="page flex-col bg-violet-50" id="page-9"><div class="expl-wrap"><div class="gram-head"><svg class="gh-svg" preserveAspectRatio="none"></svg><div class="link-cards"><div class="expl-card link-card" data-i="0"><p class="expl-sub">raison, objectif</p></div><div class="expl-card link-card" data-i="1"><p class="expl-sub">verbe (action)</p></div></div><p class="ko expl-ko-sm gh-line"><span class="gh-word" data-i="0">V1</span>+(으)려고 + <span class="gh-word" data-i="1">V2</span></p><p class="expl-sub gh-sub">V2 pour / afin de V1</p></div><div class="text-box-il" id="text-9" style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);"><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;">« -(으)려고 » s’utilise pour exprimer le <span class="text-violet-600 font-bold">but d’une action</span>. On peut employer n’importe quel verbe comme un verbe principal (V2).</p></div></div></div>
 <div class="page flex-col bg-violet-50" id="page-10"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);width:100%;gap:1vh;"><p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">비행기 표를 사려고</span> <span class="text-red-500">돈을 모아요</span>.</p><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;"><span class="text-green-600">pour acheter un billet d’avion</span> <span class="text-red-500">rassembler de l’argent</span></p><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;font-style:italic;color:#6b7280;">Je mets de l’argent de côté pour acheter un billet d’avion.</p><button class="mic-btn" id="mic-10" onclick="handleMicClick(10)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button><div class="feedback-area invisible-fb" id="feedback-10" style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;"></div><div id="transcript-10" style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;color:#6b7280;min-height:2vh;"></div></div><div class="text-box-il" id="text-10" style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);"><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;">Comme « 돈을 모으다 (mettre de l’argent de côté) » est une action générale et non un déplacement, on ajoute « 려고 » après le but « 사다 (acheter) ».</p></div></div></div>
 <div class="page flex-col bg-violet-50" id="page-11"><div class="expl-wrap"><div class="expl-cards stack"><div class="expl-card"><p class="ko expl-ko-sm">Voyelle + 려고</p><p class="expl-sub">사려고</p></div><div class="text-box-il" id="text-11" style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);"><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;">Après une voyelle, on ajoute « 려고 ».</p></div><div class="expl-card"><p class="ko expl-ko-sm">Consonne + 으려고</p><p class="expl-sub">먹으려고</p></div><div class="text-box-il" id="text-11" style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);"><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;">Après une consonne, on ajoute « 으려고 » pour la liaison.</p></div><div class="expl-card"><p class="ko expl-ko-sm">ㄷ → ㄹ + 으려고</p><p class="expl-sub">들으려고</p></div><div class="text-box-il" id="text-11" style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);"><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;">Pour les verbes irréguliers dont la consonne finale du radical est « ㄷ », on remplace d’abord « ㄷ » par « ㄹ », puis on ajoute « 으려고 » selon la règle générale des consonnes.</p></div><div class="expl-card"><p class="ko expl-ko-sm">ㄹ + 려고</p><p class="expl-sub">팔려고</p></div><div class="text-box-il" id="text-11" style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);"><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;">Si le radical se termine déjà par « ㄹ », on ajoute directement « 려고 » sans liaison.</p></div></div></div></div>
 <div class="page flex-col bg-violet-50" id="page-12"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);width:100%;gap:1vh;"><p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-green-600">옷을 팔려고</span> <span class="text-red-500">가게를 열었어요</span>.</p><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;"><span class="text-green-600">pour vendre des vêtements</span> <span class="text-red-500">avoir ouvert un magasin</span></p><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;font-style:italic;color:#6b7280;">J’ai ouvert un magasin pour vendre des vêtements.</p><button class="mic-btn" id="mic-12" onclick="handleMicClick(12)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button><div class="feedback-area invisible-fb" id="feedback-12" style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;"></div><div id="transcript-12" style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;color:#6b7280;min-height:2vh;"></div></div><div class="text-box-il" id="text-12" style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);"><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;">Comme le radical de « 팔다 » se termine par « ㄹ », on ajoute directement « 려고 », même s’il s’agit d’une consonne.</p></div></div></div>
-<div class="page flex-col bg-violet-50" id="page-13"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez ce qui convient pour compléter le blanc.</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);width:100%;gap:1.5vh;"><p id="mcq-q-13" class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;color:#1e1b2e;">취직<span class="blank">◯◯◯</span> 한국어 공부를 해요.</p><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;font-style:italic;color:#6b7280;">J’étudie le coréen pour trouver un emploi.</p><div id="mcq-opts-13" class="mcq-opts"></div></div></div></div>
+<div class="page flex-col bg-violet-50" id="page-13"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez ce qui convient pour compléter le blanc.</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);width:100%;gap:1.5vh;"><p id="mcq-q-13" class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;color:#1e1b2e;">취직<span class="g-blank"></span> 한국어 공부를 해요.</p><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;font-style:italic;color:#6b7280;">J’étudie le coréen pour trouver un emploi.</p><div id="mcq-opts-13" class="mcq-opts"></div></div></div></div>
 <div class="page flex-col bg-violet-50" id="page-14"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez l’explication correcte.</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);width:100%;gap:1.5vh;"><div id="mcq-opts-14" class="mcq-opts"></div><button id="valider-14" onclick="mcqValider(14)" disabled class="valider-btn">Valider</button></div></div></div>
-<div class="page flex-col bg-violet-50" id="page-15"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez ce qui convient pour compléter le blanc.</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);width:100%;gap:1.5vh;"><p id="mcq-q-15" class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;color:#1e1b2e;">중국에 <span class="blank">◯◯◯</span> 여권을 만들었어요.</p><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;font-style:italic;color:#6b7280;">J’ai fait mon passeport pour aller en Chine.</p><div id="mcq-opts-15" class="mcq-opts"></div><button id="valider-15" onclick="mcqValider(15)" disabled class="valider-btn">Valider</button></div></div></div>
-<div class="page flex-col bg-violet-50" id="page-16"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez ce qui convient pour compléter le blanc.</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);width:100%;gap:1.5vh;"><p id="mcq-q-16" class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;color:#1e1b2e;">빵을 <span class="blank">◯◯◯</span> 오세요.</p><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;font-style:italic;color:#6b7280;">Venez manger du pain.</p><div id="mcq-opts-16" class="mcq-opts"></div><button id="valider-16" onclick="mcqValider(16)" disabled class="valider-btn">Valider</button></div></div></div>
-<div class="page flex-col bg-violet-50" id="page-17"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez tout ce qui peut convenir pour compléter le blanc.</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);width:100%;gap:1.5vh;"><p id="mcq-q-17" class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;color:#1e1b2e;">옷을 팔러 <span class="blank">◯◯◯</span></p><div id="mcq-opts-17" class="mcq-opts"></div><button id="valider-17" onclick="mcqValider(17)" disabled class="valider-btn">Valider</button></div></div></div>
+<div class="page flex-col bg-violet-50" id="page-15"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez ce qui convient pour compléter le blanc.</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);width:100%;gap:1.5vh;"><p id="mcq-q-15" class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;color:#1e1b2e;">중국에 <span class="g-blank"></span> 여권을 만들었어요.</p><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;font-style:italic;color:#6b7280;">J’ai fait mon passeport pour aller en Chine.</p><div id="mcq-opts-15" class="mcq-opts"></div></div></div></div>
+<div class="page flex-col bg-violet-50" id="page-16"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez ce qui convient pour compléter le blanc.</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);width:100%;gap:1.5vh;"><p id="mcq-q-16" class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;color:#1e1b2e;">빵을 <span class="g-blank"></span> 오세요.</p><p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;font-style:italic;color:#6b7280;">Venez manger du pain.</p><div id="mcq-opts-16" class="mcq-opts"></div></div></div></div>
+<div class="page flex-col bg-violet-50" id="page-17"><div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;"><p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Choisissez tout ce qui peut convenir pour compléter le blanc.</p><div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);width:100%;gap:1.5vh;"><p id="mcq-q-17" class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;color:#1e1b2e;">옷을 팔러 <span class="g-blank"></span></p><div id="mcq-opts-17" class="mcq-opts"></div><button id="valider-17" onclick="mcqValider(17)" disabled class="valider-btn">Valider</button></div></div></div>
 <div class="page flex-col bg-violet-50" id="page-18">
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:2vh;">
@@ -292,8 +293,8 @@ const MCQ_PAGES = {
         answers: [1],
         hints: { 0: 'Le déplacement est également inclus dans l’action.',
                  2: '« (으)러 » s’utilise uniquement pour un déplacement.' } },
-  15: { mode: 'multi', opts: ['갈려고', '가러', '가려고', '가으러', '간려고'], answers: [2] },
-  16: { mode: 'multi', opts: ['먹려고', '머러', '먹으려고', '먹러', '먹으러', '먹으고'], answers: [4] },
+  15: { mode: 'instant', opts: ['갈려고', '가러', '가려고', '가으러', '간려고'], answers: [2] },
+  16: { mode: 'instant', opts: ['먹려고', '머러', '먹으려고', '먹러', '먹으러', '먹으고'], answers: [4] },
   17: { mode: 'multi', long: true,
         opts: ['시장에 가요', '가게를 열었어요', '시장에 왔어요', '가게를 모아요'],
         answers: [0, 2],
@@ -348,7 +349,7 @@ function mcqUnionExact(cfg, st) {
 function mcqSelect(n, idx) {
   const cfg = MCQ_PAGES[n];
   const st = mcqState(n);
-  if (st.completed || st.green.has(idx)) return;
+  if (st.completed) return;
   if (cfg.mode === 'instant') {
     if (cfg.answers.indexOf(idx) !== -1) {
       playSfx('correct');
@@ -362,15 +363,12 @@ function mcqSelect(n, idx) {
     renderMCQ(n);
     return;
   }
-  if (st.selected.has(idx)) st.selected.delete(idx); else st.selected.add(idx);
-  if (mcqUnionExact(cfg, st)) {
-    playSfx('correct');
-    cfg.answers.forEach(a => st.green.add(a));
-    st.selected.clear();
-    st.completed = true;
-    renderMCQ(n);
-    updateBottomBar();
-    return;
+  if (st.wrong.has(idx)) return;
+  if (cfg.mode === 'valider-single') {
+    // 단일 선택: 다른 옵션을 누르면 교체, 같은 옵션을 다시 누르면 취소
+    st.selected = st.selected.has(idx) ? new Set() : new Set([idx]);
+  } else {
+    if (st.selected.has(idx)) st.selected.delete(idx); else st.selected.add(idx);
   }
   renderMCQ(n);
 }
@@ -379,12 +377,13 @@ function mcqValider(n) {
   const cfg = MCQ_PAGES[n];
   const st = mcqState(n);
   if (st.completed || st.selected.size === 0) return;
-  const sel = [...st.selected];
-  const allRight = mcqUnionExact(cfg, st);
-  if (allRight) {
+  const sel = [...st.selected].sort((a, b) => a - b);
+  const ans = [...cfg.answers].sort((a, b) => a - b);
+  const exact = sel.length === ans.length && sel.every((v, i) => v === ans[i]);
+  if (exact) {
     playSfx('correct');
-    cfg.answers.forEach(a => st.green.add(a));
-    st.selected.clear();
+    st.green = new Set(cfg.answers);
+    st.selected = new Set();
     st.completed = true;
     renderMCQ(n);
     updateBottomBar();
@@ -392,14 +391,11 @@ function mcqValider(n) {
   }
   playSfx('wrong');
   sel.forEach(i => {
-    if (cfg.answers.indexOf(i) === -1) {
-      st.wrong.add(i);
-      if (cfg.hints && cfg.hints[i] !== undefined) st.hintShown.add(i);
-    } else {
-      st.green.add(i);
-    }
+    if (cfg.answers.indexOf(i) !== -1) return;
+    if (cfg.hints && cfg.hints[i] !== undefined) st.hintShown.add(i);
+    else st.wrong.add(i);
   });
-  st.selected.clear();
+  st.selected = new Set();
   renderMCQ(n);
 }
 
@@ -443,18 +439,36 @@ function fitPageContent(n) {
   const wrap = page.querySelector(':scope > div');
   if (!wrap) return;
   wrap.style.transform = '';
+  wrap.style.width = '';
+  wrap.style.maxWidth = '';
   const cs = getComputedStyle(page);
   const avail = page.clientHeight - parseFloat(cs.paddingTop || 0) - parseFloat(cs.paddingBottom || 0);
-  const kids = [...wrap.children].filter(el => el.getBoundingClientRect().height > 0);
-  if (!kids.length || avail <= 0) return;
-  const top = Math.min(...kids.map(el => el.getBoundingClientRect().top));
-  const bottom = Math.max(...kids.map(el => el.getBoundingClientRect().bottom));
-  const need = bottom - top;
-  if (need > avail) {
-    const scale = Math.max(0.5, avail / need);
-    wrap.style.transformOrigin = 'center center';
-    wrap.style.transform = 'scale(' + scale.toFixed(3) + ')';
+  if (avail <= 0) return;
+  const baseW = wrap.getBoundingClientRect().width;
+  if (!baseW) return;
+  const measure = () => {
+    const kids = [...wrap.children].filter(el => el.getBoundingClientRect().height > 0);
+    if (!kids.length) return 0;
+    const top = Math.min(...kids.map(el => el.getBoundingClientRect().top));
+    const bottom = Math.max(...kids.map(el => el.getBoundingClientRect().bottom));
+    return bottom - top;
+  };
+  let need = measure();
+  if (need <= avail + 1) return;
+  // 폭을 넓히면 줄바꿈이 줄어 높이가 줄어든다 → 아이템 가로폭을 유지한 채 필요한 배율만 찾는다
+  let scale = 1;
+  for (let i = 0; i < 6; i++) {
+    scale = Math.max(0.4, avail / need);
+    wrap.style.width = (baseW / scale) + 'px';
+    wrap.style.maxWidth = (baseW / scale) + 'px';
+    need = measure();
+    if (need * scale <= avail + 1) break;
   }
+  if (scale >= 0.999) { wrap.style.width = ''; wrap.style.maxWidth = ''; return; }
+  wrap.style.width = (baseW / scale) + 'px';
+  wrap.style.maxWidth = (baseW / scale) + 'px';
+  wrap.style.transformOrigin = 'center center';
+  wrap.style.transform = 'scale(' + scale.toFixed(3) + ')';
 }
 
 function layoutHeaderCards(n) {
@@ -513,18 +527,19 @@ function layoutHeaderCards(n) {
     items.forEach(o => { o.left = Math.max(2, Math.min(o.left, avail - o.w - 2)); });
   }
 
+  // 연결선은 카드가 여러 개일 때 전부 또는 전무: 하나라도 밀렸으면 모든 카드에 선을 긋는다
+  const placed = items.map(o => ({ o, cardCenter: o.left + o.w / 2 }));
+  const LINE_MIN = Math.max(8, avail * 0.012);
+  const anyDisplaced = placed.some(p => Math.abs(p.cardCenter - p.o.wc) > LINE_MIN);
   let lines = '';
-  items.forEach(o => {
-    o.card.style.left = o.left + 'px';
-    o.card.style.top = '0px';
-    const cardCenter = o.left + o.w / 2;
-    const displaced = Math.abs(cardCenter - o.wc) > Math.max(8, avail * 0.012);
-    if (displaced) {
-      const y1 = cardH + lineSpace * 0.2;
-      const y2 = o.wtop - cardGap * 0.35;
-      if (y2 - y1 > 2) {
-        lines += '<line x1="' + cardCenter.toFixed(1) + '" y1="' + y1.toFixed(1) + '" x2="' + o.wc.toFixed(1) + '" y2="' + y2.toFixed(1) + '" stroke="#c4b5fd" stroke-width="1.5" stroke-linecap="round"/>';
-      }
+  placed.forEach(p => {
+    p.o.card.style.left = p.o.left + 'px';
+    p.o.card.style.top = '0px';
+    if (!anyDisplaced) return;
+    const y1 = cardH + lineSpace * 0.2;
+    const y2 = p.o.wtop - cardGap * 0.35;
+    if (y2 - y1 > 2) {
+      lines += '<line x1="' + p.cardCenter.toFixed(1) + '" y1="' + y1.toFixed(1) + '" x2="' + p.o.wc.toFixed(1) + '" y2="' + y2.toFixed(1) + '" stroke="#c4b5fd" stroke-width="1.5" stroke-linecap="round"/>';
     }
   });
 
@@ -561,7 +576,7 @@ function handlePageEnter(n) {
   }
   if (EXERCISES[n]) {
     const a = EXERCISES[n].answer.audio;
-    if (n <= 6 && a) {
+    if (a) {
       audioTimer = setTimeout(() => playAudio(a, () => { micTimer = setTimeout(() => activateMic(n), 300); }), 300);
     } else {
       micTimer = setTimeout(() => activateMic(n), 300);
@@ -953,7 +968,7 @@ async function processGeminiChat(audioBase64, mimeType, pageNum) {
     const res = await fetch(GEMINI_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...payload, systemInstruction: "유저의 발화를 한글로 전사하라", model: "gemini-3.5-flash-lite", permit: lessonPermit, lesson_id: lessonId })
+      body: JSON.stringify({ ...payload, systemInstruction: "유저의 한국어 발화를 한글로 전사한다.\n1. 발화를 하지 않는 구간이나 외국어로 발화하는 구간은 전사하지 않는다.\n2. Filler words, stutters 삭제하고 실제 발화값만 전사한다.\n3. 문법, 발음 오류는 교정 없이 들리는 대로 전사한다.", model: "gemini-3.8-flash", permit: lessonPermit, lesson_id: lessonId })
     });
 
     if (!res.ok) throw new Error("API status: " + res.status);
