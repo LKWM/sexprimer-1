@@ -438,9 +438,13 @@ function fitPageContent(n) {
   if (!page) return;
   const wrap = page.querySelector(':scope > div');
   if (!wrap) return;
+  if (wrap.dataset.origW === undefined) {
+    wrap.dataset.origW = wrap.style.width || '';
+    wrap.dataset.origMW = wrap.style.maxWidth || '';
+  }
   wrap.style.transform = '';
-  wrap.style.width = '';
-  wrap.style.maxWidth = '';
+  wrap.style.width = wrap.dataset.origW;
+  wrap.style.maxWidth = wrap.dataset.origMW;
   const cs = getComputedStyle(page);
   const avail = page.clientHeight - parseFloat(cs.paddingTop || 0) - parseFloat(cs.paddingBottom || 0);
   if (avail <= 0) return;
@@ -454,7 +458,7 @@ function fitPageContent(n) {
     return bottom - top;
   };
   let need = measure();
-  if (need <= avail + 1) return;
+  if (need <= avail + 1) { wrap.style.transform = ''; return; }
   // 폭을 넓히면 줄바꿈이 줄어 높이가 줄어든다 → 아이템 가로폭을 유지한 채 필요한 배율만 찾는다
   let scale = 1;
   for (let i = 0; i < 6; i++) {
@@ -464,7 +468,7 @@ function fitPageContent(n) {
     need = measure();
     if (need * scale <= avail + 1) break;
   }
-  if (scale >= 0.999) { wrap.style.width = ''; wrap.style.maxWidth = ''; return; }
+  if (scale >= 0.999) { wrap.style.width = wrap.dataset.origW; wrap.style.maxWidth = wrap.dataset.origMW; wrap.style.transform = ''; return; }
   wrap.style.width = (baseW / scale) + 'px';
   wrap.style.maxWidth = (baseW / scale) + 'px';
   wrap.style.transformOrigin = 'center center';
