@@ -118,8 +118,7 @@
   .expl-sub, .expl-sub2 { font-size:clamp(0.8rem,min(max(2.2vw,2.2vh),3vh),1.3rem); }
   .expl-text { font-size:clamp(0.8rem,min(max(2.3vw,2.3vh),3.2vh),1.3rem); line-height:1.5; }
       .opt-wrap { display:flex; flex-direction:column; width:100%; }
-    .option-btn.long { font-size:clamp(0.72rem,max(1.7vw,1.7vh),1rem) !important; text-align:center !important; line-height:1.4 !important; }
-    .g-hint { font-size:clamp(0.62rem,max(1.35vw,1.35vh),0.85rem); color:#6b7280; font-weight:500; text-align:center; line-height:1.25; padding:0.3vh 0.4vw 0; }
+    .g-hint { font-size:clamp(0.744rem,max(1.62vw,1.62vh),1.02rem); color:#6b7280; font-weight:500; text-align:center; line-height:1.25; padding:0.3vh 0.4vw 0; }
     .g-hint.invisible, .invisible { visibility:hidden; }
   .gram-head { position:relative; width:100%; display:flex; flex-direction:column; align-items:center; gap:0.4vh; }
 .gh-line { white-space:nowrap; font-size:clamp(2.4rem,max(6vw,6vh),3.8rem); }
@@ -289,7 +288,7 @@ const MCQ_PAGES = {
   7:  { mode: 'instant', opts: ['일하러', '일러', '일으러', '일하다러'], answers: [0] },
   8:  { mode: 'instant', opts: ['만나하러', '만날러', '만나러', '만나으러'], answers: [2] },
   13: { mode: 'instant', opts: ['할려고', '하러고', '하려고', '하다려고'], answers: [2] },
-  14: { mode: 'valider', long: true,
+  14: { mode: 'valider',
         opts: ['Si le verbe de la proposition principale est un déplacement, on ne peut utiliser que « (으)러 » pour exprimer le but.',
                'Si le verbe de la proposition principale est une action, on ne peut utiliser que « (으)려고 » pour exprimer le but.',
                'Si le verbe de la proposition principale est une action, on peut utiliser « (으)러 » pour exprimer le but.'],
@@ -298,7 +297,7 @@ const MCQ_PAGES = {
                  2: '« (으)러 » s’utilise uniquement pour un déplacement.' } },
   15: { mode: 'instant', opts: ['갈려고', '가러', '가려고', '가으러', '간려고'], answers: [2] },
   16: { mode: 'instant', opts: ['먹려고', '머러', '먹으려고', '먹러', '먹으러', '먹으고'], answers: [4] },
-  17: { mode: 'multi', long: true,
+  17: { mode: 'multi',
         opts: ['시장에 가요', '가게를 열었어요', '시장에 왔어요', '가게를 모아요'],
         answers: [0, 2],
         hints: { 1: 'Comme « 열다 » n’est pas un déplacement, on ne peut pas utiliser « (으)러 » pour exprimer le but.',
@@ -324,7 +323,7 @@ function renderMCQ(n) {
     const wrap = document.createElement('div');
     wrap.className = 'opt-wrap';
     const btn = document.createElement('button');
-    btn.className = 'option-btn ko' + (cfg.long ? ' long' : '');
+    btn.className = 'option-btn ko';
     btn.textContent = text;
     if (st.selected.has(idx)) btn.classList.add('selected');
     if (st.green.has(idx)) btn.classList.add('correct');
