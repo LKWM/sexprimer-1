@@ -86,9 +86,9 @@
     /* 단어 카드: 모든 Subtitle 2 중 가장 긴 것을 기준으로 공간을 고정 (Golden Rule 2), 넘치면 비율 축소 (Golden Rule 1) */
     #deck-content { flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: calc(2.5vh * var(--deck-scale)); width: 100%; }
     #deck-sub1 { font-size: calc(clamp(1.05rem, max(3vw, 3vh), 99rem) * var(--deck-scale)); font-weight: 700; text-align: center; color: #1e1b2e; }
-    #deck-sub2-wrap { display: grid; width: 100%; }
-    .deck-sub2 { grid-area: 1 / 1; visibility: hidden; font-size: calc(clamp(0.9rem, max(2.2vw, 2.2vh), 99rem) * var(--deck-scale)); font-weight: 500; text-align: center; color: #6b7280; font-style: italic; }
-    .deck-sub2.on { visibility: visible; }
+    #deck-sub2-wrap { display: block; width: 100%; }
+    .deck-sub2 { font-size: calc(clamp(0.9rem, max(2.2vw, 2.2vh), 99rem) * var(--deck-scale)); font-weight: 500; text-align: center; color: #6b7280; font-style: italic; }
+    .deck-sub2:empty { display: none; }
     .mcq-opts { display: grid; grid-template-columns: 1fr; gap: 1vh; width: 100%; }
     @media (orientation: landscape) { .mcq-opts { grid-template-columns: 1fr 1fr; } }
   </style>
@@ -702,13 +702,10 @@ function renderDeck() {
   // 모든 단어의 Subtitle 2를 같은 칸에 겹쳐 놓아 가장 긴 것을 기준으로 높이를 고정
   const wrap = document.getElementById('deck-sub2-wrap');
   if (!wrap.children.length) {
-    WORDS.forEach((w, i) => {
-      const p = document.createElement('p');
-      p.className = 'deck-sub2';
-      p.id = 'deck-sub2-' + i;
-      p.textContent = w.sub2 || '\u00A0';
-      wrap.appendChild(p);
-    });
+    const p = document.createElement('p');
+    p.className = 'deck-sub2';
+    p.id = 'deck-sub2';
+    wrap.appendChild(p);
   }
   updateDeckCard();
 }
@@ -718,9 +715,8 @@ function updateDeckCard() {
   const w = WORDS[st.deckIndex];
   document.getElementById('deck-word').textContent = w.ko;
   document.getElementById('deck-sub1').textContent = w.fr;
-  WORDS.forEach((_, i) => {
-    document.getElementById('deck-sub2-' + i).classList.toggle('on', i === st.deckIndex && !!WORDS[i].sub2);
-  });
+  const sub2 = document.getElementById('deck-sub2');
+  if (sub2) sub2.textContent = w.sub2 || '';
   document.getElementById('deck-prev').disabled = (st.deckIndex === 0);
   document.getElementById('deck-next').disabled = (st.deckIndex === WORDS.length - 1);
   fitDeck();
