@@ -548,7 +548,7 @@ function mcqValider(n) {
   if (st.completed || st.selected.size === 0) return;
   const sel = [...st.selected].sort((a, b) => a - b);
   const all = new Set([...st.green, ...sel]);
-  const exact = cfg.answers.every(a => all.has(a)) && [...all].every(i => cfg.answers.indexOf(i) !== -1);
+  const exact = cfg.answers.every(a => all.has(a));
   sel.forEach(i => {
     if (cfg.answers.indexOf(i) !== -1) {
       st.green.add(i);
