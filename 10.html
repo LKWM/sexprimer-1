@@ -577,11 +577,17 @@ function mcqOptions(n) { return MCQ_PAGES[n].opts; }
 function fitOneLine(el) {
   if (!el) return;
   el.style.fontSize = '';
-  let size = parseFloat(getComputedStyle(el).fontSize) || 16;
+  const host = el.parentElement;
+  const hostW = host ? host.clientWidth : 0;
+  if (!hostW) return;
+  const baseSize = parseFloat(getComputedStyle(host).fontSize) || 16;
+  let size = parseFloat(getComputedStyle(el).fontSize) || baseSize;
+  el.style.fontSize = (size / baseSize * 100).toFixed(2) + '%';
   let guard = 0;
-  while (el.scrollWidth > el.clientWidth + 1 && size > 8 && guard++ < 60) {
-    size -= 1;
-    el.style.fontSize = size + 'px';
+  while (el.scrollWidth > hostW + 1 && guard++ < 80) {
+    size *= 0.97;
+    el.style.fontSize = (size / baseSize * 100).toFixed(2) + '%';
+    if (size < baseSize * 0.25) break;
   }
 }
 
@@ -590,6 +596,10 @@ function matchHintSlots(n) {
   if (!box) return;
   const hints = [...box.querySelectorAll('.g-hint')];
   if (!hints.length) return;
+  const toEm = (h, px) => {
+    const f = parseFloat(getComputedStyle(h).fontSize) || 16;
+    return (px / f).toFixed(3) + 'em';
+  };
   hints.forEach(h => { h.style.minHeight = '0'; });
   let max = 0;
   hints.forEach(h => { max = Math.max(max, h.getBoundingClientRect().height); });
@@ -597,11 +607,11 @@ function matchHintSlots(n) {
     setTimeout(() => {
       let m2 = 0;
       hints.forEach(h => { m2 = Math.max(m2, h.getBoundingClientRect().height); });
-      if (m2 > 0) hints.forEach(h => { h.style.minHeight = m2 + 'px'; });
+      if (m2 > 0) hints.forEach(h => { h.style.minHeight = toEm(h, m2); });
     }, 60);
     return;
   }
-  hints.forEach(h => { h.style.minHeight = max + 'px'; });
+  hints.forEach(h => { h.style.minHeight = toEm(h, max); });
 }
 
 function fitPageContent(n) {
@@ -618,6 +628,8 @@ function fitPageContent(n) {
   wrap.style.maxWidth = wrap.dataset.origMW;
   const cs = getComputedStyle(page);
   const avail = page.clientHeight - parseFloat(cs.paddingTop || 0) - parseFloat(cs.paddingBottom || 0);
+  const contentW = page.clientWidth - parseFloat(cs.paddingLeft || 0) - parseFloat(cs.paddingRight || 0);
+  const cwPct = px => (contentW > 0 ? (px / contentW * 100).toFixed(3) + '%' : '');
   if (avail <= 0) return;
   const baseW = wrap.getBoundingClientRect().width;
   if (!baseW) return;
@@ -634,14 +646,14 @@ function fitPageContent(n) {
   let scale = 1;
   for (let i = 0; i < 6; i++) {
     scale = Math.max(0.4, avail / need);
-    wrap.style.width = (baseW / scale) + 'px';
-    wrap.style.maxWidth = (baseW / scale) + 'px';
+    wrap.style.width = cwPct(baseW / scale);
+    wrap.style.maxWidth = 'none';
     need = measure();
     if (need * scale <= avail + 1) break;
   }
   if (scale >= 0.999) { wrap.style.width = wrap.dataset.origW; wrap.style.maxWidth = wrap.dataset.origMW; wrap.style.transform = ''; return; }
-  wrap.style.width = (baseW / scale) + 'px';
-  wrap.style.maxWidth = (baseW / scale) + 'px';
+  wrap.style.width = cwPct(baseW / scale);
+  wrap.style.maxWidth = 'none';
   wrap.style.transformOrigin = 'center center';
   wrap.style.transform = 'scale(' + scale.toFixed(3) + ')';
 }
@@ -669,7 +681,8 @@ function layoutHeaderCards(n) {
   const cardH = Math.max(...cards.map(c => c.getBoundingClientRect().height || 0));
   const lineSpace = Math.max(8, hb.height * 0.028);
   const cardGap = Math.max(5, hb.height * 0.014);
-  head.style.paddingTop = (cardH + lineSpace + cardGap) + 'px';
+  const headBase = parseFloat(getComputedStyle(head).fontSize) || 16;
+  head.style.paddingTop = ((cardH + lineSpace + cardGap) / headBase).toFixed(3) + 'em';
 
   const hb2 = head.getBoundingClientRect();
   const avail = hb2.width;
@@ -708,8 +721,8 @@ function layoutHeaderCards(n) {
   const anyDisplaced = placed.some(p => Math.abs(p.cardCenter - p.o.wc) > LINE_MIN);
   let lines = '';
   placed.forEach(p => {
-    p.o.card.style.left = p.o.left + 'px';
-    p.o.card.style.top = '0px';
+    p.o.card.style.left = (p.o.left / avail * 100).toFixed(3) + '%';
+    p.o.card.style.top = '0';
     if (!anyDisplaced) return;
     const y1 = cardH + lineSpace * 0.2;
     const y2 = p.o.wtop - cardGap * 0.35;
