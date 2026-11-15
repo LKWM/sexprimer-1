@@ -7,10 +7,10 @@
   // 모든 오디오 링크 목록 — 녹음 완료 후 링크 추가 시 자동 연동
   // ================================================================
   const audioMap = {
-      '내년에 한국으로 유학을 가기로 했어요.': '',
-      '회사를 그만두기로 했어요.': '',
-      '<span class="text-blue-600">가기 전에</span> <span class="text-green-600">한국어</span>를 <span class="text-red-500">배우</span><span class="text-orange-500">려고 해요</span>.': '',
-      '<span class="text-blue-600">새로운</span> <span class="text-green-600">직업</span>을 <span class="text-red-500">찾으</span><span class="text-orange-500">려고 해요</span>.': '',
+      '내년에 한국으로 유학을 가기로 했어요.': 'https://res.cloudinary.com/de76i94ia/video/upload/v1793885141/C3S5-F_bubmlt.mp3',
+      '회사를 그만두기로 했어요.': 'https://res.cloudinary.com/de76i94ia/video/upload/v1793885145/C3S7-M_vegnhg.mp3',
+      '가기 전에 한국어를 배우려고 해요.': 'https://res.cloudinary.com/de76i94ia/video/upload/v1793885143/C3S6-F_wg66ou.mp3',
+      '새로운 직업을 찾으려고 해요.': 'https://res.cloudinary.com/de76i94ia/video/upload/v1793885148/C3S8-M_euocz2.mp3',
   };
   window.addEventListener('resize', () => { if (currentPage) { layoutHeaderCards(currentPage); fitPageContent(currentPage); if (isMcqPage(currentPage)) matchHintSlots(currentPage); } });
 </script>
@@ -439,7 +439,7 @@ function updateBottomBar() {
 }
 
 // 객관식 문제 — 실라버스 원문 그대로 (answer: 정답 선지 번호, 0부터 시작). 선지 순서는 입장 시 섞음
-const CLICK_AUDIO = { 3: [''], 8: ['', '', ''] };
+const CLICK_AUDIO = { 3: [audioMap['내년에 한국으로 유학을 가기로 했어요.']], 8: ['', '', ''] };
 
 function playClickAudio(pageNum, idx = 0) {
   if (isRecording) return;
