@@ -9,8 +9,8 @@
   const audioMap = {
       '내년에 한국으로 유학을 가기로 했어요.': '',
       '회사를 그만두기로 했어요.': '',
-      '가기 전에 한국어를 배우려고 해요.': '',
-      '새로운 직업을 찾으려고 해요.': '',
+      '<span class="text-blue-600">가기 전에</span> <span class="text-green-600">한국어</span>를 <span class="text-red-500">배우</span><span class="text-orange-500">려고 해요</span>.': '',
+      '<span class="text-blue-600">새로운</span> <span class="text-green-600">직업</span>을 <span class="text-red-500">찾으</span><span class="text-orange-500">려고 해요</span>.': '',
   };
   window.addEventListener('resize', () => { if (currentPage) { layoutHeaderCards(currentPage); fitPageContent(currentPage); if (isMcqPage(currentPage)) matchHintSlots(currentPage); } });
 </script>
@@ -230,7 +230,7 @@
             <i class="ph-fill ph-speaker-high expl-icon"></i>
             <p class="ko expl-ko">-(으)려고 + phrase</p>
           </div>
-          <p class="expl-sub">pour, afin de</p>
+          <p class="expl-sub2">pour, afin de</p>
         </div>
       <div class="text-box-il" id="text-8" style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);">
         <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;">Il sert à exprimer <span class="text-violet-600 font-bold">le but d’une action</span>. Toujours suivi d’une proposition indiquant l’action effectuée, c’est-à-dire la « conséquence ».</p>
@@ -240,7 +240,7 @@
             <i class="ph-fill ph-speaker-high expl-icon"></i>
             <p class="ko expl-ko">-(으)려고요.</p>
           </div>
-          <p class="expl-sub">(Je) compte + V</p>
+          <p class="expl-sub2">(Je) compte + V</p>
         </div>
       <div class="text-box-il" id="text-8" style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);">
         <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;">Comme cela exprime ce que le sujet compte faire dans un avenir proche, on le traduit <span class="text-violet-600 font-bold">toujours à la 1re personne (Je/Nous)</span>. S’il s’agit d’une phrase interrogative, elle sert toujours à demander directement l’avis de l’interlocuteur et se traduit donc avec « Vous/Tu ».</p>
@@ -250,7 +250,7 @@
             <i class="ph-fill ph-speaker-high expl-icon"></i>
             <p class="ko expl-ko">-(으)려고 하다.</p>
           </div>
-          <p class="expl-sub">Compter + V</p>
+          <p class="expl-sub2">Compter + V</p>
         </div>
       <div class="text-box-il" id="text-8" style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);background:rgba(255,255,255,0.7);">
         <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#1e1b2e;">Il permet d’exprimer indirectement l’intention non seulement du <span class="text-violet-600 font-bold">locuteur</span> ou de l’<span class="text-violet-600 font-bold">interlocuteur</span>, mais aussi d’une <span class="text-violet-600 font-bold">tierce personne</span>. Aux 1re et 2e personnes, cet emploi est interchangeable avec « -(으)려고 », mais en tant que phrase complète, il donne un ton plus formel.</p>
@@ -262,8 +262,8 @@
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
-        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;">가기 전에 한국어를 배우려고 해요.</p>
-        <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;">avant d'y aller coréen compter apprendre</p>
+        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-blue-600">가기 전에</span> <span class="text-green-600">한국어</span>를 <span class="text-red-500">배우</span><span class="text-orange-500">려고 해요</span>.</p>
+        <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;"><span class="text-blue-600">avant d’y aller</span> <span class="text-green-600">coréen</span> <span class="text-orange-500">compter</span> <span class="text-red-500">apprendre</span></p>
         <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je compte apprendre le coréen avant d'y aller.</p>
         <button class="mic-btn disabled" id="mic-9" onclick="handleMicClick(9)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-9" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
@@ -277,8 +277,8 @@
     <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
       <p class="ko" style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">따라 말해 보세요!</p>
       <div style="background:#f5f3ff;border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;display:flex;flex-direction:column;align-items:center;gap:0.8vh;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.08);width:100%;gap:1vh;">
-        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-red-500">새로운</span> <span class="text-green-600">직업</span>을 <span class="text-purple-600">찾으려고 해요</span>.</p>
-        <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;"><span class="text-red-500">nouveau</span> <span class="text-green-600">métier</span> <span class="text-purple-600">compter chercher</span></p>
+        <p class="ko" style="font-size:clamp(1.3rem,max(3.5vw,3.5vh),2.3rem);font-weight:700;text-align:center;"><span class="text-blue-600">새로운</span> <span class="text-green-600">직업</span>을 <span class="text-red-500">찾으</span><span class="text-orange-500">려고 해요</span>.</p>
+        <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;"><span class="text-blue-600">nouveau</span> <span class="text-green-600">métier</span> <span class="text-orange-500">compter</span> <span class="text-red-500">chercher</span></p>
         <p style="font-size:min(clamp(0.99rem,max(2.42vw,2.42vh),1.43rem),3vh);font-weight:500;text-align:center;color:#6b7280;font-style:italic;">Je compte chercher un nouveau métier.</p>
         <button class="mic-btn disabled" id="mic-10" onclick="handleMicClick(10)"><i class="ph-fill ph-microphone" style="font-size:var(--btn);"></i></button>
         <div class="feedback-area invisible-fb" id="feedback-10" style="font-size:clamp(0.8rem,max(1.5vw,1.5vh),1rem);font-weight:600;text-align:center;"></div>
