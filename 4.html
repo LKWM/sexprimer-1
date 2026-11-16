@@ -427,8 +427,15 @@ function askQuestion() {
   col.appendChild(b); col.appendChild(trBtn);
   row.appendChild(av); row.appendChild(col);
   area.appendChild(row);
+  scrollChat();
 
-  // 우측 점선 말풍선(suggestion)
+  // 질문 오디오 자동 재생 → 오디오가 끝나면 우측 점선 말풍선(suggestion) 추가 + 마이크 활성
+  playQuestionAudio(q.n, () => { showSuggestion(q); });
+}
+
+// 우측 점선 말풍선(suggestion) — 질문 오디오 종료 후 추가
+function showSuggestion(q) {
+  const area = chatArea();
   const row2 = document.createElement('div');
   row2.className = 'chat-row user';
   const col2 = document.createElement('div');
@@ -452,11 +459,8 @@ function askQuestion() {
   area.appendChild(row2);
   scrollChat();
 
-  // 질문 오디오 자동 재생 → 끝나면 마이크 활성
-  playQuestionAudio(q.n, () => {
-    waitingForMic = true;
-    setMicEnabled(true);
-  });
+  waitingForMic = true;
+  setMicEnabled(true);
 }
 
 // ================================================================
@@ -515,10 +519,17 @@ function buildSystemInstruction(q) {
 // 응답 "[전사값], [Correct 또는 프랑스어 설명]" 파싱
 function parseReply(text) {
   const t = (text || '').trim();
-  const m = t.match(/^\[([\s\S]*?)\]\s*,\s*\[([\s\S]*)\]\s*$/);
+  // 1) [전사값], [Correct 또는 프랑스어 설명]
+  let m = t.match(/^\[([\s\S]*?)\]\s*,\s*\[([\s\S]*)\]\s*$/);
   if (m) return { transcript: m[1].trim(), verdict: m[2].trim() };
+  // 2) 대괄호 없이 오는 경우: 전사값, <Correct> 또는 전사값, 프랑스어 설명 (판정은 마지막 쉼표 뒤)
+  const cm = t.match(/^([\s\S]*?)\s*,\s*(<?\s*correct\s*>?\.?)\s*$/i);
+  if (cm) return { transcript: cm[1].replace(/^\[|\]$/g, '').trim(), verdict: 'Correct' };
   const idx = t.indexOf('],');
   if (t.startsWith('[') && idx > 0) return { transcript: t.slice(1, idx).trim(), verdict: t.slice(idx + 2).replace(/^\s*\[/, '').replace(/\]\s*$/, '').trim() };
+  // 3) 전사값, 프랑스어 설명 (대괄호 없음): 첫 쉼표 앞이 한글이고 뒤가 프랑스어(라틴 문자)인 경우만 분리
+  const fm = t.match(/^([^,]*[가-힣][^,]*?)\s*,\s*([A-Za-zÀ-ÿ<][\s\S]*)$/);
+  if (fm) return { transcript: fm[1].trim(), verdict: fm[2].replace(/^\[|\]$/g, '').trim() };
   return { transcript: t, verdict: '' };
 }
 
