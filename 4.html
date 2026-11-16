@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <script>
+  // ================================================================
+  // 질문별 오디오 리스트 — 링크를 입력하면 해당 Question이 발화될 때 자동 재생됨
+  // (키: Question 번호, 값: 오디오 링크. 빈 값이면 재생하지 않음)
+  // ================================================================
+  const QUESTION_AUDIO = {
+    1: '',
+    2: '',
+    3: '',
+    4: '',
+    5: '',
+    6: '',
+    7: '',
+  };
+  // 에이전트(Chloé) 프로필 이미지 링크 — 비어 있으면 기본 아이콘 표시
+  const AGENT_IMG = '';
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>S’exprimer davantage (1) — Chapitre 1 — Questions-réponses</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+  <style>
+    :root { --nav-h: max(12vmin, 10vh); --btn: calc(var(--nav-h) * 0.5); }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Nunito', sans-serif; }
+    .page {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 2.5vh 2.5vw; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; overflow: hidden;
+    }
+    .page.active { opacity: 1; pointer-events: auto; }
+    .ko { font-family: 'Noto Sans KR', sans-serif; }
+    .invisible { visibility: hidden; }
+    .cta-btn {
+      background: linear-gradient(135deg,#7c3aed,#4c1d95); color: #fff; border: none; border-radius: 1.2vw;
+      padding: 1.8vh 8vw; font-family: 'Nunito',sans-serif;
+      font-size: clamp(0.9rem, max(2.5vw,2.5vh), 99rem); font-weight: 800; letter-spacing: 0.06em; cursor: pointer;
+      box-shadow: 0 0.5vh 1.8vh rgba(124,58,237,0.2); transition: transform 0.15s;
+    }
+    .cta-btn:hover { transform: scale(1.04); }
+    .cta-btn:active { transform: scale(0.97); }
+    .objectif-card {
+      background: #fff; border: 0.15vh solid #e9d5ff; border-radius: 1.2vw;
+      padding: 1.2vh 3vw; width: 100%; display: flex; align-items: center; gap: 2vw;
+      box-shadow: 0 0.4vh 1.5vh rgba(124,58,237,0.08);
+    }
+    .objectif-badge {
+      min-width: clamp(1.4rem, max(4vw,4vh), 99rem); height: clamp(1.4rem, max(4vw,4vh), 99rem);
+      border-radius: 50%; background: #ede9fe; color: #7c3aed; font-weight: 800;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      font-size: clamp(0.75rem, max(2vw,2vh), 99rem);
+    }
+    .objectif-ko {
+      border-radius: 0.8vw; padding: 0.9vh 2vw; text-align: left; line-height: 1.35; flex: 1; min-width: 0;
+      font-size: clamp(0.85rem, max(2.1vw,2.1vh), 1.2rem);
+      background: #f5f3ff; border: 0.15vh solid #e9d5ff; font-family: 'Noto Sans KR', sans-serif; font-weight: 700; color: #1e1b2e;
+    }
+
+    /* ── 상단 고정 영역: Title / Subtitle ── */
+    #qr-head { width: 100%; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 0.6vh; padding-bottom: 1.2vh; }
+    #qr-title { font-size: clamp(1.05rem, max(2.8vw,2.8vh), 1.5rem); font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #7c3aed; text-align: center; }
+    #qr-subtitle { font-size: clamp(0.9rem, max(2.3vw,2.3vh), 1.3rem); font-weight: 500; line-height: 1.5; color: #1e1b2e; text-align: center; }
+
+    /* ── 대화창 ── */
+    .chat-row { display: flex; align-items: flex-end; gap: 1.5vw; width: 100%; }
+    .chat-row.user { flex-direction: row-reverse; }
+    .avatar {
+      width: clamp(1.9rem, max(6vw,6vh), 99rem); height: clamp(1.9rem, max(6vw,6vh), 99rem);
+      border-radius: 50%; flex-shrink: 0; overflow: hidden;
+      background: #e5e7eb; display: flex; align-items: center; justify-content: center;
+      border: 0.2vh solid #d1d5db;
+    }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+    .bubble-col { display: flex; flex-direction: column; gap: 0.8vh; max-width: 74%; }
+    .chat-row.user .bubble-col { align-items: flex-end; }
+    .bubble {
+      background: #fff; border: 0.15vh solid #e9d5ff; border-radius: 1.2vw;
+      padding: 1.4vh 2.5vw;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: clamp(0.95rem, max(2.4vw,2.4vh), 1.35rem); font-weight: 500; color: #1e1b2e;
+      line-height: 1.55; word-break: break-word; text-align: left;
+      box-shadow: 0 0.4vh 1.5vh rgba(124,58,237,0.06);
+    }
+    .bubble.suggestion { background: #f5f3ff; border: 0.2vh dashed #a78bfa; }       /* 우측 점선 말풍선 */
+    .bubble.mine { background: #ede9fe; border-color: #c4b5fd; }                      /* 우측 실선 말풍선(전사값) */
+    .bubble.mine.correct { background: #dcfce7; border-color: #16a34a; color: #14532d; }
+    .bubble-sub { font-family: 'Nunito', sans-serif; font-size: clamp(0.8rem, max(2vw,2vh), 1.1rem); font-weight: 600; color: #6b7280; line-height: 1.5; margin-top: 0.6vh; }
+    .mini-btn {
+      align-self: flex-start; background: #fff; border: 0.15vh solid #c4b5fd; color: #7c3aed; border-radius: 99vw;
+      padding: 0.5vh 2.2vw; font-family: 'Nunito', sans-serif; font-weight: 800; cursor: pointer;
+      font-size: clamp(0.75rem, max(1.9vw,1.9vh), 1.05rem);
+    }
+    .mini-btn:disabled { opacity: 0.45; cursor: default; }
+    .chat-row.user .mini-btn { align-self: flex-end; }
+    .ok-mark { font-family: 'Nunito', sans-serif; font-weight: 800; color: #16a34a; font-size: clamp(0.8rem, max(2vw,2vh), 1.1rem); margin-top: 0.6vh; }
+    .expl-box {
+      width: 100%; background: rgba(255,255,255,0.7); border: 0.15vh solid #e9d5ff; border-radius: 1.2vw;
+      padding: 1.4vh 3vw; box-shadow: 0 0.4vh 1.5vh rgba(124,58,237,0.1);
+      font-size: clamp(0.85rem, max(2.2vw,2.2vh), 1.2rem); font-weight: 500; line-height: 1.6; text-align: center; color: #1e1b2e;
+    }
+    .etape-end { width: 100%; text-align: center; font-size: clamp(0.9rem, max(2.3vw,2.3vh), 1.3rem); font-weight: 800; color: #7c3aed; padding: 1.4vh 0; }
+
+    /* ── 하단 존 (공간 항상 확보) ── */
+    #conv-bottom {
+      position: fixed; bottom: 0; left: 0; width: 100%; height: var(--nav-h); display: none;
+      align-items: center; justify-content: center; padding: 0 2.5vw;
+      background: rgba(255,255,255,0.95); backdrop-filter: blur(1vh); border-top: 0.15vh solid #e9d5ff; z-index: 150;
+    }
+    .mic-btn {
+      width: var(--btn); height: var(--btn); border-radius: 50%; border: none; background: #7c3aed; color: #fff;
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
+      font-size: calc(var(--btn) * 0.5); transition: opacity 0.15s, transform 0.15s;
+    }
+    .mic-btn:disabled { background: #e9d5ff; cursor: not-allowed; opacity: 0.6; }
+    .mic-btn.recording { background: #ef4444; animation: micpulse 1.2s infinite; }
+    .next-btn {
+      width: var(--btn); height: var(--btn); border-radius: 50%; border: none; background: #7c3aed; color: #fff;
+      display: none; align-items: center; justify-content: center; cursor: pointer;
+      font-size: calc(var(--btn) * 0.45);
+    }
+    @keyframes micpulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.12)} }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spin { animation: spin 1s linear infinite; }
+  </style>
+</head>
+<body class="bg-violet-50">
+
+  <!-- ════════ PAGE 1 — COVER ════════ -->
+  <div class="page active flex-col bg-violet-50" id="page-1">
+    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:1.5vh;">
+      <div class="flex flex-col items-center" style="gap:3vh;">
+        <div style="width:clamp(3.5rem,max(12vw,12vh),99rem);height:clamp(3.5rem,max(12vw,12vh),99rem);border-radius:50%;background:linear-gradient(135deg,#7c3aed,#a78bfa);display:flex;align-items:center;justify-content:center;box-shadow:0 0.5vh 2vh rgba(124,58,237,0.25);">
+          <i class="ph ph-microphone-stage" style="font-size:clamp(1.75rem,max(6vw,6vh),99rem);color:#fff;"></i>
+        </div>
+        <p style="font-size:clamp(1.05rem,max(2.6vw,2.6vh),99rem);font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:#a78bfa;text-align:center;line-height:1.5;"><span style="white-space:nowrap;">Chapitre 1 :</span> <span style="display:inline-block;">Le but d’une action</span></p>
+        <p style="font-size:clamp(1.28rem,max(2.88vw,2.88vh),99rem);font-weight:800;letter-spacing:0.18em;color:#a78bfa;text-align:center;margin-top:-1.5vh;">Questions-réponses 🎙️</p>
+        <h1 style="font-size:clamp(1.5rem,max(5vw,5vh),99rem);font-weight:900;color:#4c1d95;text-align:center;line-height:1.15;margin-top:-1.5vh;">Mon projet de voyage en Corée</h1>
+        <button onclick="startLesson()" class="cta-btn" style="margin-top:1vh;">Commencer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 2 — GOALS ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-2">
+    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:2vh;">
+      <p style="font-size:clamp(0.9rem,max(2.3vw,2.3vh),1.3rem);font-weight:500;line-height:1.7;text-align:center;color:#1e1b2e;">Chloé vous posera des questions. Répondez en coréen en utilisant les suggestions et les indices. Si vous faites une erreur, vous aurez une deuxième chance de répondre. Après deux tentatives, vous passerez à la question suivante.</p>
+      <div style="display:flex;flex-direction:column;gap:2vh;width:100%;">
+        <div class="objectif-card">
+          <span class="objectif-badge">1</span>
+          <p class="objectif-ko" style="font-family:'Nunito',sans-serif;">Étape 1 : Échauffement – Aller au concert</p>
+        </div>
+        <div class="objectif-card">
+          <span class="objectif-badge">2</span>
+          <p class="objectif-ko" style="font-family:'Nunito',sans-serif;">Étape 2 : Échauffement – Faire son passeport</p>
+        </div>
+        <div class="objectif-card">
+          <span class="objectif-badge">3</span>
+          <p class="objectif-ko" style="font-family:'Nunito',sans-serif;">Étape 3 : Mise en pratique – Parlez de votre projet de voyage en Corée !</p>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:center;">
+        <button class="cta-btn" onclick="startConversation()">Commencer la conversation</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ PAGE 3 — CONVERSATION (Étape 1·2·3 공용 화면) ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-3" style="justify-content:flex-start;padding-top:3vh;">
+    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;flex:1;min-height:0;">
+      <div id="qr-head">
+        <p id="qr-title" class="ko"></p>
+        <p id="qr-subtitle"></p>
+      </div>
+      <div id="chat-area" style="flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:1.4vh;padding:1vh 0.5vw;width:100%;"></div>
+    </div>
+  </div>
+
+  <!-- ════════ 대화 하단 존 (공간 항상 확보 — 마이크 / 다음 étape 화살표) ════════ -->
+  <div id="conv-bottom">
+    <button id="mic" class="mic-btn" onclick="onMicClick()" disabled><i class="ph-fill ph-microphone"></i></button>
+    <button id="next-etape" class="next-btn" onclick="goNextEtape()"><i class="ph-bold ph-arrow-right"></i></button>
+  </div>
+
+  <!-- ════════ PAGE 4 — OUTRO ════════ -->
+  <div class="page flex-col bg-violet-50" id="page-4">
+    <div style="width:95%;max-width:90vw;display:flex;flex-direction:column;gap:2vh;">
+      <div style="background:rgba(255,255,255,0.7);border:0.15vh solid #e9d5ff;border-radius:1.2vw;padding:2vh 3vw;box-shadow:0 0.4vh 1.5vh rgba(124,58,237,0.1);">
+        <p style="font-size:clamp(0.99rem,max(2.42vw,2.42vh),1.43rem);font-weight:500;text-align:center;color:#1e1b2e;line-height:1.7;">Vous avez réussi à discuter en coréen en utilisant les phrases apprises dans ce chapitre. Excellent travail ! Rendez-vous au prochain chapitre !</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+let currentPage = 1;
+const TOTAL_PAGES = 4;
+let toneReady = false;
+let correctSound, errorSound, completionSynth, transitionSynth, startSynth;
+
+// ================================================================
+// Permit (부모 postMessage 수신) / GeminiChatSecure 호출 (평가만, Live API 미사용)
+// ================================================================
+const GEMINI_URL = 'https://coreeno.base44.app/functions/GeminiChatSecure';
+let lessonPermit = null;
+let lessonId = null;
+window.addEventListener('message', (event) => {
+  if (event.data?.type !== 'coreeno:permit') return;
+  lessonPermit = event.data.permit;
+  lessonId = event.data.lesson_id;
+});
+
+let geminiErrorStreak = 0;
+function geminiErrorMessage(error) {
+  const msg = (error && error.message) || String(error);
+  if (msg.indexOf('Lesson permit') !== -1) return "Permis d'accès indisponible. Veuillez actualiser la page et réessayer.";
+  const m = msg.match(/API status: (\d+)/);
+  if (m) {
+    const status = parseInt(m[1], 10);
+    if (status === 401 || status === 403) return "Permis d'accès expiré. Veuillez actualiser la page et réessayer.";
+    if (status === 404) return "La configuration vocale de cette leçon est indisponible. Veuillez contacter l'administrateur.";
+    if (status === 429) return "Limite d'utilisation atteinte. Veuillez réessayer dans quelques instants. Si l'erreur persiste, signalez un bug.";
+    if (status >= 500) return "Erreur du serveur. Veuillez réessayer dans quelques instants. Si l'erreur persiste, signalez un bug.";
+    return "Erreur inattendue. Si le problème persiste, signalez un bug.";
+  }
+  geminiErrorStreak++;
+  if (geminiErrorStreak >= 2) return "Erreur de connexion. Si le problème persiste, signalez un bug.";
+  return "Erreur de connexion. Veuillez réessayer.";
+}
+
+// ================================================================
+// 실라버스 verbatim — Étape / Question
+// ================================================================
+const ETAPES = [
+  { title: 'L’échauffement', subtitle: 'Dites où vous allez et pourquoi.',
+    questions: [
+      { n: 1, q: '오늘 어디 가요?', trans: 'Où vas-tu aujourd’hui ?',
+        suggestion: 'Dites “Je vais au concert aujourd’hui.”', hint: '저는 오늘 콘서트에 가요.', expl: '' },
+      { n: 2, q: '왜 콘서트에 가요?', trans: 'Pourquoi vas-tu au concert ?',
+        suggestion: 'Dites “Je vais au concert pour écouter des chansons.”', hint: '노래를 들으러 콘서트에 가요.', expl: '' },
+    ] },
+  { title: 'L’échauffement', subtitle: 'Dites ce que vous avez fait et pourquoi.',
+    questions: [
+      { n: 3, q: '이게 뭐예요?', trans: 'Qu’est-ce que c’est?',
+        suggestion: 'Dites “C’est mon passeport.”', hint: '이건 제 여권이에요.', expl: '' },
+      { n: 4, q: '왜 여권을 만들었어요?', trans: 'Pourquoi as-tu fait un passeport ?',
+        suggestion: 'Dites “J’ai fait mon passeport pour aller en Chine.”', hint: '중국에 가려고 여권을 만들었어요.', expl: '' },
+    ] },
+  { title: 'Mise en pratique', subtitle: 'Parlez de votre projet de voyage en Corée !',
+    questions: [
+      { n: 5, q: '여름에 뭐 할 거예요?', trans: 'Qu’est-ce que tu vas faire en été ?',
+        suggestion: '한국에 간다고 말해 보세요!', hint: '한국에 갈 거예요.', expl: '' },
+      { n: 6, q: '한국에 가서 뭐 할 거예요?', trans: 'Qu’est-ce que tu vas faire en Corée ?',
+        suggestion: '뭘 하러 한국에 가는지 말해 보세요.', hint: '___(으)러 한국에 가요.', expl: '' },
+      { n: 7, q: '한국에 가려고 뭘 준비했어요?', trans: 'Qu’est-ce que tu as préparé pour aller en Corée ?',
+        suggestion: '한국에 가려고 준비한 것을 말해 보세요.', hint: '한국어를 공부했어요. / 여권을 만들었어요. / 돈을 모았어요.', expl: '' },
+    ] },
+];
+const MAX_ATTEMPTS = 2;            // 두 번의 기회, 두 번 시도 후 다음 질문
+const MAX_RECORD_MS = 6000;        // 최대 발화 6초 (Golden Rule 5)
+
+// ================================================================
+// 효과음
+// ================================================================
+async function initTone() {
+  await Tone.start();
+  correctSound = new Tone.Synth({ oscillator: { type: 'sine' } }).toDestination();
+  errorSound = new Tone.Synth({ oscillator: { type: 'triangle' } }).toDestination();
+  completionSynth = new Tone.PolySynth(Tone.Synth).toDestination();
+  transitionSynth = new Tone.Synth({ oscillator: { type: 'sine' }, envelope: { attack: 0.01, decay: 0.1, sustain: 0, release: 0.1 } }).toDestination();
+  transitionSynth.volume.value = -15;
+  startSynth = new Tone.Synth({ oscillator: { type: 'sine' }, envelope: { attack: 0.01, decay: 0.2, sustain: 0, release: 0.15 } }).toDestination();
+  toneReady = true;
+}
+function playSfx(type) {
+  if (!toneReady) return;
+  switch (type) {
+    case 'pageTurn': transitionSynth.triggerAttackRelease('C6', '0.05s'); break;
+    case 'correct': correctSound.triggerAttackRelease('C5', '0.2s'); break;
+    case 'wrong': errorSound.triggerAttackRelease('C4', '0.1s'); break;
+    case 'start':
+      startSynth.triggerAttackRelease('E4', '16n', Tone.now());
+      startSynth.triggerAttackRelease('A4', '16n', Tone.now() + 0.12);
+      startSynth.triggerAttackRelease('C#5', '8n', Tone.now() + 0.24);
+      break;
+    case 'end': completionSynth.triggerAttackRelease(['C5','E5','G5','C6'], '4n'); break;
+  }
+}
+
+// ================================================================
+// 페이지 이동
+// ================================================================
+async function startLesson() {
+  await initTone();
+  playSfx('start');
+  goToPage(2);
+}
+function goToPage(n) {
+  if (n === currentPage) return;
+  playSfx('pageTurn');
+  stopQuestionAudio();
+  const oldPage = document.getElementById('page-' + currentPage);
+  if (oldPage) oldPage.classList.remove('active');
+  currentPage = n;
+  const newPage = document.getElementById('page-' + n);
+  if (newPage) newPage.classList.add('active');
+  updateBottomBar();
+  if (n === 4) {
+    playSfx('end');
+    setTimeout(() => window.parent.postMessage({ type: 'lesson_complete' }, '*'), 500);
+  }
+}
+function updateBottomBar() {
+  const bar = document.getElementById('conv-bottom');
+  const activePage = document.getElementById('page-' + currentPage);
+  if (currentPage === 3) {
+    bar.style.display = 'flex';
+    if (activePage) activePage.style.paddingBottom = 'calc(var(--nav-h) + 2.5vh)';
+    return;
+  }
+  bar.style.display = 'none';
+  if (activePage) activePage.style.paddingBottom = '';
+}
+
+// ================================================================
+// 질문 오디오 (자동 재생)
+// ================================================================
+let questionAudio = null;
+function stopQuestionAudio() {
+  if (questionAudio) { try { questionAudio.pause(); } catch (e) {} questionAudio = null; }
+}
+function playQuestionAudio(n, onEnded) {
+  stopQuestionAudio();
+  const url = QUESTION_AUDIO[n];
+  if (!url) { if (onEnded) onEnded(); return; }
+  const a = new Audio(url);
+  questionAudio = a;
+  let done = false;
+  const fin = () => { if (done) return; done = true; if (questionAudio === a) questionAudio = null; if (onEnded) onEnded(); };
+  a.onended = fin; a.onerror = fin;
+  a.play().catch(() => fin());
+}
+
+// ================================================================
+// 대화 상태
+// ================================================================
+let etapeIdx = 0;
+let qIdx = 0;
+let attempts = 0;
+let evaluating = false;
+let waitingForMic = false;      // 질문 발화 후 유저 발화 대기
+let isRecording = false;
+let mediaRecorder = null;
+let recordTimer = null;
+
+function chatArea() { return document.getElementById('chat-area'); }
+function scrollChat() { const el = chatArea(); el.scrollTop = el.scrollHeight; }
+function setMicEnabled(on) {
+  const m = document.getElementById('mic');
+  m.disabled = !on;
+}
+function setMicIcon(state) {
+  const m = document.getElementById('mic');
+  m.classList.toggle('recording', state === 'recording');
+  if (state === 'recording') m.innerHTML = '<i class="ph-fill ph-stop"></i>';
+  else if (state === 'loading') m.innerHTML = '<i class="ph ph-spinner spin"></i>';
+  else m.innerHTML = '<i class="ph-fill ph-microphone"></i>';
+}
+
+function startConversation() {
+  goToPage(3);
+  etapeIdx = 0;
+  beginEtape();
+}
+function beginEtape() {
+  const e = ETAPES[etapeIdx];
+  document.getElementById('qr-title').textContent = e.title;
+  document.getElementById('qr-subtitle').textContent = e.subtitle;
+  chatArea().innerHTML = '';
+  document.getElementById('next-etape').style.display = 'none';
+  document.getElementById('mic').style.display = 'flex';
+  qIdx = 0;
+  askQuestion();
+}
+
+// ── 질문 발화: 좌측 말풍선(Question N + traduction 버튼) / 우측 점선 말풍선(suggestion + indice 🔑 버튼)
+function askQuestion() {
+  const q = ETAPES[etapeIdx].questions[qIdx];
+  attempts = 0;
+  evaluating = false;
+  waitingForMic = false;
+  setMicEnabled(false);
+  setMicIcon('idle');
+
+  // 좌측 말풍선
+  const area = chatArea();
+  const row = document.createElement('div');
+  row.className = 'chat-row';
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  if (AGENT_IMG) {
+    const img = document.createElement('img'); img.src = AGENT_IMG; img.alt = 'Chloé'; av.appendChild(img);
+  } else {
+    const i = document.createElement('i'); i.className = 'ph ph-user';
+    i.style.cssText = 'font-size:clamp(0.95rem,max(3vw,3vh),99rem);color:#9ca3af;'; av.appendChild(i);
+  }
+  const col = document.createElement('div');
+  col.className = 'bubble-col';
+  const b = document.createElement('div');
+  b.className = 'bubble ko';
+  b.textContent = q.q;
+  const trBtn = document.createElement('button');
+  trBtn.className = 'mini-btn';
+  trBtn.textContent = 'traduction';
+  trBtn.onclick = () => {
+    const sub = document.createElement('p');
+    sub.className = 'bubble-sub';
+    sub.textContent = q.trans;
+    b.appendChild(sub);
+    trBtn.disabled = true;
+    scrollChat();
+  };
+  col.appendChild(b); col.appendChild(trBtn);
+  row.appendChild(av); row.appendChild(col);
+  area.appendChild(row);
+
+  // 우측 점선 말풍선(suggestion)
+  const row2 = document.createElement('div');
+  row2.className = 'chat-row user';
+  const col2 = document.createElement('div');
+  col2.className = 'bubble-col';
+  const s = document.createElement('div');
+  s.className = 'bubble suggestion ko';
+  s.textContent = q.suggestion;
+  const hBtn = document.createElement('button');
+  hBtn.className = 'mini-btn';
+  hBtn.textContent = 'indice 🔑';
+  hBtn.onclick = () => {
+    const sub = document.createElement('p');
+    sub.className = 'bubble-sub ko';
+    sub.textContent = q.hint;
+    s.appendChild(sub);
+    hBtn.disabled = true;
+    scrollChat();
+  };
+  col2.appendChild(s); col2.appendChild(hBtn);
+  row2.appendChild(col2);
+  area.appendChild(row2);
+  scrollChat();
+
+  // 질문 오디오 자동 재생 → 끝나면 마이크 활성
+  playQuestionAudio(q.n, () => {
+    waitingForMic = true;
+    setMicEnabled(true);
+  });
+}
+
+// ================================================================
+// 마이크 / 녹음 / 평가
+// ================================================================
+async function onMicClick() {
+  if (evaluating || !waitingForMic) return;
+  if (isRecording) { stopRecording(); return; }
+  await startRecording();
+}
+async function startRecording() {
+  stopQuestionAudio();
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder = new MediaRecorder(stream);
+    const chunks = [];
+    mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
+    mediaRecorder.onstop = () => {
+      if (recordTimer) { clearTimeout(recordTimer); recordTimer = null; }
+      stream.getTracks().forEach((t) => t.stop());
+      isRecording = false;
+      // 평가 동안 마이크 클릭 불가
+      evaluating = true;
+      setMicEnabled(false);
+      setMicIcon('loading');
+      const blob = new Blob(chunks, { type: 'audio/webm' });
+      const mimeType = blob.type.split(';')[0] || 'audio/webm';
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onloadend = () => evaluate(reader.result.split(',')[1], mimeType);
+    };
+    mediaRecorder.start();
+    isRecording = true;
+    setMicIcon('recording');
+    recordTimer = setTimeout(() => { if (mediaRecorder && mediaRecorder.state === 'recording') mediaRecorder.stop(); }, MAX_RECORD_MS);
+  } catch (err) {
+    console.warn('Mic error:', err);
+    isRecording = false;
+    setMicIcon('idle');
+    setMicEnabled(true);
+  }
+}
+function stopRecording() {
+  if (mediaRecorder && mediaRecorder.state === 'recording') mediaRecorder.stop();
+}
+
+// systemInstruction — 실라버스 verbatim, "question N" / "Question N hint"는 해당 질문 번호와 hint 값으로 치환
+function buildSystemInstruction(q) {
+  return '다음은 “question ' + q.n + '”에 대한 한국어 학습자의 대답입니다.\n' +
+    '유저의 발화를 한글로 전사합니다. 발화를 하지 않거나, 외국어로 말할 경우, 전사하지 않고 공란으로 출력합니다. \n' +
+    '유저의 발화가 질문에 대한 답으로 적절한지 평가합니다. 다음의 힌트를 참조합니다: “' + q.hint + '” \n' +
+    '유저의 답이 힌트와 일치하거나, 힌트와 다르더라도 문법적으로 정확하고 맥락에 맞는 경우 <Correct> 라고 출력합니다.\n' +
+    '유저의 답이 맥락에 맞지 않거나 문법적으로 정확하지 않은 경우, 이해가 되지 않는 경우, 오답에 대한 설명을 “2문장 이내 프랑스어”로 출력합니다.\n' +
+    '답변은 다음과 같은 형태로만 출력할 수 있습니다: [전사값], [Correct 또는 프랑스어 설명] ';
+}
+// 응답 "[전사값], [Correct 또는 프랑스어 설명]" 파싱
+function parseReply(text) {
+  const t = (text || '').trim();
+  const m = t.match(/^\[([\s\S]*?)\]\s*,\s*\[([\s\S]*)\]\s*$/);
+  if (m) return { transcript: m[1].trim(), verdict: m[2].trim() };
+  const idx = t.indexOf('],');
+  if (t.startsWith('[') && idx > 0) return { transcript: t.slice(1, idx).trim(), verdict: t.slice(idx + 2).replace(/^\s*\[/, '').replace(/\]\s*$/, '').trim() };
+  return { transcript: t, verdict: '' };
+}
+
+async function evaluate(audioBase64, mimeType) {
+  const q = ETAPES[etapeIdx].questions[qIdx];
+  attempts++;
+  let transcript = '', verdict = '', failed = false;
+  try {
+    if (!lessonPermit || !lessonId) throw new Error('Lesson permit is not available yet.');
+    const res = await fetch(GEMINI_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ role: 'user', parts: [{ inline_data: { mime_type: mimeType, data: audioBase64 } }] }],
+        systemInstruction: buildSystemInstruction(q),
+        model: 'gemini-3.8-flash',
+        permit: lessonPermit,
+        lesson_id: lessonId,
+      }),
+    });
+    if (!res.ok) throw new Error('API status: ' + res.status);
+    const data = await res.json();
+    const r = parseReply(data.text || '');
+    transcript = r.transcript; verdict = r.verdict;
+    geminiErrorStreak = 0;
+  } catch (error) {
+    console.warn('Gemini API Error:', error);
+    failed = true;
+    verdict = geminiErrorMessage(error);
+  }
+
+  const correct = !failed && /^<?\s*correct\s*>?\.?$/i.test(verdict);
+
+  // 전사값 → 우측 실선 말풍선
+  const area = chatArea();
+  const row = document.createElement('div');
+  row.className = 'chat-row user';
+  const col = document.createElement('div');
+  col.className = 'bubble-col';
+  const b = document.createElement('div');
+  b.className = 'bubble mine ko' + (correct ? ' correct' : '');
+  b.textContent = transcript || '…';
+  col.appendChild(b);
+  if (correct) {
+    const ok = document.createElement('p');
+    ok.className = 'ok-mark';
+    ok.textContent = 'Très bien ✅';
+    col.appendChild(ok);
+  }
+  row.appendChild(col);
+  area.appendChild(row);
+
+  // 설명은 하단 텍스트 박스
+  if (!correct && verdict) {
+    const box = document.createElement('div');
+    box.className = 'expl-box';
+    box.textContent = verdict;
+    area.appendChild(box);
+  } else if (correct && q.expl) {
+    const box = document.createElement('div');
+    box.className = 'expl-box';
+    box.textContent = q.expl;
+    area.appendChild(box);
+  }
+  scrollChat();
+
+  evaluating = false;
+  setMicIcon('idle');
+  if (correct) {
+    playSfx('correct');
+    waitingForMic = false;
+    setMicEnabled(false);
+    setTimeout(nextQuestion, 900);
+  } else if (!failed && attempts >= MAX_ATTEMPTS) {
+    playSfx('wrong');
+    waitingForMic = false;
+    setMicEnabled(false);
+    setTimeout(nextQuestion, 900);
+  } else {
+    playSfx('wrong');
+    if (failed) attempts--;          // 호출 오류는 시도로 세지 않음
+    setMicEnabled(true);             // 재시도는 직접 클릭해서 켬
+  }
+}
+
+function nextQuestion() {
+  const e = ETAPES[etapeIdx];
+  qIdx++;
+  if (qIdx < e.questions.length) { askQuestion(); return; }
+  endEtape();
+}
+function endEtape() {
+  setMicEnabled(false);
+  document.getElementById('mic').style.display = 'none';
+  const msg = document.createElement('p');
+  msg.className = 'etape-end';
+  msg.textContent = 'Étape ' + (etapeIdx + 1) + ' terminée';
+  chatArea().appendChild(msg);
+  scrollChat();
+  playSfx('end');
+  const nb = document.getElementById('next-etape');
+  nb.style.display = 'flex';
+}
+function goNextEtape() {
+  playSfx('pageTurn');
+  etapeIdx++;
+  if (etapeIdx < ETAPES.length) { beginEtape(); return; }
+  goToPage(4);
+}
+  </script>
+</body>
+</html>
