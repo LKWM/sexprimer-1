@@ -329,22 +329,42 @@ function updateBottomBar() {
 // ================================================================
 // 질문 오디오 (자동 재생)
 // ================================================================
-let questionAudio = null;
+let qAudioEl = null;
+function getQAudioEl() {
+  if (!qAudioEl) {
+    qAudioEl = document.createElement('audio');
+    qAudioEl.preload = 'auto';
+    qAudioEl.setAttribute('playsinline', '');
+    qAudioEl.style.display = 'none';
+    document.body.appendChild(qAudioEl);
+  }
+  return qAudioEl;
+}
 function stopQuestionAudio() {
-  if (questionAudio) { try { questionAudio.pause(); } catch (e) {} questionAudio = null; }
+  if (!qAudioEl) return;
+  qAudioEl.onended = null;
+  qAudioEl.onerror = null;
+  try { qAudioEl.pause(); qAudioEl.currentTime = 0; } catch (e) {}
 }
+// 질문 오디오: 같은 엘리먼트를 계속 재사용해야 두 번째 질문부터도 재생이 허용된다
 function playQuestionAudio(n, onEnded) {
-  stopQuestionAudio();
   const url = QUESTION_AUDIO[n];
-  if (!url) { if (onEnded) onEnded(); return; }
-  const a = new Audio(url);
-  questionAudio = a;
+  const el = getQAudioEl();
+  stopQuestionAudio();
   let done = false;
-  const fin = () => { if (done) return; done = true; if (questionAudio === a) questionAudio = null; if (onEnded) onEnded(); };
-  a.onended = fin; a.onerror = fin;
-  a.play().catch(() => fin());
+  const fin = () => { if (done) return; done = true; el.onended = null; el.onerror = null; if (onEnded) onEnded(); };
+  if (!url) { fin(); return; }
+  el.onended = fin;
+  el.onerror = fin;
+  el.src = url;
+  try { el.currentTime = 0; } catch (e) {}
+  const tryPlay = (attempt) => {
+    let p;
+    try { p = el.play(); } catch (e) { p = { catch: (cb) => cb(e) }; }
+    if (p && p.catch) p.catch(() => { if (attempt < 3) { setTimeout(() => tryPlay(attempt + 1), 250); } else { fin(); } });
+  };
+  tryPlay(0);
 }
-
 // ================================================================
 // 대화 상태
 // ================================================================
@@ -387,7 +407,8 @@ function beginEtape() {
   askQuestion();
 }
 
-// ── 질문 발화: 좌측 말풍선(Question N + traduction 버튼) / 우측 점선 말풍선(suggestion + indice 🔑 버튼)
+// ── 질문 턴: 질문 오디오를 먼저 재생하고, 재생이 끝난 뒤에 좌측 말풍선(Question N + traduction)과
+//    우측 점선 말풍선(suggestion + indice 🔑)을 추가하고 마이크를 켠다 (오디오 우선·텍스트 후행)
 function askQuestion() {
   const q = ETAPES[etapeIdx].questions[qIdx];
   attempts = 0;
@@ -395,9 +416,13 @@ function askQuestion() {
   waitingForMic = false;
   setMicEnabled(false);
   setMicIcon('idle');
+  playQuestionAudio(q.n, () => renderQuestionTurn(q));
+}
 
-  // 좌측 말풍선
+function renderQuestionTurn(q) {
   const area = chatArea();
+
+  // 좌측 말풍선 (Question N)
   const row = document.createElement('div');
   row.className = 'chat-row';
   const av = document.createElement('div');
@@ -427,22 +452,15 @@ function askQuestion() {
   col.appendChild(b); col.appendChild(trBtn);
   row.appendChild(av); row.appendChild(col);
   area.appendChild(row);
-  scrollChat();
 
-  // 질문 오디오 자동 재생 → 오디오가 끝나면 우측 점선 말풍선(suggestion) 추가 + 마이크 활성
-  playQuestionAudio(q.n, () => { showSuggestion(q); });
-}
-
-// 우측 점선 말풍선(suggestion) — 질문 오디오 종료 후 추가
-function showSuggestion(q) {
-  const area = chatArea();
+  // 우측 점선 말풍선 (suggestion)
   const row2 = document.createElement('div');
   row2.className = 'chat-row user';
   const col2 = document.createElement('div');
   col2.className = 'bubble-col';
-  const s = document.createElement('div');
-  s.className = 'bubble suggestion ko';
-  s.textContent = q.suggestion;
+  const s2 = document.createElement('div');
+  s2.className = 'bubble suggestion ko';
+  s2.textContent = q.suggestion;
   const hBtn = document.createElement('button');
   hBtn.className = 'mini-btn';
   hBtn.textContent = 'indice 🔑';
@@ -450,11 +468,11 @@ function showSuggestion(q) {
     const sub = document.createElement('p');
     sub.className = 'bubble-sub ko';
     sub.textContent = q.hint;
-    s.appendChild(sub);
+    s2.appendChild(sub);
     hBtn.disabled = true;
     scrollChat();
   };
-  col2.appendChild(s); col2.appendChild(hBtn);
+  col2.appendChild(s2); col2.appendChild(hBtn);
   row2.appendChild(col2);
   area.appendChild(row2);
   scrollChat();
@@ -463,16 +481,16 @@ function showSuggestion(q) {
   setMicEnabled(true);
 }
 
-// ================================================================
-// 마이크 / 녹음 / 평가
-// ================================================================
+let micStarting = false;
 async function onMicClick() {
   if (evaluating || !waitingForMic) return;
+  if (micStarting) return;                 // 시작 처리 중 연타 방지
   if (isRecording) { stopRecording(); return; }
   await startRecording();
 }
 async function startRecording() {
   stopQuestionAudio();
+  micStarting = true;
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     mediaRecorder = new MediaRecorder(stream);
@@ -494,11 +512,13 @@ async function startRecording() {
     };
     mediaRecorder.start();
     isRecording = true;
+    micStarting = false;
     setMicIcon('recording');
     recordTimer = setTimeout(() => { if (mediaRecorder && mediaRecorder.state === 'recording') mediaRecorder.stop(); }, MAX_RECORD_MS);
   } catch (err) {
     console.warn('Mic error:', err);
     isRecording = false;
+    micStarting = false;
     setMicIcon('idle');
     setMicEnabled(true);
   }
