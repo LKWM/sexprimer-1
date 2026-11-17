@@ -347,21 +347,35 @@ function stopQuestionAudio() {
   try { qAudioEl.pause(); qAudioEl.currentTime = 0; } catch (e) {}
 }
 // 질문 오디오: 같은 엘리먼트를 계속 재사용해야 두 번째 질문부터도 재생이 허용된다
-function playQuestionAudio(n, onEnded) {
+// 질문 오디오: 재생 시작 시점에 agent text, 재생 종료 시점에 suggestion을 표시한다
+function playQuestionAudio(n, hooks) {
   const url = QUESTION_AUDIO[n];
   const el = getQAudioEl();
   stopQuestionAudio();
-  let done = false;
-  const fin = () => { if (done) return; done = true; el.onended = null; el.onerror = null; if (onEnded) onEnded(); };
-  if (!url) { fin(); return; }
+  let started = false, ended = false;
+  const startOnce = () => { if (started) return; started = true; if (hooks && hooks.onStart) hooks.onStart(); };
+  const fin = () => {
+    if (ended) return;
+    ended = true;
+    el.onended = null; el.onerror = null;
+    startOnce();
+    if (hooks && hooks.onEnd) hooks.onEnd();
+  };
+  if (!url) { startOnce(); fin(); return; }
   el.onended = fin;
   el.onerror = fin;
   el.src = url;
   try { el.currentTime = 0; } catch (e) {}
+  // 실제로 재생이 시작된 순간에 agent text를 띄운다
+  const onPlaying = () => { el.removeEventListener('playing', onPlaying); startOnce(); };
+  el.addEventListener('playing', onPlaying);
   const tryPlay = (attempt) => {
     let p;
     try { p = el.play(); } catch (e) { p = { catch: (cb) => cb(e) }; }
-    if (p && p.catch) p.catch(() => { if (attempt < 3) { setTimeout(() => tryPlay(attempt + 1), 250); } else { fin(); } });
+    if (p && p.then) {
+      p.then(() => { el.removeEventListener('playing', onPlaying); startOnce(); })
+       .catch(() => { if (attempt < 3) { setTimeout(() => tryPlay(attempt + 1), 250); } else { fin(); } });
+    }
   };
   tryPlay(0);
 }
@@ -416,10 +430,14 @@ function askQuestion() {
   waitingForMic = false;
   setMicEnabled(false);
   setMicIcon('idle');
-  playQuestionAudio(q.n, () => renderQuestionTurn(q));
+  playQuestionAudio(q.n, {
+    onStart: () => renderAgentText(q),
+    onEnd: () => renderSuggestion(q),
+  });
 }
 
-function renderQuestionTurn(q) {
+// agent text(좌측 말풍선) — 질문 오디오가 시작된 뒤에 표시
+function renderAgentText(q) {
   const area = chatArea();
 
   // 좌측 말풍선 (Question N)
@@ -452,8 +470,12 @@ function renderQuestionTurn(q) {
   col.appendChild(b); col.appendChild(trBtn);
   row.appendChild(av); row.appendChild(col);
   area.appendChild(row);
+  scrollChat();
+}
 
-  // 우측 점선 말풍선 (suggestion)
+// suggestion(우측 점선 말풍선) — 질문 오디오가 끝난 뒤에 표시
+function renderSuggestion(q) {
+  const area = chatArea();
   const row2 = document.createElement('div');
   row2.className = 'chat-row user';
   const col2 = document.createElement('div');
