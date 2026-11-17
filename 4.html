@@ -287,6 +287,7 @@ function playSfx(type) {
       startSynth.triggerAttackRelease('A4', '16n', Tone.now() + 0.12);
       startSynth.triggerAttackRelease('C#5', '8n', Tone.now() + 0.24);
       break;
+    case 'etape': completionSynth.triggerAttackRelease(['C5','E5'], '8n'); break;   // étape 완료 (레슨 종료와 구분)
     case 'end': completionSynth.triggerAttackRelease(['C5','E5','G5','C6'], '4n'); break;
   }
 }
@@ -671,7 +672,7 @@ function endEtape() {
   msg.textContent = 'Étape ' + (etapeIdx + 1) + ' terminée';
   chatArea().appendChild(msg);
   scrollChat();
-  playSfx('end');
+  playSfx('etape');
   const nb = document.getElementById('next-etape');
   nb.style.display = 'flex';
 }
