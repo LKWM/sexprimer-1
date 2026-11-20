@@ -476,6 +476,48 @@ const GATED = new Set([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 1
 let currentPage = 1;
 let currentAudio = null;
 let audioTimer = null;
+
+// ── 마지막 speaking / Trad speaking 과제의 예시 오디오: 정답 또는 최대 발화 횟수 소진 후 1회 재생 보장
+//    (재생마다 새 Audio를 만들면 자동재생 정책에 막히므로 단일 엘리먼트를 재사용하고 첫 제스처에서 잠금 해제)
+const LAST_SPEAK_PAGE = 22;
+let exampleAudioEl = null;
+const exampleAudioPlayed = {};
+function getExampleAudioEl() {
+  if (!exampleAudioEl) {
+    exampleAudioEl = document.createElement('audio');
+    exampleAudioEl.preload = 'auto';
+    exampleAudioEl.setAttribute('playsinline', '');
+    exampleAudioEl.style.display = 'none';
+    document.body.appendChild(exampleAudioEl);
+  }
+  return exampleAudioEl;
+}
+function unlockExampleAudio() {
+  const el = getExampleAudioEl();
+  if (el._unlocked) return;
+  el._unlocked = true;
+  try {
+    el.src = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAABErAAABAAgAZGF0YQAAAAA=';
+    const p = el.play();
+    if (p && p.catch) p.catch(() => {});
+  } catch (e) {}
+}
+function playExampleAudioOnce(pageNum, url) {
+  if (!url || exampleAudioPlayed[pageNum]) return;
+  exampleAudioPlayed[pageNum] = true;
+  const el = getExampleAudioEl();
+  el.onended = null;
+  el.onerror = null;
+  el.src = url;
+  try { el.currentTime = 0; } catch (e) {}
+  const tryPlay = (n) => {
+    let p;
+    try { p = el.play(); } catch (e) { p = { catch: (cb) => cb(e) }; }
+    if (p && p.catch) p.catch(() => { if (n < 2) setTimeout(() => tryPlay(n + 1), 200); });
+  };
+  tryPlay(0);
+}
+
 let micTimer = null;
 let toneReady = false;
 let correctSound, errorSound, transitionSynth, completionSynth, startSynth;
@@ -598,6 +640,7 @@ function syncMicAudioState() {
 }
 
 function stopAudio() {
+  if (exampleAudioEl) { try { exampleAudioEl.pause(); exampleAudioEl.currentTime = 0; } catch (e) {} }
   if (currentAudio) {
     try { currentAudio.pause(); currentAudio.currentTime = 0; } catch (e) {}
     currentAudio = null;
@@ -628,6 +671,7 @@ function disableMic(pageNum) {
 async function startLesson() {
   unlockAudioEl();
   await initTone();
+  unlockExampleAudio();
   playSfx('start');
   document.getElementById('progress-bar-container').style.display = 'block';
   document.getElementById('bottom-nav').style.display = 'flex';
@@ -982,6 +1026,7 @@ function tryMatch(pageNum) {
    SPEECH RECOGNITION (Gemini API)
    ═══════════════════════════════════════ */
 async function handleMicClick(pageNum) {
+  unlockExampleAudio();
   if (!EXERCISES[pageNum] || pageState[pageNum]?.completed) return;
   const micBtn = document.getElementById('mic-' + pageNum);
   if (micBtn.classList.contains('disabled')) return;
@@ -1207,7 +1252,7 @@ function evaluateResult(pageNum, isPass, transcript, score) {
     revealAnswerText(pageNum);
     revealAnswerAudio(pageNum);
     const w = ex.answer;
-    if (w.audio) audioTimer = setTimeout(() => { playAudio(w.audio); }, 500);
+    if (w.audio && pageNum !== LAST_SPEAK_PAGE) audioTimer = setTimeout(() => { playAudio(w.audio); }, 500);
   } else {
     playSfx('wrong');
     if (state.attempts < ex.maxAttempts) {
@@ -1228,10 +1273,15 @@ function evaluateResult(pageNum, isPass, transcript, score) {
       showFeedback(pageNum, transcript, score, false);
       disableMic(pageNum);
       const w = ex.answer;
-      if (w.audio) audioTimer = setTimeout(() => { playAudio(w.audio); }, 500);
+      if (w.audio && pageNum !== LAST_SPEAK_PAGE) audioTimer = setTimeout(() => { playAudio(w.audio); }, 500);
     }
   }
 
+
+  // 마지막 speaking / Trad speaking 과제: 정답 또는 최대 발화 횟수 소진 시 예시 오디오 1회 재생
+  if (pageNum === LAST_SPEAK_PAGE && (isPass || state.attempts >= ex.maxAttempts)) {
+    if (ex.answer && ex.answer.audio) audioTimer = setTimeout(() => { playExampleAudioOnce(pageNum, ex.answer.audio); }, 500);
+  }
   updateBottomBar();
 }
 
